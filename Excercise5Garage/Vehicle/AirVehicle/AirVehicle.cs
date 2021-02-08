@@ -1,5 +1,8 @@
 ﻿namespace Excercise5Garage.Vehicle.AirVehicle
 {
+    /// <summary>
+    /// Basklass för fordon som flyger i luften
+    /// </summary>
     public class AirVehicle : Vehicle
     {
         /// <summary>

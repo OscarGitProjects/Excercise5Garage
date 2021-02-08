@@ -1,5 +1,8 @@
 ﻿namespace Excercise5Garage.Vehicle.WaterVehicle
 {
+    /// <summary>
+    /// Basklass för fordon som färdas i vatten ex segelbåt, motorbåt
+    /// </summary>
     public class WaterVehicle : Vehicle
     {
         /// <summary>

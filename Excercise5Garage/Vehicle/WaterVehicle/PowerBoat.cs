@@ -1,5 +1,8 @@
 ﻿namespace Excercise5Garage.Vehicle.WaterVehicle
 {
+    /// <summary>
+    /// Klass med information om en motorbåt
+    /// </summary>
     public class PowerBoat : WaterVehicle
     {
         /// <summary>
@@ -18,6 +21,12 @@
         public PowerBoat(string strRegistrationNumber, string strColor = "Svart", int iNumberOfEngines = 2) : base(strRegistrationNumber, strColor)
         {
             this.NumberOfEngines = iNumberOfEngines;
+        }
+
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color}, Antal motorer: {this.NumberOfEngines}";
         }
     }
 }

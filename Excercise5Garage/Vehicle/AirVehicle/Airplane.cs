@@ -1,5 +1,8 @@
 ﻿namespace Excercise5Garage.Vehicle.AirVehicle
 {
+    /// <summary>
+    /// Klass med informaion om ett flygplan
+    /// </summary>
     public class Airplane : AirVehicle
     {
         /// <summary>
@@ -17,6 +20,12 @@
         public Airplane(string strRegistrationNumber, string strColor = "Svart", int iNumberOfEngines = 2) : base(strRegistrationNumber, strColor)
         {
             NumberOfEngines = iNumberOfEngines;
+        }
+
+        public override string ToString()
+        {
+            
+            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color}, Antal motorer: {this.NumberOfEngines}";
         }
     }
 }

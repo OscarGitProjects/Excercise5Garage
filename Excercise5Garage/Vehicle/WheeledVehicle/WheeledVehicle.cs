@@ -1,5 +1,8 @@
 ﻿namespace Excercise5Garage.Vehicle.WheeledVehicle
 {
+    /// <summary>
+    /// Bassklass för fordon som framförs på hjul ex. bil, buss, motorcykel
+    /// </summary>
     public class WheeledVehicle : Vehicle
     {
         public int NumberOfWheels { get; set; }

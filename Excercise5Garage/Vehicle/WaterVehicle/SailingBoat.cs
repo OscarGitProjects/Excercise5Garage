@@ -1,5 +1,8 @@
 ﻿namespace Excercise5Garage.Vehicle.WaterVehicle
 {
+    /// <summary>
+    /// Klass med information om en segelbåt
+    /// </summary>
     public class SailingBoat : WaterVehicle
     {
         /// <summary>
@@ -17,6 +20,12 @@
         public SailingBoat(string strRegistrationNumber, string strColor = "Svart", int iNumberOfEngines = 1) : base(strRegistrationNumber, strColor)
         {
             this.NumberOfEngines = iNumberOfEngines;
+        }
+
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color}, Antal motorer: {this.NumberOfEngines}";
         }
     }
 }
