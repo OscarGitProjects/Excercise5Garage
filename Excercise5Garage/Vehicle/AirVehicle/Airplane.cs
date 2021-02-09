@@ -22,6 +22,11 @@
             NumberOfEngines = iNumberOfEngines;
         }
 
+
+        /// <summary>
+        /// Överlagring av ToString()
+        /// </summary>
+        /// <returns>String med information om objektet</returns>
         public override string ToString()
         {
             

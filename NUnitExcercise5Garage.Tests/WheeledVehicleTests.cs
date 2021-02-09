@@ -14,6 +14,11 @@ namespace NUnitExcercise5Garage.Tests
         {
         }
 
+
+
+        /// <summary>
+        /// Metoden testar Bus klassens konstruktor fungerar
+        /// </summary>
         [Test]
         [Description("Metoden testar Bus klassens konstruktor fungerar")]
         public void Bus_Constructor_Test()
@@ -45,6 +50,9 @@ namespace NUnitExcercise5Garage.Tests
 
 
 
+        /// <summary>
+        /// Metoden testar Car klassens konstruktor fungerar
+        /// </summary>
         [Test]
         [Description("Metoden testar Car klassens konstruktor fungerar")]
         public void Car_Constructor_Test()
@@ -75,6 +83,10 @@ namespace NUnitExcercise5Garage.Tests
         }
 
 
+
+        /// <summary>
+        /// Metoden testar MotorCycle klassens konstruktor fungerar
+        /// </summary>
         [Test]
         [Description("Metoden testar MotorCycle klassens konstruktor fungerar")]
         public void MotorCycle_Constructor_Test()

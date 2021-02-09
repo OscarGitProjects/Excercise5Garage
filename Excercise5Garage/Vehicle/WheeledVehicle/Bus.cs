@@ -25,6 +25,11 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
             NumberOfSeatedPassengers = iNumberOfSeatedPassengers;
         }
 
+
+        /// <summary>
+        /// Överlagring av ToString()
+        /// </summary>
+        /// <returns>String med information om objektet</returns>
         public override string ToString()
         {
             return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color}, Antal hjul: {this.NumberOfWheels}, Antal sittande passagerare: {this.NumberOfSeatedPassengers}";

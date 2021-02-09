@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-namespace Excercise5Garage.Vehicle
+﻿namespace Excercise5Garage.Vehicle
 {
     /// <summary>
     /// Abstract bassklass för olika fordon
@@ -31,6 +28,13 @@ namespace Excercise5Garage.Vehicle
             Color = strColor;
         }
 
+
+
+        /// <summary>
+        /// Överlagring av metoden Equals
+        /// </summary>
+        /// <param name="obj">Objekt som vi skall jämföra med</param>
+        /// <returns>true om objekten är lika. Annars returneras false</returns>
         public override bool Equals(object obj)
         {
             Vehicle vehicle = obj as Vehicle;
@@ -41,6 +45,11 @@ namespace Excercise5Garage.Vehicle
             return base.Equals(obj);
         }
 
+
+        /// <summary>
+        /// Överlagring av metoden GetHashCode
+        /// </summary>
+        /// <returns>Returnerar HashCode för registreringsnumret</returns>
         public override int GetHashCode()
         {
             return this.RegistrationNumber.GetHashCode();

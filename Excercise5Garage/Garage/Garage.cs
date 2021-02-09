@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace Excercise5Garage.Garage
 {
+    /// <summary>
+    /// Garage klass med funktionalitet för att lägga till och radera items av typen T. Skall vara av typen Vehicle
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Garage<T> : IGarage<T> where T : class, ICanBeParkedInGarage
     {
         /// <summary>
@@ -27,7 +31,7 @@ namespace Excercise5Garage.Garage
         public bool IsFull { get { return Capacity == Count;  } }
 
         /// <summary>
-        /// ÄR garaget tomt eller ej
+        /// Är garaget tomt eller ej
         /// </summary>
         public bool IsEmpty { get { return Count == 0;  } }
 
@@ -40,6 +44,7 @@ namespace Excercise5Garage.Garage
         /// Unik identifierare av garaget
         /// </summary>
         public Guid GarageID { get; private set; }
+
 
 
         /// <summary>
@@ -57,6 +62,7 @@ namespace Excercise5Garage.Garage
         }
 
 
+
         /// <summary>
         /// Returnerar vehicle vid index
         /// </summary>
@@ -72,6 +78,8 @@ namespace Excercise5Garage.Garage
                 return arrVehicles[iIndex];
             }
         }
+
+
 
         /// <summary>
         /// Metoden lägger till ett nytt vehicle
@@ -93,6 +101,8 @@ namespace Excercise5Garage.Garage
 
             return false;
         }
+
+
 
         /// <summary>
         /// Metoden raderar vehicle från garaget
@@ -118,6 +128,8 @@ namespace Excercise5Garage.Garage
 
             return false;
         }
+
+
 
         /// <summary>
         /// Metoden raderar vehicle vid index från garaget
@@ -147,6 +159,8 @@ namespace Excercise5Garage.Garage
             return bRemovedObject;
         }
 
+
+
         /// <summary>
         /// Metoden flyttar alla allokerade objekt till början av arrayen
         /// Ser till att det inte finns några tomma element, null, mitt i arrayen
@@ -173,6 +187,8 @@ namespace Excercise5Garage.Garage
             }
         }
 
+
+
         /// <summary>
         /// Metoden returnerar IEnumerator<T>
         /// </summary>
@@ -186,6 +202,8 @@ namespace Excercise5Garage.Garage
             }
         }
 
+
+
         /// <summary>
         /// Metoden returnerar IEnumerator
         /// </summary>
@@ -193,6 +211,17 @@ namespace Excercise5Garage.Garage
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+
+
+        /// <summary>
+        /// Överlagring av ToString()
+        /// </summary>
+        /// <returns>String med information om objektet</returns>
+        public override string ToString()
+        {
+            return $"Id: {this.GarageID}, Name: {this.GarageName}, Capacity: {this.Capacity}, Count: {this.Count}";
         }
     }
 }

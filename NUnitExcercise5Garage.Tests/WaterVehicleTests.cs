@@ -15,6 +15,10 @@ namespace NUnitExcercise5Garage.Tests
         }
 
 
+
+        /// <summary>
+        /// Metoden testar PowerBoat klassens konstruktor fungerar
+        /// </summary>
         [Test]
         [Description("Metoden testar PowerBoat klassens konstruktor fungerar")]
         public void PowerBoat_Constructor_Test()
@@ -42,6 +46,10 @@ namespace NUnitExcercise5Garage.Tests
         }
 
 
+
+        /// <summary>
+        /// Metoden testar SailingBoat klassens konstruktor fungerar
+        /// </summary>
         [Test]
         [Description("Metoden testar SailingBoat klassens konstruktor fungerar")]
         public void SailingBoat_Constructor_Test()

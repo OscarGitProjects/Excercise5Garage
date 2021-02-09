@@ -18,6 +18,10 @@ namespace NUnitExcercise5Garage.Tests
         }
 
 
+
+        /// <summary>
+        /// Metoden testar Airplane klassens konstruktor fungerar
+        /// </summary>
         [Test]
         [Description("Metoden testar Airplane klassens konstruktor fungerar")]
         public void PowerBoat_Constructor_Test()
