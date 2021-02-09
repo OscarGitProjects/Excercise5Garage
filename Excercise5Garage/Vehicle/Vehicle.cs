@@ -1,4 +1,7 @@
-﻿namespace Excercise5Garage.Vehicle
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Excercise5Garage.Vehicle
 {
     /// <summary>
     /// Abstract bassklass för olika fordon
@@ -26,6 +29,21 @@
         {
             RegistrationNumber = strRegistrationNumber;
             Color = strColor;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Vehicle vehicle = obj as Vehicle;
+
+            if (vehicle != null)
+                return (string.Compare(this.RegistrationNumber, vehicle.RegistrationNumber, true) == 0) ? true : false;
+            
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.RegistrationNumber.GetHashCode();
         }
     }
 }
