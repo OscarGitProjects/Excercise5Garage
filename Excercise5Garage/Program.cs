@@ -9,8 +9,8 @@ namespace Excercise5Garage
             var startup = new StartUp();
             startup.SetUp();
 
-            Console.WriteLine("Enter för att avsluta");
-            Console.ReadLine(); ;
+            //Console.WriteLine("Enter för att avsluta");
+            //Console.ReadLine(); ;
         }
     }
 }

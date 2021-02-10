@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Excercise5Garage.Garage
 {
@@ -217,12 +218,37 @@ namespace Excercise5Garage.Garage
 
 
         /// <summary>
+        /// Metoden skriv ut all information om garaget
+        /// Även information vilka fordon som är parkerade i garaget
+        /// </summary>
+        /// <returns>All information om garaget och de parkerade fordonen</returns>
+        public string PrintAllInformation()
+        {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.AppendLine($"Id: {this.GarageID}, Name: {this.GarageName}, Capacity: {this.Capacity}, Count: {this.Count}");
+
+            if (!IsEmpty)
+            {// Det finns parkerade fordon. Hämta info om dessa
+
+                foreach (var item in arrVehicles)
+                {
+                    if (item != null)
+                        strBuilder.AppendLine(item.ToString());
+                }
+            }
+
+            return strBuilder.ToString();
+        }
+
+
+
+        /// <summary>
         /// Överlagring av ToString()
         /// </summary>
         /// <returns>String med information om objektet</returns>
         public override string ToString()
         {
-            return $"Id: {this.GarageID}, Name: {this.GarageName}, Capacity: {this.Capacity}, Count: {this.Count}";
+            return $"{this.GarageName}, Capacity: {this.Capacity}, Count: {this.Count}";
         }
     }
 }

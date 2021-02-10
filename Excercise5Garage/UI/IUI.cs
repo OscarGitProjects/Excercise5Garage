@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Excercise5Garage.UI
+﻿namespace Excercise5Garage.UI
 {
     public interface IUI
     {
+        void Clear();
+        string ReadLine();
+        void Write(string strText);
+        void WriteLine(string strText);
     }
 }

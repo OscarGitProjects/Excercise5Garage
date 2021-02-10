@@ -20,5 +20,6 @@ namespace Excercise5Garage.Garage
         bool Add(T vehicle);
         bool Remove(T vehicle);
         bool Remove(int iIndex);
+        string PrintAllInformation();
     }
 }
