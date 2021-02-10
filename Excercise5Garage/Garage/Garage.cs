@@ -6,6 +6,7 @@ namespace Excercise5Garage.Garage
 {
     /// <summary>
     /// Garage klass med funktionalitet för att lägga till och radera items av typen T. Skall vara av typen Vehicle
+    /// Anledningen till att jag använder Where T : class är för att kunna sätta arrVehicles[iIndex] = null;  
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class Garage<T> : IGarage<T> where T : class, ICanBeParkedInGarage
@@ -52,13 +53,13 @@ namespace Excercise5Garage.Garage
         /// </summary>
         /// <param name="guidId">Unik identifierare av garaget</param>
         /// <param name="strGarageName">Namn på garaget</param>
-        /// <param name="iCapacity">Storleken på Array som skall innehålla T objekten</param>
+        /// <param name="iCapacity">Storleken på Array som skall innehålla T objekten. Är iCapacity negativ blir värdet 0</param>
         public Garage(Guid guidId, string strGarageName, int iCapacity)
         {
             GarageID = guidId;
             GarageName = strGarageName;
-            Capacity = iCapacity;
-            arrVehicles = new T[iCapacity];
+            Capacity = Math.Max(0, iCapacity);
+            arrVehicles = new T[Capacity];
         }
 
 

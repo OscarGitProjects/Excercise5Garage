@@ -66,6 +66,52 @@ namespace NUnitExcercise5Garage.Tests
 
 
         /// <summary>
+        /// Metoden testar Garage klassens konstruktor fungerar med negativ kapacitet
+        /// </summary>
+        [Test]
+        [Description("Metoden testar Garage klassens konstruktor fungerar med negativ kapacitet")]
+        public void Garage_Constructor_Capacity_Negativ_Test()
+        {
+            // Assert.Pass();
+
+            // Arrange
+            // expected      
+            Guid guid = Guid.NewGuid();
+
+            Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", -5);
+            string strExpectedToString = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {0}, Count: {0}";
+
+
+            // Act
+            // actual
+            string strActualGuid = garage.GarageID.ToString();
+            string strActualGarageName = garage.GarageName;
+            int iActualGarageCapacity = garage.Capacity;
+            int iActualNumberOfVehicles = garage.Count;
+            bool bActualIsEmpty = garage.IsEmpty;
+            bool bActualIsFull = garage.IsFull;
+            string strActualToString = garage.ToString();
+
+
+            // Assert
+            Assert.AreEqual(guid.ToString(), strActualGuid);
+
+            Assert.AreEqual("Garage 1", strActualGarageName);
+
+            Assert.AreEqual(0, iActualGarageCapacity);
+
+            Assert.AreEqual(0, iActualNumberOfVehicles);
+
+            Assert.IsTrue(bActualIsEmpty);
+
+            Assert.IsTrue(bActualIsFull);
+
+            Assert.AreEqual(strExpectedToString, strActualToString);
+        }
+
+
+
+        /// <summary>
         /// Metoden testar att det går lägga till Vehicle objekt till Garage klassen
         /// </summary>
         [Test]
