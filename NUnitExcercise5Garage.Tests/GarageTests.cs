@@ -294,9 +294,10 @@ namespace NUnitExcercise5Garage.Tests
 
         /// <summary>
         /// Metoden testar att det går lägga till flera Vehicle objekt än kapaciteten för för Garage klassen
+        /// Objekt över kapaciteten kommer inte att läggas till. Add metoden skall då returnera false
         /// </summary>
         [Test]
-        [Description("Metoden testar att det går lägga till flera Vehicle objekt än kapaciteten för Garage klassen")]
+        [Description("Metoden testar att det går lägga till flera Vehicle objekt än kapaciteten för Garage klassen. Objekt över kapaciteten kommer inte att läggas till. Add metoden skall då returnera false")]
         public void Garage_Add_Over_Capacity_Vehicle_Test()
         {
             // Assert.Pass();
@@ -647,9 +648,10 @@ namespace NUnitExcercise5Garage.Tests
         /// <summary>
         /// Metoden testar att undantaget ArgumentOutOfRangeException kastas om man att hämta Vehicle objekt med från Garage objektet med [] och index är minde än 0 eller större än capacity
         /// </summary>
-        [Test]
+        [TestCase(-1)]
+        [TestCase(5)]
         [Description("Metoden testar att undantaget ArgumentOutOfRangeException kastas om man att hämta Vehicle objekt med från Garage objektet med [] och index är minde än 0 eller större än capacity")]
-        public void Garage_Returnera_Vehicle_With_this_At_Wrong_Index_Test()
+        public void Garage_Returnera_Vehicle_With_this_At_Wrong_Index_Test(int iIndex)
         {
             // Assert.Pass();
 
@@ -669,17 +671,7 @@ namespace NUnitExcercise5Garage.Tests
 
             try
             {
-                var vec = garage[-1];
-                Assert.Fail();
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                Assert.Pass();
-            }
-
-            try
-            {
-                var vec1 = garage[5];
+                var vec = garage[iIndex];
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException)
