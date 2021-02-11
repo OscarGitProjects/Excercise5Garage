@@ -1,11 +1,7 @@
-﻿using Excercise5Garage.Garage;
-using Excercise5Garage.GarageHandler;
+﻿using Excercise5Garage.GarageHandler.Interface;
 using Excercise5Garage.Menu;
-using Excercise5Garage.UI;
-using Excercise5Garage.Vehicle;
-using Excercise5Garage.Vehicle.AirVehicle;
-using Excercise5Garage.Vehicle.WheeledVehicle;
-using System;
+using Excercise5Garage.Menu.Interface;
+using Excercise5Garage.UI.Interface;
 using System.Collections.Generic;
 
 namespace Excercise5Garage
@@ -62,73 +58,73 @@ namespace Excercise5Garage
 
 
         /// <summary>
-        /// TODO Remove sjit
+        /// TODO Remove shit
         /// </summary>
-        public void TestCodeRun()
-        {
-            Console.WriteLine("Run GarageProgram");
+        //public void TestCodeRun()
+        //{
+        //    Console.WriteLine("Run GarageProgram");
 
-            Guid guid = Guid.NewGuid();
+        //    Guid guid = Guid.NewGuid();
 
-            Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", 5);
+        //    Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", 5);
 
-            IVehicle plane = new Airplane("AAA 111", "Grön", 4);
+        //    IVehicle plane = new Airplane("AAA 111", "Grön", 4);
 
-            ICanBeParkedInGarage veh = new Car("BBB 222", "Röd", 4);
-            garage.Add(veh);
+        //    ICanBeParkedInGarage veh = new Car("BBB 222", "Röd", 4);
+        //    garage.Add(veh);
 
-            veh = new Car("CCC 333", "Röd", 4);
-            garage.Add(veh);
+        //    veh = new Car("CCC 333", "Röd", 4);
+        //    garage.Add(veh);
 
-            veh = new Car("DDD 444", "Röd", 4);
-            garage.Add(veh);
+        //    veh = new Car("DDD 444", "Röd", 4);
+        //    garage.Add(veh);
 
-            veh = new Car("DDD 444", "Röd", 4);
-            garage.Add(veh);
+        //    veh = new Car("DDD 444", "Röd", 4);
+        //    garage.Add(veh);
 
-            //veh = new Car("EEE 555", "Röd", 4);
-            //garage.Add(veh);
+        //    //veh = new Car("EEE 555", "Röd", 4);
+        //    //garage.Add(veh);
 
-            //veh = new Car("FFF 666", "Röd", 4);
-            //garage.Add(veh);
-
-
-            Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-
-            foreach (var item in garage)
-            {
-                Console.WriteLine(item);
-            }
-
-            ICanBeParkedInGarage veh1 = new Car("CCC 333", "Röd", 4);
-            garage.Add(veh1);
-
-            Console.WriteLine("***** *****" + System.Environment.NewLine);
-            Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-            foreach (var item in garage)
-            {
-                Console.WriteLine(item);
-            }
-
-            garage.Remove(veh);
-
-            string str = "abc";
-
-            Console.WriteLine("***** *****" + System.Environment.NewLine);
-            Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-            foreach (var item in garage)
-            {
-                Console.WriteLine(item);
-            }
+        //    //veh = new Car("FFF 666", "Röd", 4);
+        //    //garage.Add(veh);
 
 
-            garage.Remove(veh);
-            Console.WriteLine("***** *****" + System.Environment.NewLine);           
-            Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-            foreach (var item in garage)
-            {
-                Console.WriteLine(item);
-            }
-        }
+        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
+
+        //    foreach (var item in garage)
+        //    {
+        //        Console.WriteLine(item);
+        //    }
+
+        //    ICanBeParkedInGarage veh1 = new Car("CCC 333", "Röd", 4);
+        //    garage.Add(veh1);
+
+        //    Console.WriteLine("***** *****" + System.Environment.NewLine);
+        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
+        //    foreach (var item in garage)
+        //    {
+        //        Console.WriteLine(item);
+        //    }
+
+        //    garage.Remove(veh);
+
+        //    string str = "abc";
+
+        //    Console.WriteLine("***** *****" + System.Environment.NewLine);
+        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
+        //    foreach (var item in garage)
+        //    {
+        //        Console.WriteLine(item);
+        //    }
+
+
+        //    garage.Remove(veh);
+        //    Console.WriteLine("***** *****" + System.Environment.NewLine);           
+        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
+        //    foreach (var item in garage)
+        //    {
+        //        Console.WriteLine(item);
+        //    }
+        //}
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Excercise5Garage.UI
+﻿namespace Excercise5Garage.UI.Interface
 {
     public interface IUI
     {

@@ -1,4 +1,4 @@
-﻿namespace Excercise5Garage.Garage
+﻿namespace Excercise5Garage.Garage.Interface
 {
     /// <summary>
     /// Alla fordon som skall kunna parkeras i ett garage måste implementera detta interface

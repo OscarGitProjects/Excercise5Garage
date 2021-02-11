@@ -1,4 +1,6 @@
-﻿namespace Excercise5Garage.Vehicle
+﻿using Excercise5Garage.Vehicle.Interface;
+
+namespace Excercise5Garage.Vehicle
 {
     /// <summary>
     /// Abstract bassklass för olika fordon

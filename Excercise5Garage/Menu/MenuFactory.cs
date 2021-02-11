@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Excercise5Garage.Menu.Interface;
+using System;
 using System.Text;
 
 namespace Excercise5Garage.Menu
@@ -16,6 +17,8 @@ namespace Excercise5Garage.Menu
         NA = 0,
         MAIN_MENU = 1,
         ADD_VEHICLE = 2,
+        CREATE_GARAGE = 3,
+        SELECT_GARAGE = 4
     }
 
     public class MenuFactory : IMenuFactory
@@ -35,13 +38,18 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("3. Simulering av skapa garage, skapa och parkera fordon i garaget");
                     strMenu = strBuilder.ToString();
                     break;
-                case MainMenuType.ADD_VEHICLE:
-                    strBuilder.AppendLine("");
-
-                    // TODO Meny för ADD_VEHICLE
-
+                case MainMenuType.CREATE_GARAGE:
+                    strBuilder.AppendLine("Skapa ett nytt garage");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange namn på garaget");
                     strMenu = strBuilder.ToString();
                     break;
+                case MainMenuType.SELECT_GARAGE:
+                    strBuilder.AppendLine("Välj siffra för önskat garage?");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strMenu = strBuilder.ToString();
+                    break;
+
             }
 
             return strMenu;

@@ -1,9 +1,11 @@
 ﻿using Excercise5Garage.Garage;
-using Excercise5Garage.UI;
+using Excercise5Garage.Garage.Interface;
+using Excercise5Garage.GarageHandler.Interface;
+using Excercise5Garage.Menu.Interface;
+using Excercise5Garage.UI.Interface;
+using Excercise5Garage.Vehicle;
 using System;
 using System.Collections.Generic;
-using Excercise5Garage.GarageHandler;
-using Excercise5Garage.Vehicle;
 
 namespace Excercise5Garage.Menu
 {
@@ -42,7 +44,7 @@ namespace Excercise5Garage.Menu
         /// <summary>
         /// Metoden visar huvudmenyn
         /// </summary>
-        /// <returns></returns>
+        /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
         public MenuInputResult Show()
         {
             MenuInputResult result = MenuInputResult.NA;
@@ -69,6 +71,7 @@ namespace Excercise5Garage.Menu
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
         private MenuInputResult HandleInput()
         {
+            int iSelectedGarage = 0;
             MenuInputResult result = MenuInputResult.NA;
             string strInput = this.Ui.ReadLine();
 
@@ -76,7 +79,6 @@ namespace Excercise5Garage.Menu
             {
                 strInput = strInput.Trim();
                 
-
                 if (strInput.StartsWith('0'))
                 {// Användaren har valt att avsluta programmet
                     result = MenuInputResult.EXIT;
@@ -84,13 +86,22 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('1'))
                 {// Skapa garage
 
-                    // TODO Implementera Skapa garage
-
+                    CreateGarageMenu createGarageMenu = new CreateGarageMenu(MenuFactory, Ui, GarageHandlers);
+                    result = createGarageMenu.Show();
                 }
                 else if (strInput.StartsWith('2'))
                 {// Gå till ett Garage
 
-                    // TODO Implementera Gå till garage
+                    // Låt användaren välja gararge
+                    SelectGarageMenu selectGarageMenu = new SelectGarageMenu(MenuFactory, Ui, GarageHandlers);
+                    iSelectedGarage = selectGarageMenu.Show();
+
+                    // Låt användaren interagera med garaget
+                    if(iSelectedGarage > 0)
+                    {// Användaren har valt ett garage
+                        // TODO ANVÄNDAREN HAR VALT ETT GARAGE. GÅ DIT
+                    }
+
 
                 }
                 else if (strInput.StartsWith('3'))
@@ -127,7 +138,7 @@ namespace Excercise5Garage.Menu
             Guid guid = Guid.NewGuid();
             
             // Skapa ett garage
-            var garage = garageFactory.CreateGarage(guid, "Första garaget", 10);
+            var garage = garageFactory.CreateGarage(guid, "Första garaget", 5);
 
             // Skapa en GarageHandler som hantera allt om ett garage
             this.GarageHandlers.Add(new GarageHandler.GarageHandler(garage, this.Ui));
@@ -151,14 +162,28 @@ namespace Excercise5Garage.Menu
             ICanBeParkedInGarage vehicle2 = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle2);
 
+            ICanBeParkedInGarage vehicle3 = vehicleFactory.CreateRandomVehicleForGarage();
+            garageHandler.ParkVehicle(vehicle3);
+
+            ICanBeParkedInGarage vehicle4 = vehicleFactory.CreateRandomVehicleForGarage();
+            garageHandler.ParkVehicle(vehicle4);
+
+            // Garaget är fullt, men vi försöker parkera ett fordon till
+            ICanBeParkedInGarage vehicle5 = vehicleFactory.CreateRandomVehicleForGarage();
+            garageHandler.ParkVehicle(vehicle5);
 
             garageHandler.PrintInformation();
 
 
-            // TODO Simulera vad som händer när garaget är fullt
+            // Ett fordon lämnar garaget
+            garageHandler.RemoveVehicle(vehicle1);
 
+            garageHandler.PrintInformation();
 
-            // TODO Simulera när fordon lämnar garaget
+            // Ett fordon som inte finns i garaget lämnar
+            garageHandler.RemoveVehicle(vehicle5);
+
+            garageHandler.PrintInformation();
 
             Ui.ReadLine();
         }

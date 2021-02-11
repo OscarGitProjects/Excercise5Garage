@@ -1,4 +1,4 @@
-﻿using Excercise5Garage.Garage;
+﻿using Excercise5Garage.Garage.Interface;
 
 namespace Excercise5Garage.Vehicle.WheeledVehicle
 {

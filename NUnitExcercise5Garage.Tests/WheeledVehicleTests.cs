@@ -1,4 +1,5 @@
 using Excercise5Garage.Vehicle;
+using Excercise5Garage.Vehicle.Interface;
 using Excercise5Garage.Vehicle.WheeledVehicle;
 using NUnit.Framework;
 

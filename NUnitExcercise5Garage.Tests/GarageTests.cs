@@ -1,4 +1,5 @@
 ﻿using Excercise5Garage.Garage;
+using Excercise5Garage.Garage.Interface;
 using Excercise5Garage.Vehicle;
 using Excercise5Garage.Vehicle.WheeledVehicle;
 using NUnit.Framework;
@@ -33,7 +34,7 @@ namespace NUnitExcercise5Garage.Tests
             Guid guid = Guid.NewGuid();
 
             Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", 5);
-            string strExpectedToString = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {0}";
+            string strExpectedToString = $"Garage 1, Capacity: {5}, Count: {0}";
 
 
             // Act
@@ -79,7 +80,7 @@ namespace NUnitExcercise5Garage.Tests
             Guid guid = Guid.NewGuid();
 
             Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", -5);
-            string strExpectedToString = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {0}, Count: {0}";
+            string strExpectedToString = $"Garage 1, Capacity: {0}, Count: {0}";
 
 
             // Act
@@ -128,7 +129,7 @@ namespace NUnitExcercise5Garage.Tests
 
             ICanBeParkedInGarage vehicle = new Car("AAA 111", "Röd", 4);
 
-            string strExpectedToString = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {1}";
+            string strExpectedToString = $"Garage 1, Capacity: {5}, Count: {1}";
 
 
             // Act
@@ -173,7 +174,7 @@ namespace NUnitExcercise5Garage.Tests
 
             ICanBeParkedInGarage vehicle1 = new Bus("BBB 222", "Grön", 50);
 
-            string strExpectedToString = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {2}";
+            string strExpectedToString = $"Garage 1, Capacity: {5}, Count: {2}";
 
 
             // Act
@@ -257,7 +258,7 @@ namespace NUnitExcercise5Garage.Tests
             ICanBeParkedInGarage vehicle5 = new Car("EEE 555", "Grön", 5);
 
 
-            string strExpectedToString = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {5}";
+            string strExpectedToString = $"Garage 1, Capacity: {5}, Count: {5}";
 
 
             // Act
@@ -320,7 +321,7 @@ namespace NUnitExcercise5Garage.Tests
 
             ICanBeParkedInGarage vehicle6 = new Bus("FFF 666", "Grön", 50);
 
-            string strExpectedToString = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {5}";
+            string strExpectedToString = $"Garage 1, Capacity: {5}, Count: {5}";
 
 
             // Act
@@ -375,8 +376,8 @@ namespace NUnitExcercise5Garage.Tests
             ICanBeParkedInGarage vehicle1 = new Car("AAA 111", "Röd", 4);
             //ICanBeParkedInGarage vehicle2 = new Car("BBB 222");
 
-            string strExpectedToStringBeforeRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {1}";
-            string strExpectedToStringAfterRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {0}";
+            string strExpectedToStringBeforeRemove = $"Garage 1, Capacity: {5}, Count: {1}";
+            string strExpectedToStringAfterRemove = $"Garage 1, Capacity: {5}, Count: {0}";
 
 
             // Act
@@ -436,8 +437,8 @@ namespace NUnitExcercise5Garage.Tests
             ICanBeParkedInGarage vehicle1 = new Car("AAA 111", "Röd", 4);
             ICanBeParkedInGarage vehicle2 = new Car("BBB 222");
 
-            string strExpectedToStringBeforeRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {2}";
-            string strExpectedToStringAfterRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {2}";
+            string strExpectedToStringBeforeRemove = $"Garage 1, Capacity: {5}, Count: {2}";
+            string strExpectedToStringAfterRemove = $"Garage 1, Capacity: {5}, Count: {2}";
 
 
             // Act
@@ -528,8 +529,8 @@ namespace NUnitExcercise5Garage.Tests
             ICanBeParkedInGarage vehicle2 = new Car("BBB 222", "Röd", 4);
 
 
-            string strExpectedToStringBeforeRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {2}";
-            string strExpectedToStringAfterRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {1}";
+            string strExpectedToStringBeforeRemove = $"Garage 1, Capacity: {5}, Count: {2}";
+            string strExpectedToStringAfterRemove = $"Garage 1, Capacity: {5}, Count: {1}";
 
 
             // Act
@@ -583,8 +584,8 @@ namespace NUnitExcercise5Garage.Tests
             ICanBeParkedInGarage vehicle3 = new Car("CCC 333", "Röd", 4);
 
 
-            string strExpectedToStringBeforeRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {2}";
-            string strExpectedToStringAfterRemove = $"Id: {guid.ToString()}, Name: Garage 1, Capacity: {5}, Count: {2}";
+            string strExpectedToStringBeforeRemove = $"Garage 1, Capacity: {5}, Count: {2}";
+            string strExpectedToStringAfterRemove = $"Garage 1, Capacity: {5}, Count: {2}";
 
 
             // Act

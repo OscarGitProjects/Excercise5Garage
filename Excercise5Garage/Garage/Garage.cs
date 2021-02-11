@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Excercise5Garage.Garage.Interface;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -64,7 +65,6 @@ namespace Excercise5Garage.Garage
         }
 
 
-
         /// <summary>
         /// Returnerar vehicle vid index
         /// </summary>
@@ -80,7 +80,6 @@ namespace Excercise5Garage.Garage
                 return arrVehicles[iIndex];
             }
         }
-
 
 
         /// <summary>
@@ -105,7 +104,6 @@ namespace Excercise5Garage.Garage
         }
 
 
-
         /// <summary>
         /// Metoden raderar vehicle från garaget
         /// </summary>
@@ -117,20 +115,16 @@ namespace Excercise5Garage.Garage
             if (vehicle == null)
                 throw new ArgumentNullException("ArgumentNullException. Garage.Remove(T vehicle). Referensen till vehicle är null");
 
+            bool bRemovedObject = false;
             for(int i = 0; i < arrVehicles.Length; i++)
             {
                 if(arrVehicles[i] != null)
-                {
                     if (vehicle.Equals(arrVehicles[i]))
-                    {
-                        return Remove(i);
-                    }
-                }
+                        bRemovedObject = Remove(i);
             }
 
-            return false;
+            return bRemovedObject;
         }
-
 
 
         /// <summary>
@@ -162,7 +156,6 @@ namespace Excercise5Garage.Garage
         }
 
 
-
         /// <summary>
         /// Metoden flyttar alla allokerade objekt till början av arrayen
         /// Ser till att det inte finns några tomma element, null, mitt i arrayen
@@ -190,7 +183,6 @@ namespace Excercise5Garage.Garage
         }
 
 
-
         /// <summary>
         /// Metoden returnerar IEnumerator<T>
         /// </summary>
@@ -205,7 +197,6 @@ namespace Excercise5Garage.Garage
         }
 
 
-
         /// <summary>
         /// Metoden returnerar IEnumerator
         /// </summary>
@@ -214,7 +205,6 @@ namespace Excercise5Garage.Garage
         {
             return this.GetEnumerator();
         }
-
 
 
         /// <summary>
@@ -239,7 +229,6 @@ namespace Excercise5Garage.Garage
 
             return strBuilder.ToString();
         }
-
 
 
         /// <summary>

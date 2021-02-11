@@ -1,4 +1,4 @@
-﻿namespace Excercise5Garage.Menu
+﻿namespace Excercise5Garage.Menu.Interface
 {
     public interface IMenuFactory
     {

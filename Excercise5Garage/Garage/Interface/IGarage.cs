@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Excercise5Garage.Garage
+namespace Excercise5Garage.Garage.Interface
 {
     /// <summary>
     /// Interface för Garage

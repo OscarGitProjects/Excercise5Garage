@@ -1,8 +1,9 @@
 ﻿using Excercise5Garage.Menu;
+using Excercise5Garage.Menu.Interface;
 using Excercise5Garage.UI;
+using Excercise5Garage.UI.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Runtime.CompilerServices;
 
 // [assembly:InternalsVisibleTo("NUnitExcercise5Garage.Tests")] Om man har internal klasser som man vill testa
 namespace Excercise5Garage

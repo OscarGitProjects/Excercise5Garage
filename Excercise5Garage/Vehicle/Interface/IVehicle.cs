@@ -1,4 +1,4 @@
-﻿namespace Excercise5Garage.Vehicle
+﻿namespace Excercise5Garage.Vehicle.Interface
 {
     /// <summary>
     /// Interface för olika fordon
