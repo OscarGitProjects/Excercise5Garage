@@ -9,7 +9,9 @@ namespace Excercise5Garage.Menu
         NA = 0,
         WRONG_INPUT = 1,
         EXIT = 2,
-        TO_MAIN_MENU = 3
+        TO_MAIN_MENU = 3,
+        TO_GARAGE_MENU = 4
+
     }
 
     public enum MenuType

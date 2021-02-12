@@ -107,8 +107,6 @@ namespace Excercise5Garage.Menu
         {
             MenuInputResult result = MenuInputResult.NA;
 
-            // TODO Implementera GarageMenu HandleInput
-
 
             // Inläsning av kommando från ui
             string strInput = this.Ui.ReadLine();
@@ -121,11 +119,15 @@ namespace Excercise5Garage.Menu
                     result = MenuInputResult.TO_MAIN_MENU;
                 }
                 else if (strInput.StartsWith('1'))
-                {// Parkera fordon                    
+                {// Parkera fordon 
+                    
+                    // TODO PARKERA ETT FORDON
                 }
                 else if (strInput.StartsWith('2'))
                 {// Lämna garaget med ett fordon
 
+                    LeaveTheGarageMenu leaveTheGarageMenu = new LeaveTheGarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers, this.SelectedGarageHandlerGuid, this.RegistrationNumberRegister);
+                    result = leaveTheGarageMenu.Show();
                 }
                 else if (strInput.StartsWith('3'))
                 {// Skapa ett antal fordon
@@ -145,6 +147,7 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('6'))
                 {// Sök efter fordon
 
+                    // TODO SÖKNING EFTER FORDON
                 }
             }
             else
@@ -240,6 +243,7 @@ namespace Excercise5Garage.Menu
                     vehicle = vehicleFactory.CreateRandomVehicleForGarage();
                     if(garageHandler.ParkVehicle(vehicle))
                     {// Det gick parkera fordonet. Registrerar att registreringsnumret är upptaget
+
                         tmpVehicle = vehicle as IVehicle;
                         if (tmpVehicle != null)
                             this.RegistrationNumberRegister.AddRegistrationNumber(tmpVehicle.RegistrationNumber);

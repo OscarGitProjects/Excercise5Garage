@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Excercise5Garage.Extensions;
 using Excercise5Garage.UI.Interface;
+using System.Linq;
 
 namespace Excercise5Garage.RegistrationNumber
 {
@@ -46,23 +47,26 @@ namespace Excercise5Garage.RegistrationNumber
 
 
         /// <summary>
-        /// Metoden kotrollera så att inte registreringsnumret redan finns
+        /// Metoden kotrollera så att inte registreringsnumret finns
+        /// Metoden gör även ToUpper på registreringsnumret
         /// </summary>
         /// <param name="strRegistrationNumber">Sökt registreringsnummer</param>
         /// <returns>true om registreringsnumret redan finns. Annars returneras false</returns>
         public bool CheckIfRegistrationnNumberExcist(string strRegistrationNumber)
         {
             bool bRegisterNumberExcist = false;
-
             string strTmpRegistrationNumber = strRegistrationNumber.ToUpper();
 
-            bRegisterNumberExcist = this.RegistrationNumbers.Contains(strTmpRegistrationNumber);
+            var strRegNummer = this.RegistrationNumbers.FirstOrDefault(r => r.Equals(strTmpRegistrationNumber));
+            if(!String.IsNullOrEmpty(strRegNummer))
+                bRegisterNumberExcist = true;
             return bRegisterNumberExcist;
         }
 
 
         /// <summary>
         /// Metoden sparar registreringsnummer som inte finns sparade
+        /// Metoden sparar regsitreringsnummer med stora bokstäver
         /// </summary>
         /// <param name="strRegistrationNumber">Registreringsnummer som vi vill spara</param>
         /// <returns>true om det gick spara registreringsnumret. Annars returneras false</returns>
@@ -89,7 +93,7 @@ namespace Excercise5Garage.RegistrationNumber
         {
             bool bRemovedRegistrationNumber = false;
 
-            if (CheckIfRegistrationnNumberExcist(strRegistrationNumber) == false)
+            if (CheckIfRegistrationnNumberExcist(strRegistrationNumber) == true)
                 bRemovedRegistrationNumber = this.RegistrationNumbers.Remove(strRegistrationNumber.ToUpper());
 
             return bRemovedRegistrationNumber;
@@ -102,6 +106,7 @@ namespace Excercise5Garage.RegistrationNumber
         /// <returns>Slumpmässigt genererat registreringsnummer</returns>
         public string CreateRandomRegistrationNumber()
         {
+            char ch;
             bool bRun = true;
             string strRegistrationNumber = String.Empty;
             Random rand = new Random();
@@ -118,7 +123,11 @@ namespace Excercise5Garage.RegistrationNumber
                 string strTextPart = String.Empty;
 
                 for (int i = 0; i < 3; i++)
-                    strTextPart += strChars.RandomChar();
+                {
+                    ch = strChars.RandomChar();
+                    if (ch != Char.MinValue)
+                        strTextPart += ch;
+                }
 
                 strRegistrationNumber = strTextPart + strNumberPart;
 

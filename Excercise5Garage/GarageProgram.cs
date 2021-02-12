@@ -65,9 +65,7 @@ namespace Excercise5Garage
         }
 
 
-        /// <summary>
-        /// TODO Remove shit
-        /// </summary>
+
         //public void TestCodeRun()
         //{
         //    Console.WriteLine("Run GarageProgram");

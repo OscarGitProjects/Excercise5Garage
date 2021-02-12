@@ -187,7 +187,7 @@ namespace Excercise5Garage.Garage
         /// <summary>
         /// Metoden returnerar IEnumerator<T>
         /// </summary>
-        /// <returns>Returnerra en IEnumerator<T></returns>
+        /// <returns>Returnera en IEnumerator<T></returns>
         public IEnumerator<T> GetEnumerator()
         {
             foreach(var item in arrVehicles)
