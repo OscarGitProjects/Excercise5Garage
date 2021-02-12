@@ -238,7 +238,7 @@ namespace Excercise5Garage.Garage
         /// <returns>String med information om objektet</returns>
         public override string ToString()
         {
-            return $"{this.GarageName}, Capacity: {this.Capacity}, Count: {this.Count}";
+            return $"{this.GarageName}, Kapacitet: {this.Capacity}, Antal parkerade fordon: {this.Count}";
         }
 
 
@@ -267,6 +267,16 @@ namespace Excercise5Garage.Garage
             }
 
             return iNumberOfVehicleWithRegistrationNumber;
+        }
+
+
+        /// <summary>
+        /// Metoden returnera information om garagets unika id, namn och om garaget är fullt eller ej, kapacitet och antal vehicle som är parkerade
+        /// </summary>
+        /// <returns>Returnera information om garagets unika id, namn och om garaget är fullt eller ej, kapacitet och antal vehicle som är parkerade</returns>
+        public (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo()
+        {
+            return (strId: this.GarageID.ToString(), strName: this.GarageName, bIsFull: this.IsFull, iCapacity: this.Capacity, iNumberOfParkedVehicle: this.Count);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Excercise5Garage.GarageHandler.Interface;
 using Excercise5Garage.Menu;
 using Excercise5Garage.Menu.Interface;
+using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI.Interface;
 using System.Collections.Generic;
 
@@ -26,6 +27,11 @@ namespace Excercise5Garage
         /// </summary>
         public List<IGarageHandler>lsGarageHandlers = new List<IGarageHandler>();
 
+        /// <summary>
+        /// Register där använda registreringsnummer finns lagrade
+        /// </summary>
+        public IRegistrationNumberRegister RegistrationNumberRegister { get; }
+
 
 
         /// <summary>
@@ -33,10 +39,12 @@ namespace Excercise5Garage
         /// </summary>
         /// <param name="menuFactory">Referens till Factory där vi skapar olika menyer</param>
         /// <param name="ui">Referens till ui</param>
-        public GarageProgram(IMenuFactory menuFactory, IUI ui)
+        /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        public GarageProgram(IMenuFactory menuFactory, IUI ui, IRegistrationNumberRegister registrationNumberRegister)
         {
             MenuFactory = menuFactory;
             Ui = ui;
+            RegistrationNumberRegister = registrationNumberRegister;
         }
         
 
@@ -47,7 +55,7 @@ namespace Excercise5Garage
         public void Run()
         {
             MenuInputResult result = MenuInputResult.NA;
-            MainMenu mainMenu = new MainMenu(MenuFactory, Ui, lsGarageHandlers);
+            MainMenu mainMenu = new MainMenu(this.MenuFactory, this.Ui, this.lsGarageHandlers, this.RegistrationNumberRegister);
 
             do
             {

@@ -2,6 +2,7 @@
 using Excercise5Garage.Garage.Interface;
 using Excercise5Garage.GarageHandler.Interface;
 using Excercise5Garage.Menu.Interface;
+using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI.Interface;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace Excercise5Garage.Menu
         /// </summary>
         public IList<IGarageHandler> GarageHandlers { get; private set; }
 
+        /// <summary>
+        /// Register där använda registreringsnummer finns lagrade
+        /// </summary>
+        public IRegistrationNumberRegister RegistrationNumberRegister { get; }
+
 
         /// <summary>
         /// Konstruktor
@@ -36,7 +42,8 @@ namespace Excercise5Garage.Menu
         /// <param name="menuFactory">Referense till en factory där man kan hämta text till olika menyer</param>
         /// <param name="ui">Referense till objekt för att skriva och hämta indata</param>
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
-        public CreateGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
+        /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        public CreateGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, IRegistrationNumberRegister registrationNumberRegister)
         {
             MenuFactory = menuFactory;
             Ui = ui;
@@ -46,6 +53,7 @@ namespace Excercise5Garage.Menu
                 lsGarageHandlers = new List<IGarageHandler>();
 
             GarageHandlers = lsGarageHandlers;
+            RegistrationNumberRegister = registrationNumberRegister;
         }
 
 
@@ -128,7 +136,7 @@ namespace Excercise5Garage.Menu
                                 garage = new Garage<ICanBeParkedInGarage>(Guid.NewGuid(), strGarageName, iCapacity);
 
                                 // Skapa en handler som skall hantera det nya garaget
-                                IGarageHandler garageHandler = new Excercise5Garage.GarageHandler.GarageHandler(garage, Ui);
+                                IGarageHandler garageHandler = new Excercise5Garage.GarageHandler.GarageHandler(garage, this.Ui, this.RegistrationNumberRegister);
 
                                 // Lägg till handlern till en lista med olika garagehandlers
                                 this.GarageHandlers.Add(garageHandler);

@@ -8,6 +8,21 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
     public class Car : WheeledVehicle, ICanBeParkedInGarage
     {
         /// <summary>
+        /// Default värde på antal hjul
+        /// </summary>
+        public static int DefaultNumberOfWheels = 4;
+
+        /// <summary>
+        /// Default värde på antal passagerare
+        /// </summary>
+        public static int DefaultNumberOfPassengers = 50;
+
+        /// <summary>
+        /// Default färg
+        /// </summary>
+        public static string DefaultColor = "Svart";
+
+        /// <summary>
         /// Antalet sittande passagerar som fordonet kan ta
         /// </summary>
         public int NumberOfSeatedPassengers { get; set; }

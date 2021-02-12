@@ -1,5 +1,7 @@
 ﻿using Excercise5Garage.Menu;
 using Excercise5Garage.Menu.Interface;
+using Excercise5Garage.RegistrationNumber;
+using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI;
 using Excercise5Garage.UI.Interface;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +27,7 @@ namespace Excercise5Garage
             services.AddSingleton<GarageProgram>();
             services.AddSingleton<IMenuFactory, MenuFactory>();
             services.AddSingleton<IUI, ConsoleUI>();
+            services.AddSingleton<IRegistrationNumberRegister, RegistrationNumberRegister>();
         }
     }
 }

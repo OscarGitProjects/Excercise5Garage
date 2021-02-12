@@ -1,5 +1,6 @@
 ﻿using Excercise5Garage.Garage.Interface;
 using Excercise5Garage.GarageHandler.Interface;
+using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI.Interface;
 using Excercise5Garage.Vehicle.Interface;
 using System;
@@ -19,6 +20,11 @@ namespace Excercise5Garage.GarageHandler
         public IUI Ui { get; }
 
         /// <summary>
+        /// Register där använda registreringsnummer finns lagrade
+        /// </summary>
+        public IRegistrationNumberRegister RegistrationNumberRegister { get; }
+
+        /// <summary>
         /// Unik identifierare av garageHandler och Garage. Det är samma Guid som i Garage
         /// </summary>
         public Guid GuidId { get; }
@@ -28,23 +34,13 @@ namespace Excercise5Garage.GarageHandler
         /// <summary>
         /// Konstruktor
         /// </summary>
-        /// <param name="ui">Referens till ui</param>
-        /// <param name="guid">Unikt id för garageHandler. Skall vara samma som i garage</param>
-        public GarageHandler(IUI ui, Guid guid)
-        {
-            Ui = ui;
-            GuidId = guid;
-        }
-
-
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
         /// <param name="garage">Referens till garage</param>
         /// <param name="ui">Referens till ui</param>
-        public GarageHandler(IGarage<ICanBeParkedInGarage> garage, IUI ui)
+        /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        public GarageHandler(IGarage<ICanBeParkedInGarage> garage, IUI ui, IRegistrationNumberRegister registrationNumberRegister)
         {
             Ui = ui;
+            RegistrationNumberRegister = registrationNumberRegister;
             Garage = garage;
             GuidId = garage.GarageID;
         }
@@ -66,10 +62,13 @@ namespace Excercise5Garage.GarageHandler
                 throw new NullReferenceException("NullReferenceException. GarageHandler.ParkVehicle(ICanBeParkedInGarage vehicle). Garage referensen är null");
 
 
+            var tmpVehicle = vehicle as IVehicle;
+            string strRegistrationNumber = tmpVehicle?.RegistrationNumber;
             bool bParkedVehicle = false;
+
             if (Garage.IsFull)
             {
-                Ui.WriteLine($"{Garage.GarageName} är fullt");
+                Ui.WriteLine($"Det går inte parkera fordon {vehicle.GetType().Name} med registreringsnummer {strRegistrationNumber}. {Garage.GarageName} är fullt");
             }
             else
             {// Vi kan försöka att parkera fordonet
@@ -80,8 +79,6 @@ namespace Excercise5Garage.GarageHandler
             if (bParkedVehicle)
             {// Vi har parkerat ett fordon. Skriv ut info om detta
 
-                var tmpVehicle = vehicle as IVehicle;
-                string strRegistrationNumber = tmpVehicle?.RegistrationNumber;
                 Ui.WriteLine($"Parkerar fordon {vehicle.GetType().Name} med registreringsnummer {strRegistrationNumber}");
             }
 
@@ -125,10 +122,26 @@ namespace Excercise5Garage.GarageHandler
         /// <summary>
         /// Metoden skriver ut all information om garaget och de parkerade fordonen
         /// </summary>
-        public void PrintInformation()
+        public void PrintAllInformationAboutGarage()
         {
             if(Garage != null)
                 Ui.WriteLine(Garage.PrintAllInformation());
+        }
+
+
+        /// <summary>
+        /// Metoden skriver ut information om garagets namn, antal bilar som är parkerade och om garaget är fullt eller ej
+        /// </summary>
+        public void PrintInformationAboutGarage()
+        {
+            if(Garage != null)
+            {
+                var (strId, strName, bIsFull, iCapacity, iNumberOfParkedVehicle) = Garage.GetGarageInfo();
+
+                // Skapa en lämplig utskrift för menyn
+                string strIsFull = bIsFull ? "Nej" : "Ja";
+                this.Ui.WriteLine($"{strName}. Har lediga platser {strIsFull}. Antal bilar i garaget {iNumberOfParkedVehicle}");
+            }
         }
 
 
@@ -156,7 +169,8 @@ namespace Excercise5Garage.GarageHandler
             if (Garage == null)
                 throw new NullReferenceException("NullReferenceException. GarageHandler.GetGarageInfo(ICanBeParkedInGarage vehicle). Garage referensen är null");
 
-            return (strId: Garage.GarageID.ToString(), strName: Garage.GarageName, bIsFull: Garage.IsFull, iCapacity: Garage.Capacity, iNumberOfParkedVehicle: Garage.Count);
+            //(strId: Garage.GarageID.ToString(), strName: Garage.GarageName, bIsFull: Garage.IsFull, iCapacity: Garage.Capacity, iNumberOfParkedVehicle: Garage.Count);
+            return Garage.GetGarageInfo();
         }
 
 

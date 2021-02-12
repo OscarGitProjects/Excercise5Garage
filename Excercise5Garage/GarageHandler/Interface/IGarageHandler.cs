@@ -11,7 +11,8 @@ namespace Excercise5Garage.GarageHandler.Interface
         Guid GuidId { get; }
         bool ParkVehicle(ICanBeParkedInGarage vehicle);
         bool RemoveVehicle(ICanBeParkedInGarage vehicle);
-        void PrintInformation();      
+        void PrintAllInformationAboutGarage();
+        void PrintInformationAboutGarage();
         (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo();
         int CountVehicleWithRegistrationNumber(string strRegistrationNumber);
     }

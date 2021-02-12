@@ -8,10 +8,24 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
     public class Bus : WheeledVehicle, ICanBeParkedInGarage
     {
         /// <summary>
+        /// Default värde på antal hjul
+        /// </summary>
+        public static int DefaultNumberOfWheels = 4;
+
+        /// <summary>
+        /// Default värde på antal passagerare
+        /// </summary>
+        public static int DefaultNumberOfPassengers = 50;
+
+        /// <summary>
+        /// Default färg
+        /// </summary>
+        public static string DefaultColor = "Svart";
+
+        /// <summary>
         /// Antalet sittande passagerar som fordonet kan ta
         /// </summary>
         public int NumberOfSeatedPassengers { get; set; }
-
 
         /// <summary>
         /// Konstruktor
@@ -20,7 +34,7 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
         /// <param name="strColor">Bussens färg. Default värde är Svart</param>
         /// <param name="iNumberOfWheels">Antal hjul på bussen. Default värde är 4</param>
         /// <param name="iNumberOfSeatedPassengers">Antal sittande passagerar som fordonet kan ta. Default är 0</param>
-        public Bus(string strRegistrationNumber, string strColor = "Svart", int iNumberOfWheels = 4, int iNumberOfSeatedPassengers = 0) : base(strRegistrationNumber, strColor, iNumberOfWheels)
+        public Bus(string strRegistrationNumber, string strColor = "Svart", int iNumberOfWheels = 4, int iNumberOfSeatedPassengers = 50) : base(strRegistrationNumber, strColor, iNumberOfWheels)
         {
             NumberOfSeatedPassengers = iNumberOfSeatedPassengers;
         }

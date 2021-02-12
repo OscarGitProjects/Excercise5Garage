@@ -22,5 +22,6 @@ namespace Excercise5Garage.Garage.Interface
         bool Remove(int iIndex);
         string PrintAllInformation();
         int CountVehicleWithRegistrationNumber(string strRegistrationNumber);
+        (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo();
     }
 }

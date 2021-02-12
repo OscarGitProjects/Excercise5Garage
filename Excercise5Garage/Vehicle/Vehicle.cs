@@ -31,7 +31,6 @@ namespace Excercise5Garage.Vehicle
         }
 
 
-
         /// <summary>
         /// Överlagring av metoden Equals
         /// </summary>

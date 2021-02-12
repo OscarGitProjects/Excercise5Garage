@@ -2,8 +2,10 @@
 using Excercise5Garage.Garage.Interface;
 using Excercise5Garage.GarageHandler.Interface;
 using Excercise5Garage.Menu.Interface;
+using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI.Interface;
 using Excercise5Garage.Vehicle;
+using Excercise5Garage.Vehicle.Interface;
 using System;
 using System.Collections.Generic;
 
@@ -26,6 +28,11 @@ namespace Excercise5Garage.Menu
         /// </summary>
         public IList<IGarageHandler> GarageHandlers { get; }
 
+        /// <summary>
+        /// Register där använda registreringsnummer finns lagrade
+        /// </summary>
+        public IRegistrationNumberRegister RegistrationNumberRegister { get; }
+
 
         /// <summary>
         /// Konstruktor
@@ -33,11 +40,13 @@ namespace Excercise5Garage.Menu
         /// <param name="menuFactory">Referens till factory för att skapa menyer</param>
         /// <param name="ui">Referens till ui</param>
         /// <param name="lsGarageHandlers">Referense till lista med handlers för olika garage</param>
-        public MainMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
+        /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        public MainMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, IRegistrationNumberRegister registrationNumberRegister)
         {
             MenuFactory = menuFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;
+            RegistrationNumberRegister = registrationNumberRegister;
         }
 
 
@@ -86,21 +95,21 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('1'))
                 {// Skapa garage
 
-                    CreateGarageMenu createGarageMenu = new CreateGarageMenu(MenuFactory, Ui, GarageHandlers);
+                    CreateGarageMenu createGarageMenu = new CreateGarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers, this.RegistrationNumberRegister);
                     result = createGarageMenu.Show();
                 }
                 else if (strInput.StartsWith('2'))
                 {// Gå till ett Garage
 
                     // Låt användaren välja gararge
-                    SelectGarageMenu selectGarageMenu = new SelectGarageMenu(MenuFactory, Ui, GarageHandlers);
+                    SelectGarageMenu selectGarageMenu = new SelectGarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers);
                     iSelectedGarage = selectGarageMenu.Show();
 
                     // Låt användaren interagera med garaget
                     if(iSelectedGarage > 0)
                     {// Användaren har valt ett garage
                         
-                        GarageMenu garageMenu = new GarageMenu(MenuFactory, Ui, GarageHandlers, GarageHandlers[iSelectedGarage].GuidId);
+                        GarageMenu garageMenu = new GarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers, this.GarageHandlers[iSelectedGarage - 1].GuidId, this.RegistrationNumberRegister);
                         result = garageMenu.Show();
                     }
                 }
@@ -141,7 +150,7 @@ namespace Excercise5Garage.Menu
             var garage = garageFactory.CreateGarage(guid, "Första garaget", 5);
 
             // Skapa en GarageHandler som hantera allt om ett garage
-            this.GarageHandlers.Add(new GarageHandler.GarageHandler(garage, this.Ui));
+            this.GarageHandlers.Add(new GarageHandler.GarageHandler(garage, this.Ui, this.RegistrationNumberRegister));
 
             Ui.WriteLine($"Har skapat ett nytt garage. " + garage);
 
@@ -151,7 +160,7 @@ namespace Excercise5Garage.Menu
             IGarageHandler garageHandler = garageHandlers[0];
 
             // Börja skapa lite fordon som parkeras i garaget            
-            VehicleFactory vehicleFactory = new VehicleFactory();
+            IVehicleFactory vehicleFactory = new VehicleFactory(this.RegistrationNumberRegister);
 
             ICanBeParkedInGarage vehicle = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle);
@@ -172,19 +181,20 @@ namespace Excercise5Garage.Menu
             ICanBeParkedInGarage vehicle5 = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle5);
 
-            garageHandler.PrintInformation();
+            garageHandler.PrintInformationAboutGarage();
 
 
             // Ett fordon lämnar garaget
             garageHandler.RemoveVehicle(vehicle1);
 
-            garageHandler.PrintInformation();
+            garageHandler.PrintInformationAboutGarage();
 
             // Ett fordon som inte finns i garaget lämnar
             garageHandler.RemoveVehicle(vehicle5);
 
-            garageHandler.PrintInformation();
+            garageHandler.PrintInformationAboutGarage();
 
+            Ui.WriteLine("Return för att fortsätta");
             Ui.ReadLine();
         }
     }
