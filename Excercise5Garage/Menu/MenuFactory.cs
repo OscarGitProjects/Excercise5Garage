@@ -12,25 +12,25 @@ namespace Excercise5Garage.Menu
         TO_MAIN_MENU = 3
     }
 
-    public enum MainMenuType
+    public enum MenuType
     {
         NA = 0,
         MAIN_MENU = 1,
-        ADD_VEHICLE = 2,
-        CREATE_GARAGE = 3,
-        SELECT_GARAGE = 4
+        CREATE_GARAGE_MENU = 2,
+        SELECT_GARAGE_MENU = 3,
+        GARAGE_MENU = 4
     }
 
     public class MenuFactory : IMenuFactory
     {
-        public string GetMainMenu(MainMenuType mainMenuType)
+        public string GetMenu(MenuType menuType)
         {
             StringBuilder strBuilder = new StringBuilder();
             string strMenu = String.Empty;
 
-            switch (mainMenuType)
+            switch (menuType)
             {
-                case MainMenuType.MAIN_MENU:
+                case MenuType.MAIN_MENU:
                     strBuilder.AppendLine("Huvudmeny");
                     strBuilder.AppendLine("0. Avsluta programmet");
                     strBuilder.AppendLine("1. Skapa garage");
@@ -38,17 +38,25 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("3. Simulering av skapa garage, skapa och parkera fordon i garaget");
                     strMenu = strBuilder.ToString();
                     break;
-                case MainMenuType.CREATE_GARAGE:
+                case MenuType.CREATE_GARAGE_MENU:
                     strBuilder.AppendLine("Skapa ett nytt garage");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strBuilder.AppendLine("Ange namn på garaget");
                     strMenu = strBuilder.ToString();
                     break;
-                case MainMenuType.SELECT_GARAGE:
+                case MenuType.SELECT_GARAGE_MENU:
+                    strBuilder.AppendLine("Välj garage");
                     strBuilder.AppendLine("Välj siffra för önskat garage?");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strMenu = strBuilder.ToString();
                     break;
+                case MenuType.GARAGE_MENU:
+                    strBuilder.AppendLine("Välj siffra för önskad funktion?");
+
+                    // TODO SKAPA EN MENY
+
+                    strMenu = strBuilder.ToString();
+                    break; ;
 
             }
 

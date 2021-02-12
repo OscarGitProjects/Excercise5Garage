@@ -24,7 +24,7 @@ namespace Excercise5Garage.Menu
         /// <summary>
         /// Referens till en lista med handlers av olika garage
         /// </summary>
-        public List<IGarageHandler> GarageHandlers { get; private set; }
+        public IList<IGarageHandler> GarageHandlers { get; private set; }
 
 
 
@@ -34,7 +34,7 @@ namespace Excercise5Garage.Menu
         /// <param name="menuFactory">Referense till en factory där man kan hämta text till olika menyer</param>
         /// <param name="ui">Referense till objekt för att skriva och hämta indata</param>
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
-        public SelectGarageMenu(IMenuFactory menuFactory, IUI ui, List<IGarageHandler> lsGarageHandlers)
+        public SelectGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
         {
             MenuFactory = menuFactory;
             Ui = ui;
@@ -58,7 +58,7 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
-                this.Ui.WriteLine(this.MenuFactory.GetMainMenu(MainMenuType.SELECT_GARAGE));
+                this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.SELECT_GARAGE_MENU));
 
                 // Nu skall jag skapa meny valen för varje garageHandler
                 string strIsFull = String.Empty;
@@ -68,7 +68,7 @@ namespace Excercise5Garage.Menu
                     foreach (IGarageHandler garageHandler in GarageHandlers)
                     {
                         // Hämta uppgifter om garaget
-                        var (strId, strName, bIsFull) = garageHandler.GetGarageInfo();
+                        var (strId, strName, bIsFull, iCapacity, iNumberOfParkedVehicle) = garageHandler.GetGarageInfo();
 
                         // Skapa en lämplig utskrift för menyn
                         strIsFull = bIsFull ? "Nej" : "Ja";

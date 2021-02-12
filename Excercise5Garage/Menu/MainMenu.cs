@@ -24,7 +24,7 @@ namespace Excercise5Garage.Menu
         /// <summary>
         /// Referens till en lista med handlers av olika garage
         /// </summary>
-        public List<IGarageHandler> GarageHandlers { get; }
+        public IList<IGarageHandler> GarageHandlers { get; }
 
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Excercise5Garage.Menu
         /// <param name="menuFactory">Referens till factory för att skapa menyer</param>
         /// <param name="ui">Referens till ui</param>
         /// <param name="lsGarageHandlers">Referense till lista med handlers för olika garage</param>
-        public MainMenu(IMenuFactory menuFactory, IUI ui, List<IGarageHandler> lsGarageHandlers)
+        public MainMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
         {
             MenuFactory = menuFactory;
             Ui = ui;
@@ -56,7 +56,7 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
-                this.Ui.WriteLine(this.MenuFactory.GetMainMenu(MainMenuType.MAIN_MENU));
+                this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.MAIN_MENU));
                 result = HandleInput();
             } 
             while (result != MenuInputResult.EXIT);
@@ -99,10 +99,10 @@ namespace Excercise5Garage.Menu
                     // Låt användaren interagera med garaget
                     if(iSelectedGarage > 0)
                     {// Användaren har valt ett garage
-                        // TODO ANVÄNDAREN HAR VALT ETT GARAGE. GÅ DIT
+                        
+                        GarageMenu garageMenu = new GarageMenu(MenuFactory, Ui, GarageHandlers, GarageHandlers[iSelectedGarage].GuidId);
+                        result = garageMenu.Show();
                     }
-
-
                 }
                 else if (strInput.StartsWith('3'))
                 {// Simulering av ett garage

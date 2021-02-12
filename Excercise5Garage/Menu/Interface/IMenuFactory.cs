@@ -2,6 +2,6 @@
 {
     public interface IMenuFactory
     {
-        string GetMainMenu(MainMenuType mainMenuType);
+        string GetMenu(MenuType mainMenuType);
     }
 }

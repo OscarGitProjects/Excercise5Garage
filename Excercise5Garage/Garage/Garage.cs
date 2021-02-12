@@ -1,4 +1,5 @@
 ﻿using Excercise5Garage.Garage.Interface;
+using Excercise5Garage.Vehicle.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -238,6 +239,34 @@ namespace Excercise5Garage.Garage
         public override string ToString()
         {
             return $"{this.GarageName}, Capacity: {this.Capacity}, Count: {this.Count}";
+        }
+
+
+        /// <summary>
+        /// Metoden räknar antalet vehicle som har sökt registreringsnummer
+        /// Metoden tar inte hänsyn till om det är stora eller små bokstäver
+        /// </summary>
+        /// <param name="strRegistrationNumber">Registreringsnummer somm söks</param>
+        /// <returns>Antalet vehicle med sökt registreringsnummer</returns>
+        public int CountVehicleWithRegistrationNumber(string strRegistrationNumber)
+        {
+            int iNumberOfVehicleWithRegistrationNumber = 0;
+            IVehicle tmpVehicle = null;
+
+            for(int i = 0; i < arrVehicles.Length; i++)
+            {
+                if(arrVehicles[i] != null)
+                {
+                    tmpVehicle = arrVehicles[i] as IVehicle;
+                    if(tmpVehicle != null)
+                    {
+                        if (String.Compare(tmpVehicle.RegistrationNumber, strRegistrationNumber, ignoreCase: true) == 0)
+                            iNumberOfVehicleWithRegistrationNumber++;
+                    }
+                }
+            }
+
+            return iNumberOfVehicleWithRegistrationNumber;
         }
     }
 }

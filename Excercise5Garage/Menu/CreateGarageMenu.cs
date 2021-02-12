@@ -27,7 +27,7 @@ namespace Excercise5Garage.Menu
         /// <summary>
         /// Referens till en lista med handlers av olika garage
         /// </summary>
-        public List<IGarageHandler> GarageHandlers { get; private set; }
+        public IList<IGarageHandler> GarageHandlers { get; private set; }
 
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Excercise5Garage.Menu
         /// <param name="menuFactory">Referense till en factory där man kan hämta text till olika menyer</param>
         /// <param name="ui">Referense till objekt för att skriva och hämta indata</param>
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
-        public CreateGarageMenu(IMenuFactory menuFactory, IUI ui, List<IGarageHandler> lsGarageHandlers)
+        public CreateGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
         {
             MenuFactory = menuFactory;
             Ui = ui;
@@ -64,7 +64,7 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
-                this.Ui.WriteLine(this.MenuFactory.GetMainMenu(MainMenuType.CREATE_GARAGE));
+                this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.CREATE_GARAGE_MENU));
 
                 // Hantera inmatning från användaren
                 result = HandleInput();

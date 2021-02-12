@@ -1,5 +1,6 @@
 ﻿using Excercise5Garage.Garage.Interface;
 using Excercise5Garage.UI.Interface;
+using System;
 
 namespace Excercise5Garage.GarageHandler.Interface
 {
@@ -7,9 +8,11 @@ namespace Excercise5Garage.GarageHandler.Interface
     {
         IGarage<ICanBeParkedInGarage> Garage { get; set; }
         IUI Ui { get; }
+        Guid GuidId { get; }
         bool ParkVehicle(ICanBeParkedInGarage vehicle);
         bool RemoveVehicle(ICanBeParkedInGarage vehicle);
-        void PrintInformation();
-        (string strId, string strName, bool bIsFull) GetGarageInfo();
+        void PrintInformation();      
+        (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo();
+        int CountVehicleWithRegistrationNumber(string strRegistrationNumber);
     }
 }

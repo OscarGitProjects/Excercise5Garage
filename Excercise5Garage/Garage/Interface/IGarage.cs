@@ -21,5 +21,6 @@ namespace Excercise5Garage.Garage.Interface
         bool Remove(T vehicle);
         bool Remove(int iIndex);
         string PrintAllInformation();
+        int CountVehicleWithRegistrationNumber(string strRegistrationNumber);
     }
 }
