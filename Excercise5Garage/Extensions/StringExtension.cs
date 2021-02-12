@@ -26,5 +26,24 @@ namespace Excercise5Garage.Extensions
 
             return ch;
         }
+
+
+        /// <summary>
+        /// Metoden kommer att omvandla första tecknet till storbokstav och returnera den nya texten
+        /// </summary>
+        /// <param name="str">text där vi vill omvandla första tecknet till stor bokstav</param>
+        /// <returns>Text där första bokstaven är en stor bokstav</returns>
+        public static string FirstToUpper(this string str)
+        {
+            if (!String.IsNullOrEmpty(str))
+            {
+                string tmpString = str.Substring(0, 1);
+                tmpString = tmpString.ToUpper();
+                str = str.Remove(0, 1);
+                str = tmpString + str;
+            }
+
+            return str ;
+        }
     }
 }
