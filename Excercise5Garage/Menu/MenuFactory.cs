@@ -41,7 +41,7 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("0. Avsluta programmet");
                     strBuilder.AppendLine("1. Skapa garage");
                     strBuilder.AppendLine("2. Gå till garage");
-                    strBuilder.AppendLine("3. Simulering av skapa garage, skapa och parkera fordon i garaget");
+                    //strBuilder.AppendLine("3. Simulering av skapa garage, skapa och parkera fordon i garaget");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.CREATE_GARAGE_MENU:
@@ -62,6 +62,7 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("1. Skapa och Parkera fordon");
                     strBuilder.AppendLine("2. Lämna med ett fordon");
                     strBuilder.AppendLine("3. Simulering. Skapa och parkera ett antal fordon");
+                    strBuilder.AppendLine("   Sedan lämnar ett fordon garaget");
                     strBuilder.AppendLine("4. Lista alla fordon");
                     strBuilder.AppendLine("5. Lista alla fordon per typ");
                     strBuilder.AppendLine("6. Söka efter fordon");

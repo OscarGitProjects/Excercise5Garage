@@ -3,6 +3,7 @@ using Excercise5Garage.Menu;
 using Excercise5Garage.Menu.Interface;
 using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI.Interface;
+using System;
 using System.Collections.Generic;
 
 namespace Excercise5Garage
@@ -40,8 +41,19 @@ namespace Excercise5Garage
         /// <param name="menuFactory">Referens till Factory där vi skapar olika menyer</param>
         /// <param name="ui">Referens till ui</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, ui eller registrationNumberRegister är null</exception>
         public GarageProgram(IMenuFactory menuFactory, IUI ui, IRegistrationNumberRegister registrationNumberRegister)
         {
+            if (menuFactory == null)
+                throw new NullReferenceException("NullReferenceException. GarageProgram.GarageProgram(). menuFactory referensen är null");
+
+            if (ui == null)
+                throw new NullReferenceException("NullReferenceException. GarageProgram.v(). ui referensen är null");
+
+            if (registrationNumberRegister == null)
+                throw new NullReferenceException("NullReferenceException. GarageProgram.GarageProgram(). registrationNumberRegister referensen är null");
+
+
             MenuFactory = menuFactory;
             Ui = ui;
             RegistrationNumberRegister = registrationNumberRegister;
@@ -63,74 +75,5 @@ namespace Excercise5Garage
             } 
             while (result != MenuInputResult.EXIT);
         }
-
-
-
-        //public void TestCodeRun()
-        //{
-        //    Console.WriteLine("Run GarageProgram");
-
-        //    Guid guid = Guid.NewGuid();
-
-        //    Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", 5);
-
-        //    IVehicle plane = new Airplane("AAA 111", "Grön", 4);
-
-        //    ICanBeParkedInGarage veh = new Car("BBB 222", "Röd", 4);
-        //    garage.Add(veh);
-
-        //    veh = new Car("CCC 333", "Röd", 4);
-        //    garage.Add(veh);
-
-        //    veh = new Car("DDD 444", "Röd", 4);
-        //    garage.Add(veh);
-
-        //    veh = new Car("DDD 444", "Röd", 4);
-        //    garage.Add(veh);
-
-        //    //veh = new Car("EEE 555", "Röd", 4);
-        //    //garage.Add(veh);
-
-        //    //veh = new Car("FFF 666", "Röd", 4);
-        //    //garage.Add(veh);
-
-
-        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-
-        //    foreach (var item in garage)
-        //    {
-        //        Console.WriteLine(item);
-        //    }
-
-        //    ICanBeParkedInGarage veh1 = new Car("CCC 333", "Röd", 4);
-        //    garage.Add(veh1);
-
-        //    Console.WriteLine("***** *****" + System.Environment.NewLine);
-        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-        //    foreach (var item in garage)
-        //    {
-        //        Console.WriteLine(item);
-        //    }
-
-        //    garage.Remove(veh);
-
-        //    string str = "abc";
-
-        //    Console.WriteLine("***** *****" + System.Environment.NewLine);
-        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-        //    foreach (var item in garage)
-        //    {
-        //        Console.WriteLine(item);
-        //    }
-
-
-        //    garage.Remove(veh);
-        //    Console.WriteLine("***** *****" + System.Environment.NewLine);           
-        //    Console.WriteLine("Name: " + garage.GarageName + ", Capacity: " + garage.Capacity + ", Count: " + garage.Count + ", IsEmpty: " + garage.IsEmpty + ", IsFull: " + garage.IsFull);
-        //    foreach (var item in garage)
-        //    {
-        //        Console.WriteLine(item);
-        //    }
-        //}
     }
 }

@@ -41,8 +41,22 @@ namespace Excercise5Garage.Menu
         /// <param name="ui">Referens till ui</param>
         /// <param name="lsGarageHandlers">Referense till lista med handlers för olika garage</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
         public MainMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, IRegistrationNumberRegister registrationNumberRegister)
         {
+            if (menuFactory == null)
+                throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). menuFactory referensen är null");
+
+            if (ui == null)
+                throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). ui referensen är null");
+
+            if (lsGarageHandlers == null)
+                throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). lsGarageHandlers referensen är null");
+
+            if (registrationNumberRegister == null)
+                throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). registrationNumberRegister referensen är null");
+
+
             MenuFactory = menuFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;
@@ -113,11 +127,11 @@ namespace Excercise5Garage.Menu
                         result = garageMenu.Show();
                     }
                 }
-                else if (strInput.StartsWith('3'))
-                {// Simulering av ett garage
+                //else if (strInput.StartsWith('3'))
+                //{// Simulering av ett garage
 
-                    SimulateGarage();
-                }
+                //    //SimulateGarage();
+                //}
                 else
                 {
                     result = MenuInputResult.WRONG_INPUT;

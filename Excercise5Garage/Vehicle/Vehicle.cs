@@ -7,15 +7,35 @@ namespace Excercise5Garage.Vehicle
     /// </summary>
     public abstract class Vehicle : IVehicle
     {
+
         /// <summary>
         /// Fordonets registreringsnummer
         /// </summary>
-        public string RegistrationNumber { get; set; }
+        private string strRegistrationNumber;
+
+        /// <summary>
+        /// Fordonets registreringsnummer
+        /// </summary>
+        public string RegistrationNumber
+        {
+            get { return strRegistrationNumber; }
+            set { strRegistrationNumber = value.ToUpper(); }
+        }
+
 
         /// <summary>
         /// Fordonets färg
         /// </summary>
-        public string Color { get; set; }
+        private string strColor;
+
+        /// <summary>
+        /// Fordonets färg
+        /// </summary>
+        public string Color
+        {
+            get { return strColor; }
+            set { strColor = value.ToUpper(); }
+        }
 
 
         /// <summary>

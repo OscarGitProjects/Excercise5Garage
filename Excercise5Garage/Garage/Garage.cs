@@ -111,6 +111,7 @@ namespace Excercise5Garage.Garage
         /// <param name="vehicle">Vehicle som skall raderas från garaget</param>
         /// <returns>true om det gick radera vehicle från garaget. Annars returneras false</returns>
         /// <exception cref="System.ArgumentNullException">Kastas om referensen till vehicle är null</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Index är utanför arrayen</exception>
         public bool Remove(T vehicle)
         {
             if (vehicle == null)

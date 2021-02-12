@@ -34,8 +34,19 @@ namespace Excercise5Garage.Menu
         /// <param name="menuFactory">Referense till en factory där man kan hämta text till olika menyer</param>
         /// <param name="ui">Referense till objekt för att skriva och hämta indata</param>
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, ui, lsGarageHandlers är null</exception>
         public SelectGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
         {
+            if (menuFactory == null)
+                throw new NullReferenceException("NullReferenceException. SelectGarageMenu.SelectGarageMenu(). menuFactory referensen är null");
+
+            if (ui == null)
+                throw new NullReferenceException("NullReferenceException. SelectGarageMenu.SelectGarageMenu(). ui referensen är null");
+
+            if (lsGarageHandlers == null)
+                throw new NullReferenceException("NullReferenceException. SelectGarageMenu.SelectGarageMenu(). lsGarageHandlers referensen är null");
+
+
             MenuFactory = menuFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;

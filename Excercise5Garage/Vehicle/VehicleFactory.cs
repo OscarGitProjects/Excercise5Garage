@@ -27,8 +27,12 @@ namespace Excercise5Garage.Vehicle
         /// Konstruktor
         /// </summary>
         /// <param name="registrationNumberRegister">Referense till RegistrationNumberRegister där använda registreringsnummer sparas</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till registrationNumberRegister är null</exception>
         public VehicleFactory(IRegistrationNumberRegister registrationNumberRegister)
         {
+            if (registrationNumberRegister == null)
+                throw new NullReferenceException("NullReferenceException. VehicleFactory.VehicleFactory(). registrationNumberRegister referensen är null");
+
             RegistrationNumberRegister = registrationNumberRegister;
         }
 
@@ -76,15 +80,15 @@ namespace Excercise5Garage.Vehicle
 
             // Skapa en dictionary med olika färger
             Dictionary<int, string> dicColors = new Dictionary<int, string>();
-            dicColors.Add(1, "Svart");
-            dicColors.Add(2, "Vit");
-            dicColors.Add(3, "Röd");
-            dicColors.Add(4, "Grön");
-            dicColors.Add(5, "Blå");
-            dicColors.Add(6, "Brun");
-            dicColors.Add(7, "Gul");
-            dicColors.Add(8, "Lila");
-            dicColors.Add(9, "Orange");
+            dicColors.Add(1, "SVART");
+            dicColors.Add(2, "VIT");
+            dicColors.Add(3, "RÖD");
+            dicColors.Add(4, "GRÖN");
+            dicColors.Add(5, "BLÅ");
+            dicColors.Add(6, "BRUN");
+            dicColors.Add(7, "GUL");
+            dicColors.Add(8, "LILA");
+            dicColors.Add(9, "ORANGE");
 
             int iRandomColor = rand.Next(1, 10);
             string strColor = dicColors[iRandomColor];

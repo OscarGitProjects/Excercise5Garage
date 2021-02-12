@@ -50,8 +50,21 @@ namespace Excercise5Garage.Menu
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
         /// <param name="guidSelectedGarageHandlerGuid">Guid för vald GarageHandler</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
         public LeaveTheGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, Guid guidSelectedGarageHandlerGuid, IRegistrationNumberRegister registrationNumberRegister)
         {
+            if (menuFactory == null)
+                throw new NullReferenceException("NullReferenceException. LeaveTheGarageMenu.LeaveTheGarageMenu(). menuFactory referensen är null");
+
+            if (ui == null)
+                throw new NullReferenceException("NullReferenceException. LeaveTheGarageMenu.LeaveTheGarageMenu(). ui referensen är null");
+
+            if (lsGarageHandlers == null)
+                throw new NullReferenceException("NullReferenceException. LeaveTheGarageMenu.LeaveTheGarageMenu(). lsGarageHandlers referensen är null");
+
+            if (registrationNumberRegister == null)
+                throw new NullReferenceException("NullReferenceException. LeaveTheGarageMenu.LeaveTheGarageMenu(). registrationNumberRegister referensen är null");
+
             MenuFactory = menuFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;

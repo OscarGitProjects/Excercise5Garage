@@ -40,8 +40,12 @@ namespace Excercise5Garage.RegistrationNumber
         /// Metoden skriver ut hur många registreringsnummer som finns i registret
         /// </summary>
         /// <param name="ui">Refernse till ui</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
         public void PrintRegister(IUI ui)
         {
+            if (ui == null)
+                throw new NullReferenceException("NullReferenceException. RegistrationNumberRegister.PrintRegister(). ui referensen är null");
+
             ui.WriteLine($"Det finns {RegistrationNumbers.Count} registreringsnummer i registret");
         }
 

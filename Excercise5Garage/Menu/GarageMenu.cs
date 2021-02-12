@@ -51,8 +51,21 @@ namespace Excercise5Garage.Menu
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
         /// <param name="guidSelectedGarageHandlerGuid">Guid för vald GarageHandler</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
         public GarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, Guid guidSelectedGarageHandlerGuid, IRegistrationNumberRegister registrationNumberRegister)
         {
+            if (menuFactory == null)
+                throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). menuFactory referensen är null");
+
+            if (ui == null)
+                throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). ui referensen är null");
+
+            if (lsGarageHandlers == null)
+                throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). lsGarageHandlers referensen är null");
+
+            if (registrationNumberRegister == null)
+                throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). registrationNumberRegister referensen är null");
+
             MenuFactory = menuFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;
@@ -132,7 +145,8 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('3'))
                 {// Skapa ett antal fordon
 
-                    Simulering(6);
+                    Simulering();
+                    //Simulering(6);
                 }
                 else if (strInput.StartsWith('4'))
                 {// Lista alla fordon
@@ -223,6 +237,22 @@ namespace Excercise5Garage.Menu
 
 
         /// <summary>
+        /// Metoden skapar och parkerar fordon
+        /// Simulerar också att garaget är fullt
+        /// </summary>
+        private void Simulering()
+        {
+            // Hämta vald garagehandler
+            IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
+            if(garageHandler != null)
+            {
+                var (strId, strName, bIsFull, iCapacity, iNumberOfParkedVehicle) = garageHandler.GetGarageInfo();
+                Simulering((iCapacity - iNumberOfParkedVehicle) + 2);
+            }
+        }
+
+
+        /// <summary>
         /// Metoden skapar och parkerar önskat antal fordon
         /// </summary>
         /// <param name="iNumberOfVehicle">Antal fordon som skall skapas</param>
@@ -233,6 +263,7 @@ namespace Excercise5Garage.Menu
 
             if (garageHandler != null)
             {
+                Ui.WriteLine("Simulerar att fordon parkeras i garaget");
                 // Börja skapa lite fordon som parkeras i garaget            
                 IVehicleFactory vehicleFactory = new VehicleFactory(this.RegistrationNumberRegister);
                 ICanBeParkedInGarage vehicle = null;
@@ -241,7 +272,7 @@ namespace Excercise5Garage.Menu
                 for (int i = 0; i < iNumberOfVehicle; i++)
                 {
                     vehicle = vehicleFactory.CreateRandomVehicleForGarage();
-                    if(garageHandler.ParkVehicle(vehicle))
+                    if (garageHandler.ParkVehicle(vehicle))
                     {// Det gick parkera fordonet. Registrerar att registreringsnumret är upptaget
 
                         tmpVehicle = vehicle as IVehicle;
@@ -254,6 +285,39 @@ namespace Excercise5Garage.Menu
                 garageHandler.PrintInformationAboutGarage();
                 Ui.WriteLine("Return för att fortsätta");
                 Ui.ReadLine();
+               
+                // Hämta info om garaget
+                var (strId, strName, bIsFull, iCapacity, iNumberOfParkedVehicle) = garageHandler.GetGarageInfo();
+
+                if (iNumberOfParkedVehicle > 1)
+                {// Vi har minst ett parkerat fordon. Radera det första i arrayen
+
+                    try
+                    {
+                        vehicle = garageHandler.Garage[0];
+                        if (vehicle != null)
+                        {
+                            Ui.WriteLine("Simulerar att ett fordon lämnar garaget");
+
+                            tmpVehicle = vehicle as IVehicle;
+                            string strRegistrationNumber = String.Empty;
+                            if (tmpVehicle != null)
+                                strRegistrationNumber = tmpVehicle.RegistrationNumber;
+
+                            if (garageHandler.RemoveVehicle(0))
+                                this.RegistrationNumberRegister.RemoveRegistrationNumber(strRegistrationNumber);
+
+
+                            this.RegistrationNumberRegister.PrintRegister(this.Ui);
+                            garageHandler.PrintInformationAboutGarage();
+
+                            Ui.WriteLine("Return för att fortsätta");
+                            Ui.ReadLine();
+                        }
+                    }
+                    catch(ArgumentOutOfRangeException)
+                    { }                 
+                }
             }
         }
     }

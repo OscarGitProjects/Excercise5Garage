@@ -37,8 +37,18 @@ namespace Excercise5Garage.GarageHandler
         /// <param name="garage">Referens till garage</param>
         /// <param name="ui">Referens till ui</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
+        /// <exception cref="System.NullReferenceException">Kan kastas om referensen till garage, ui eller registrationNumberRegister är null</exception>
         public GarageHandler(IGarage<ICanBeParkedInGarage> garage, IUI ui, IRegistrationNumberRegister registrationNumberRegister)
         {
+            if (garage == null)
+                throw new NullReferenceException("NullReferenceException. GarageHandler.GarageHandler(). Garage referensen är null");
+
+            if (ui == null)
+                throw new NullReferenceException("NullReferenceException. GarageHandler.GarageHandler(). ui referensen är null");
+
+            if (registrationNumberRegister == null)
+                throw new NullReferenceException("NullReferenceException. GarageHandler.GarageHandler(). registrationNumberRegister referensen är null");
+
             Ui = ui;
             RegistrationNumberRegister = registrationNumberRegister;
             Garage = garage;
@@ -52,14 +62,10 @@ namespace Excercise5Garage.GarageHandler
         /// <param name="vehicle">Fordonet som skall parkeras i garaget</param>
         /// <returns>true om det gick parkera fordonet. Annars returneras false</returns>
         /// <exception cref="System.ArgumentNullException">Kastas om referensen till vehicle är null</exception>
-        /// <exception cref="System.NullReferenceException">Kastas om referensen till Garage är null</exception>
         public bool ParkVehicle(ICanBeParkedInGarage vehicle)
         {
             if (vehicle == null)
                 throw new ArgumentNullException("ArgumentNullException. GarageHandler.ParkVehicle(ICanBeParkedInGarage vehicle). Referensen till vehicle är null");
-
-            if (Garage == null)
-                throw new NullReferenceException("NullReferenceException. GarageHandler.ParkVehicle(ICanBeParkedInGarage vehicle). Garage referensen är null");
 
 
             var tmpVehicle = vehicle as IVehicle;
@@ -92,21 +98,17 @@ namespace Excercise5Garage.GarageHandler
         /// <param name="vehicle">Fordonet som skall tas bort från garaget</param>
         /// <returns>true om det gick radera fordonet. Annars returneras false</returns>
         /// <exception cref="System.ArgumentNullException">Kastas om referensen till vehicle är null</exception>
-        /// <exception cref="System.NullReferenceException">Kastas om referensen till Garage är null</exception>
         public bool RemoveVehicle(ICanBeParkedInGarage vehicle)
         {
             if (vehicle == null)
                 throw new ArgumentNullException("ArgumentNullException. GarageHandler.RemoveVehicle(ICanBeParkedInGarage vehicle). Referensen till vehicle är null");
 
-            if (Garage == null)
-                throw new NullReferenceException("NullReferenceException. GarageHandler.RemoveVehicle(ICanBeParkedInGarage vehicle). Garage referensen är null");
-
-
             var tmpVehicle = vehicle as IVehicle;
             string strRegistrationNumber = tmpVehicle?.RegistrationNumber;
 
             bool bRemovedVehicle = Garage.Remove(vehicle);
-            if(bRemovedVehicle)
+
+            if (bRemovedVehicle)
             {
                 Ui.WriteLine($"Fordon {vehicle.GetType().Name} med registreringsnummer {strRegistrationNumber} har lämnat garaget");
             }
@@ -114,6 +116,23 @@ namespace Excercise5Garage.GarageHandler
             {
                 Ui.WriteLine($"Fordon {vehicle.GetType().Name} med registreringsnummer {strRegistrationNumber} kan inte lämna garaget. Bilen finns troligen inte i garaget");
             }
+
+            return bRemovedVehicle;
+        }
+
+
+        /// <summary>
+        /// Metoden tar bort ett parkerat fordon från garaget
+        /// </summary>
+        ///<param name="iIndex">Index till det fordon som skall raderas</param>
+        /// <returns>true om det gick radera fordonet. Annars returneras false</returns>
+        public bool RemoveVehicle(int iIndex)
+        {
+            bool bRemovedVehicle = false;
+
+            var vehicle = this.Garage[iIndex];
+            if (vehicle != null)
+                bRemovedVehicle = RemoveVehicle(vehicle);
 
             return bRemovedVehicle;
         }
@@ -163,12 +182,8 @@ namespace Excercise5Garage.GarageHandler
         /// Metoden returnera information om garagets unika id, namn och om garaget är fullt eller ej
         /// </summary>
         /// <returns>Returnera information om garagets unika id, namn och om garaget är fullt eller ej, kapacitet och antal vehicle som är parkerade</returns>
-        /// <exception cref="System.NullReferenceException">Kastas om referensen till Garage är null</exception>
         public (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo()
         {
-            if (Garage == null)
-                throw new NullReferenceException("NullReferenceException. GarageHandler.GetGarageInfo(ICanBeParkedInGarage vehicle). Garage referensen är null");
-
             //(strId: Garage.GarageID.ToString(), strName: Garage.GarageName, bIsFull: Garage.IsFull, iCapacity: Garage.Capacity, iNumberOfParkedVehicle: Garage.Count);
             return Garage.GetGarageInfo();
         }
@@ -182,9 +197,6 @@ namespace Excercise5Garage.GarageHandler
         /// <returns>Antalet vehicle med sökt registreringsnummer</returns>
         public int CountVehicleWithRegistrationNumber(string strRegistrationNumber)
         {
-            if (Garage == null)
-                throw new NullReferenceException("NullReferenceException. GarageHandler.CountVehicleWithRegistrationNumber(string strRegistrationNumber). Garage referensen är null");
-
             int iNumberOfVehicleWithRegistrationNumber = Garage.CountVehicleWithRegistrationNumber(strRegistrationNumber);
             return iNumberOfVehicleWithRegistrationNumber;
         }
