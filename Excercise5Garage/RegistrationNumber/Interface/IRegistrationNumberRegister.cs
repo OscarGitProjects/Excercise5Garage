@@ -6,7 +6,7 @@ namespace Excercise5Garage.RegistrationNumber.Interface
     {
         int NumberOfRegistrationNumbers { get; }
         bool AddRegistrationNumber(string strRegistrationNumber);
-        bool CheckIfRegistrationnNumberExcist(string strRegistrationNumber);
+        bool CheckIfRegistrationnNumberExists(string strRegistrationNumber);
         string CreateRandomRegistrationNumber();
         bool RemoveRegistrationNumber(string strRegistrationNumber);
         void PrintRegister(IUI ui);

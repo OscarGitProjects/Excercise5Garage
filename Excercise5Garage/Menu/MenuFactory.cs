@@ -10,8 +10,9 @@ namespace Excercise5Garage.Menu
         WRONG_INPUT = 1,
         EXIT = 2,
         TO_MAIN_MENU = 3,
-        TO_GARAGE_MENU = 4
-
+        TO_GARAGE_MENU = 4,
+        CONTINUE = 5,
+        REGISTRATIONNUMBER_EXISTS = 6
     }
 
     public enum MenuType
@@ -22,8 +23,10 @@ namespace Excercise5Garage.Menu
         SELECT_GARAGE_MENU = 3,
         GARAGE_MENU = 4,
         SOK_VEHICLE_IN_GARAGE_MENU = 5,
-        CREATE_VEHICLE_MENU = 6,
-        LEAVE_WITH_VEHICLE_MENU = 7
+        CREATE_AND_PARK_VEHICLE_MENU = 6,
+        LEAVE_WITH_VEHICLE_MENU = 7,
+        CREATE_REGISTRATIONNUMBER = 8,
+        CREATE_COLOR = 9
     }
 
     public class MenuFactory : IMenuFactory
@@ -37,7 +40,7 @@ namespace Excercise5Garage.Menu
             {
                 case MenuType.MAIN_MENU:
                     strBuilder.AppendLine("Huvudmeny");
-                    strBuilder.AppendLine("Välj siffra för önskad funktion?");
+                    strBuilder.AppendLine("Välj siffra för önskad funktion");
                     strBuilder.AppendLine("0. Avsluta programmet");
                     strBuilder.AppendLine("1. Skapa garage");
                     strBuilder.AppendLine("2. Gå till garage");
@@ -52,12 +55,12 @@ namespace Excercise5Garage.Menu
                     break;
                 case MenuType.SELECT_GARAGE_MENU:
                     strBuilder.AppendLine("Välj garage");
-                    strBuilder.AppendLine("Välj siffra för önskat garage?");
+                    strBuilder.AppendLine("Välj siffra för önskat garage");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.GARAGE_MENU:
-                    strBuilder.AppendLine("Välj siffra för önskad funktion?");
+                    strBuilder.AppendLine("Välj siffra för önskad funktion");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strBuilder.AppendLine("1. Skapa och Parkera fordon");
                     strBuilder.AppendLine("2. Lämna med ett fordon");
@@ -73,10 +76,14 @@ namespace Excercise5Garage.Menu
                     // TODO GÖR MENYN FÖR SÖKNING AV FORDON
 
                     break;
-                case MenuType.CREATE_VEHICLE_MENU:
-
-                    // TODO SKAPA MENY FÖR ATTT SKAPA ETT FORDON
-
+                case MenuType.CREATE_AND_PARK_VEHICLE_MENU:                    
+                    strBuilder.AppendLine("Skapa nytt fordon och parkera i garaget");
+                    strBuilder.AppendLine("Välj siffra för önskad funktion");
+                    strBuilder.AppendLine("0. För att återgå till menyn");
+                    strBuilder.AppendLine("1. Skapa en bil");
+                    strBuilder.AppendLine("2. Skapa en buss");
+                    strBuilder.AppendLine("3. Skapa en motorcykel");
+                    strMenu = strBuilder.ToString();
                     break;
                 case MenuType.LEAVE_WITH_VEHICLE_MENU:
                     strBuilder.AppendLine("Lämna garaget med fordon");
@@ -84,7 +91,20 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("Ange fordonets registreringsnummer");
                     strMenu = strBuilder.ToString();
                     break;
-
+                case MenuType.CREATE_REGISTRATIONNUMBER:
+                    strBuilder.AppendLine("Ange registreringsnumret");
+                    strBuilder.AppendLine("0. För att återgå till menyn");
+                    strBuilder.AppendLine("1. För att automatiskt skapa ett registreringsnummer");
+                    strBuilder.AppendLine("Ange fordonets registreringsnummer");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.CREATE_COLOR:
+                    strBuilder.AppendLine("Ange färg");
+                    strBuilder.AppendLine("0. För att återgå till menyn");
+                    strBuilder.AppendLine("1. För default värde");
+                    strBuilder.Append("Ange fordonets färg");
+                    strMenu = strBuilder.ToString();
+                    break;
             }
 
             return strMenu;

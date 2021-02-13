@@ -56,15 +56,15 @@ namespace Excercise5Garage.RegistrationNumber
         /// </summary>
         /// <param name="strRegistrationNumber">Sökt registreringsnummer</param>
         /// <returns>true om registreringsnumret redan finns. Annars returneras false</returns>
-        public bool CheckIfRegistrationnNumberExcist(string strRegistrationNumber)
+        public bool CheckIfRegistrationnNumberExists(string strRegistrationNumber)
         {
-            bool bRegisterNumberExcist = false;
+            bool bRegisterNumberExists= false;
             string strTmpRegistrationNumber = strRegistrationNumber.ToUpper();
 
             var strRegNummer = this.RegistrationNumbers.FirstOrDefault(r => r.Equals(strTmpRegistrationNumber));
             if(!String.IsNullOrEmpty(strRegNummer))
-                bRegisterNumberExcist = true;
-            return bRegisterNumberExcist;
+                bRegisterNumberExists = true;
+            return bRegisterNumberExists;
         }
 
 
@@ -78,7 +78,7 @@ namespace Excercise5Garage.RegistrationNumber
         {
             bool bAddedRegistrationNumber = false;
 
-            if (CheckIfRegistrationnNumberExcist(strRegistrationNumber) == false)
+            if (CheckIfRegistrationnNumberExists(strRegistrationNumber) == false)
             {
                 this.RegistrationNumbers.Add(strRegistrationNumber.ToUpper());
                 bAddedRegistrationNumber = true;
@@ -97,7 +97,7 @@ namespace Excercise5Garage.RegistrationNumber
         {
             bool bRemovedRegistrationNumber = false;
 
-            if (CheckIfRegistrationnNumberExcist(strRegistrationNumber) == true)
+            if (CheckIfRegistrationnNumberExists(strRegistrationNumber) == true)
                 bRemovedRegistrationNumber = this.RegistrationNumbers.Remove(strRegistrationNumber.ToUpper());
 
             return bRemovedRegistrationNumber;
@@ -135,7 +135,7 @@ namespace Excercise5Garage.RegistrationNumber
 
                 strRegistrationNumber = strTextPart + strNumberPart;
 
-                if (!this.CheckIfRegistrationnNumberExcist(strRegistrationNumber))
+                if (!this.CheckIfRegistrationnNumberExists(strRegistrationNumber))
                     // Registreringsnumret fanns inte. Det går bra att använda det
                     bRun = false;
             }

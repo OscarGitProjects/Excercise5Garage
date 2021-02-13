@@ -20,7 +20,7 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
         /// <summary>
         /// Default färg
         /// </summary>
-        public static string DefaultColor = "Svart";
+        public static string DefaultColor = "SVART";
 
         /// <summary>
         /// Antalet sittande passagerar som fordonet kan ta
@@ -35,7 +35,7 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
         /// <param name="strColor">Notorcykelns färg. Default värde är Svart</param>
         /// <param name="iNumberOfWheels">Antal hjul på motorcykeln. Default värde är 2</param>
         /// <param name="iNumberOfSeatedPassengers">Antal sittande passagerar som fordonet kan ta. Default är 2</param>
-        public MotorCycle(string strRegistrationNumber, string strColor = "Svart", int iNumberOfWheels = 2, int iNumberOfSeatedPassengers = 2) : base(strRegistrationNumber, strColor, iNumberOfWheels)
+        public MotorCycle(string strRegistrationNumber, string strColor = "SVART", int iNumberOfWheels = 2, int iNumberOfSeatedPassengers = 2) : base(strRegistrationNumber, strColor, iNumberOfWheels)
         {
             NumberOfSeatedPassengers = iNumberOfSeatedPassengers;
         }

@@ -101,7 +101,6 @@ namespace Excercise5Garage.Menu
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
         private MenuInputResult HandleInput()
         {
-            Garage<ICanBeParkedInGarage> garage = null;
             MenuInputResult result = MenuInputResult.NA;
 
             // Inläsning av namnet på garaget
@@ -144,7 +143,8 @@ namespace Excercise5Garage.Menu
                             {// Vi har en capacity
 
                                 // Skapa ett nytt garage
-                                garage = new Garage<ICanBeParkedInGarage>(Guid.NewGuid(), strGarageName, iCapacity);
+                                IGarageFactory garageFactory = new GarageFactory();                                
+                                IGarage<ICanBeParkedInGarage> garage = garageFactory.CreateGarage(Guid.NewGuid(), strGarageName, iCapacity);                                
 
                                 // Skapa en handler som skall hantera det nya garaget
                                 IGarageHandler garageHandler = new Excercise5Garage.GarageHandler.GarageHandler(garage, this.Ui, this.RegistrationNumberRegister);

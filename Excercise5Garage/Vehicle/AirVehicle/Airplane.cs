@@ -17,7 +17,7 @@
         /// <param name="strRegistrationNumber">Flygplanets registreringsnummer</param>
         /// <param name="strColor">Flygplanets färg. Default värde är Svart</param>
         /// <param name="iNumberOfEngins">Antalet motorer. Default värde är 2</param>
-        public Airplane(string strRegistrationNumber, string strColor = "Svart", int iNumberOfEngines = 2) : base(strRegistrationNumber, strColor)
+        public Airplane(string strRegistrationNumber, string strColor = "SVART", int iNumberOfEngines = 2) : base(strRegistrationNumber, strColor)
         {
             NumberOfEngines = iNumberOfEngines;
         }

@@ -29,7 +29,7 @@ namespace Excercise5Garage.Extensions
 
 
         /// <summary>
-        /// Metoden kommer att omvandla första tecknet till storbokstav och returnera den nya texten
+        /// Metoden kommer att omvandla första tecknet till storbokstav. Returnera den nya texten
         /// </summary>
         /// <param name="str">text där vi vill omvandla första tecknet till stor bokstav</param>
         /// <returns>Text där första bokstaven är en stor bokstav</returns>

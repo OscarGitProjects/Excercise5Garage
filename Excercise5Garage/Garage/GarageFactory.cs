@@ -6,7 +6,7 @@ namespace Excercise5Garage.Garage
     /// <summary>
     /// Klassen har metoder för att skapa Garage
     /// </summary>
-    public class GarageFactory
+    public class GarageFactory : IGarageFactory
     {
         /// <summary>
         /// Metoden skapar ett garage
