@@ -1,4 +1,6 @@
-﻿namespace Excercise5Garage.Vehicle.WaterVehicle
+﻿using Excercise5Garage.Extensions;
+
+namespace Excercise5Garage.Vehicle.WaterVehicle
 {
     /// <summary>
     /// Klass med information om en motorbåt
@@ -30,7 +32,7 @@
         /// <returns>String med information om objektet</returns>
         public override string ToString()
         {
-            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color}, Antal motorer: {this.NumberOfEngines}";
+            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color?.ToLower()?.FirstToUpper()}, Antal motorer: {this.NumberOfEngines}";
         }
     }
 }

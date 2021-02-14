@@ -88,6 +88,8 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
+                result = MenuInputResult.NA;
+
                 this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.LEAVE_WITH_VEHICLE_MENU));
 
                 // Hantera inmatning från användaren
@@ -105,6 +107,7 @@ namespace Excercise5Garage.Menu
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
         private MenuInputResult HandleInput()
         {
+            int iRemovedNumberOfVehicle = 0;
             MenuInputResult result = MenuInputResult.TO_GARAGE_MENU;
             // Hämta vald garagehandler
             IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
@@ -144,6 +147,8 @@ namespace Excercise5Garage.Menu
 
                                             // Radera registreringsnumret från registret av använda registreringsnummer
                                             this.RegistrationNumberRegister.RemoveRegistrationNumber(tmpVehicle.RegistrationNumber);
+
+                                            iRemovedNumberOfVehicle++;
                                         }
 
                                         Ui.WriteLine("Return för att fortsätta");
@@ -152,6 +157,14 @@ namespace Excercise5Garage.Menu
                                         break;
                                     }
                                 }
+                            }
+
+                            if(iRemovedNumberOfVehicle == 0)
+                            {
+                                Ui.WriteLine("Bilen ni sökte finns inte i garaget");
+                                Ui.WriteLine("Return för att fortsätta");
+                                Ui.ReadLine();
+                                result = MenuInputResult.TO_GARAGE_MENU;
                             }
                         }
                     }

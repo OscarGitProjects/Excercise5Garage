@@ -80,6 +80,8 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
+                result = MenuInputResult.NA;
+
                 this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.MAIN_MENU));
                 result = HandleInput();
             } 
@@ -128,11 +130,25 @@ namespace Excercise5Garage.Menu
                         result = garageMenu.Show();
                     }
                 }
-                //else if (strInput.StartsWith('3'))
-                //{// Simulering av ett garage
+                else if (strInput.StartsWith('3'))
+                {// Radera ett garage
 
-                //    //SimulateGarage();
-                //}
+                    // Låt användaren välja garage
+                    DeleteGarageMenu deleteGarageMenu = new DeleteGarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers);
+                    iSelectedGarage = deleteGarageMenu.Show();
+                    
+                    if(iSelectedGarage > 0)
+                    {
+                        try
+                        {
+                            this.GarageHandlers.RemoveAt(iSelectedGarage - 1);
+                        }
+                        catch(Exception)
+                        {
+                            Ui.WriteLine("Exception. MainMenu.HandleInput(). Borttagning av garage fungerade inte");
+                        }
+                    }
+                }
                 else
                 {
                     result = MenuInputResult.WRONG_INPUT;

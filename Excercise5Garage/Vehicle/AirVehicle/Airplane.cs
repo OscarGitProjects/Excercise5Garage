@@ -1,4 +1,6 @@
-﻿namespace Excercise5Garage.Vehicle.AirVehicle
+﻿using Excercise5Garage.Extensions;
+
+namespace Excercise5Garage.Vehicle.AirVehicle
 {
     /// <summary>
     /// Klass med informaion om ett flygplan
@@ -30,7 +32,7 @@
         public override string ToString()
         {
             
-            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color}, Antal motorer: {this.NumberOfEngines}";
+            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color?.ToLower()?.FirstToUpper()}, Antal motorer: {this.NumberOfEngines}";
         }
     }
 }

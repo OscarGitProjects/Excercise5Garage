@@ -83,6 +83,8 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
+                result = MenuInputResult.NA;
+
                 this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.CREATE_GARAGE_MENU));
 
                 // Hantera inmatning från användaren
@@ -154,7 +156,7 @@ namespace Excercise5Garage.Menu
                                 Ui.WriteLine("Skapade garage. " + garage);
 
                                 Ui.WriteLine("Return för att återgå till huvudmenyn");
-                                strInput = this.Ui.ReadLine();
+                                this.Ui.ReadLine();
                                 result = MenuInputResult.TO_MAIN_MENU;
                             }
                             else
@@ -171,7 +173,7 @@ namespace Excercise5Garage.Menu
             }
             else
             {
-                result = MenuInputResult.WRONG_INPUT;
+                result = MenuInputResult.TO_MAIN_MENU;
             }
 
             return result;

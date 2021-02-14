@@ -5,9 +5,11 @@ using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI.Interface;
 using Excercise5Garage.Vehicle;
 using Excercise5Garage.Vehicle.Interface;
+using Excercise5Garage.Vehicle.WheeledVehicle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Excercise5Garage.Extensions;
 
 namespace Excercise5Garage.Menu
 {
@@ -89,6 +91,8 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
+                result = MenuInputResult.NA;
+
                 // Hämta vald garagehandler
                 IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
 
@@ -168,7 +172,7 @@ namespace Excercise5Garage.Menu
             }
             else
             {
-                result = MenuInputResult.WRONG_INPUT;
+                result = MenuInputResult.TO_GARAGE_MENU;
             }
 
             return result;
@@ -216,15 +220,35 @@ namespace Excercise5Garage.Menu
         /// </summary>
         private void ListAllVehicle()
         {
+            Car car = null;
+            Bus bus = null;
+            MotorCycle motorCycle = null;
+            WheeledVehicle wheeledVehicle = null;
+            IVehicle tmpVehicle = null;
+            int iNumberOfSeatedPassengers = 0;
+
             // Hämta vald garagehandler
             IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
             if(garageHandler != null)
             {
                 if (garageHandler.Garage.Count() > 0)
                 {
-                    foreach (IVehicle vehicle in garageHandler.Garage)
+                    foreach (ICanBeParkedInGarage vehicle in garageHandler.Garage)
                     {
-                        Ui.WriteLine($"{vehicle.Color} {vehicle.GetType().Name} med registreringsnummer {vehicle.RegistrationNumber}");
+                        tmpVehicle = vehicle as IVehicle;
+                        wheeledVehicle = vehicle as WheeledVehicle;
+                        car = vehicle as Car;
+                        bus = vehicle as Bus;
+                        motorCycle = vehicle as MotorCycle;
+
+                        if (car != null)
+                            iNumberOfSeatedPassengers = car.NumberOfSeatedPassengers;
+                        else if(bus != null)
+                            iNumberOfSeatedPassengers = bus.NumberOfSeatedPassengers;
+                        else if(motorCycle != null)
+                            iNumberOfSeatedPassengers = motorCycle.NumberOfSeatedPassengers;
+
+                        Ui.WriteLine($"{tmpVehicle.Color?.ToLower()?.FirstToUpper()} {vehicle.GetType().Name} med registreringsnummer {tmpVehicle?.RegistrationNumber ?? "?"}. Har {wheeledVehicle?.NumberOfWheels ?? '?'} hjul och {iNumberOfSeatedPassengers} sittplatser");
                     }
                 }
                 else

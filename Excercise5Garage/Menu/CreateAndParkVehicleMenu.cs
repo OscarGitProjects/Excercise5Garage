@@ -90,6 +90,8 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
+                result = MenuInputResult.NA;
+
                 this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.CREATE_AND_PARK_VEHICLE_MENU));
 
                 // Hantera inmatning från användaren
@@ -130,80 +132,138 @@ namespace Excercise5Garage.Menu
                     {// Skapa en bil
 
                         var (menuInputResult, newVehicle) = CreateVehicle(Vehicle_Type.CAR);
-                        if(newVehicle != null)
-                        {// Vi har skapat ett fordon
+                        result = menuInputResult;
 
-                            if(garageHandler.ParkVehicle(newVehicle) == false)
-                            {
+                        if (result == MenuInputResult.TO_GARAGE_MENU)
+                            return result;
+
+                        if (newVehicle != null)
+                        {
+                            // Parkera fordonet
+                            if(ParkVehicleInGarage(newVehicle) == true)
+                            {// Det gick parkera fordonet. Nu skall vi registrerar att registreringsnumret är upptaget
+
                                 tmpVehicle = newVehicle as IVehicle;
-                                if(tmpVehicle != null)
-                                    this.RegistrationNumberRegister.RemoveRegistrationNumber(tmpVehicle.RegistrationNumber);
+                                if (tmpVehicle != null)
+                                {
+                                    // Nu behöver jag lägga till registreringsnumret till de upptagna registreringsnumren
+                                    this.RegistrationNumberRegister.AddRegistrationNumber(tmpVehicle.RegistrationNumber);
+                                }
                             }
                         }
                         else
                         {
-                            Ui.WriteLine("Det gick inte att skapa ett fordon");
+                            if(menuInputResult == MenuInputResult.CREATE_VEHICLE_FAILED)
+                                Ui.WriteLine("Det gick inte att skapa ett fordon");
                         }
 
-                        result = menuInputResult;
+                        Ui.WriteLine("Return för att fortsätta");
+                        Ui.ReadLine();
                     }
                     else if (strInput.StartsWith('2'))
                     {// Skapa en buss
 
                         var (menuInputResult, newVehicle) = CreateVehicle(Vehicle_Type.BUS);
-                        if (newVehicle != null)
-                        {// Vi har skapat ett fordon
+                        result = menuInputResult;
 
-                            if(garageHandler.ParkVehicle(newVehicle) == false)
-                            {
+                        if (result == MenuInputResult.TO_GARAGE_MENU)
+                            return result;
+
+                        if (newVehicle != null)
+                        {
+                            // Parkera fordonet
+                            if (ParkVehicleInGarage(newVehicle) == true)
+                            {// Det gick parkera fordonet. Nu skall vi registrerar att registreringsnumret är upptaget
+
                                 tmpVehicle = newVehicle as IVehicle;
                                 if (tmpVehicle != null)
-                                    this.RegistrationNumberRegister.RemoveRegistrationNumber(tmpVehicle.RegistrationNumber);
+                                {
+                                    // Nu behöver jag lägga till registreringsnumret till de upptagna registreringsnumren
+                                    this.RegistrationNumberRegister.AddRegistrationNumber(tmpVehicle.RegistrationNumber);
+                                }
                             }
                         }
                         else
                         {
-                            Ui.WriteLine("Det gick inte att skapa ett fordon");
+                            if (menuInputResult == MenuInputResult.CREATE_VEHICLE_FAILED)
+                                Ui.WriteLine("Det gick inte att skapa ett fordon");
                         }
 
-                        result = menuInputResult;
+                        Ui.WriteLine("Return för att fortsätta");
+                        Ui.ReadLine();
                     }
                     else if (strInput.StartsWith('3'))
                     {// Skapa en motorcykel                   
 
                         var (menuInputResult, newVehicle) = CreateVehicle(Vehicle_Type.MOTORCYCLE);
-                        if (newVehicle != null)
-                        {// Vi har skapat ett fordon
+                        result = menuInputResult;
 
-                            if (garageHandler.ParkVehicle(newVehicle) == false)
-                            {
+                        if (result == MenuInputResult.TO_GARAGE_MENU)
+                            return result;
+
+                        if (newVehicle != null)
+                        {
+                            // Parkera fordonet
+                            if (ParkVehicleInGarage(newVehicle) == true)
+                            {// Det gick parkera fordonet. Nu skall vi registrerar att registreringsnumret är upptaget
+
                                 tmpVehicle = newVehicle as IVehicle;
                                 if (tmpVehicle != null)
-                                    this.RegistrationNumberRegister.RemoveRegistrationNumber(tmpVehicle.RegistrationNumber);
-                            }                                
+                                {
+                                    // Nu behöver jag lägga till registreringsnumret till de upptagna registreringsnumren
+                                    this.RegistrationNumberRegister.AddRegistrationNumber(tmpVehicle.RegistrationNumber);
+                                }
+                            }
                         }
                         else
                         {
-                            Ui.WriteLine("Det gick inte att skapa ett fordon");
+                            if (menuInputResult == MenuInputResult.CREATE_VEHICLE_FAILED)
+                                Ui.WriteLine("Det gick inte att skapa ett fordon");
                         }
 
-                        result = menuInputResult;
+                        Ui.WriteLine("Return för att fortsätta");
+                        Ui.ReadLine();
                     }
                     else
                     {
                         result = MenuInputResult.WRONG_INPUT;
                     }
-
-                    Ui.WriteLine("Return för att fortsätta");
-                    Ui.ReadLine();
                 }
                 else
                 {
-                    result = MenuInputResult.WRONG_INPUT;
+                    result = MenuInputResult.TO_GARAGE_MENU;
                 }
             }
 
             return result;
+        }
+
+
+        /// <summary>
+        /// Metoden parkerar fordonet i garaget
+        /// </summary>
+        /// <param name="vehicle">Vehicle som vi skall parkera i garaget</param>
+        /// <returns>true om det gick parkera fordonet. Annars returneras false</returns>
+        /// <exception cref="System.ArgumentNullException">Kastas om referensen till Vehicle är null</exception>
+        private bool ParkVehicleInGarage(ICanBeParkedInGarage vehicle)
+        {
+            if (vehicle == null)
+                throw new ArgumentNullException("Exception. CreateAndParkVehicleMenu.ParkVehicleInGarage(). Referensen till vehicle är null");
+
+            bool bParkedVehicle = false;
+
+            // Hämta garagehandler
+            IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
+
+            if (garageHandler != null)
+            {
+                if (garageHandler.ParkVehicle(vehicle))
+                {// Vi har parkerat fordonet i garaget
+                    bParkedVehicle = true;
+                }
+            }
+
+            return bParkedVehicle;
         }
 
 
@@ -228,13 +288,15 @@ namespace Excercise5Garage.Menu
 
             // Hämta registreringsnumret från användaren
             var (tmpResult, strTmpRegistrationNumber) = GetRegistrationNumber();
+            result = tmpResult;
 
-            if(tmpResult == MenuInputResult.CONTINUE)
+            if (tmpResult == MenuInputResult.CONTINUE)
             {// Vi fortsätter och hämtar fordonets färg
                 strRegistrationNumber = strTmpRegistrationNumber;
 
                 // Hämta fordonets färg från användaren
                 var (tmpResult1, strTmpColor) = GetColor(strDefaultColor);
+                result = tmpResult1;
 
                 if(tmpResult1 == MenuInputResult.CONTINUE)
                 {
@@ -242,6 +304,7 @@ namespace Excercise5Garage.Menu
 
                     // Hämta antal hjul som finns på fordonet
                     var (tmpResult2, iTmpNumberOfWheels) = GetNumberOfWheels(iDefaultNumberOfWheels);
+                    result = tmpResult2;
 
                     if(tmpResult2 == MenuInputResult.CONTINUE)
                     {
@@ -249,18 +312,18 @@ namespace Excercise5Garage.Menu
 
                         // Hämta antal sittande passagerare
                         var (tmpResult3, iTmpNumberOfSeatedPassengers) = GetNumberOfSeatedPassengers(iDefaultNumberOfSeatedPassengers);
+                        result = tmpResult3;
 
                         if (tmpResult3 == MenuInputResult.CONTINUE)
                         {
                             iNumberOfSeatedPassengers = iTmpNumberOfSeatedPassengers;
 
-                            newVehicle = vehicleFactory.CreateVehicle(enumVehicleType, strRegistrationNumber, strColor, iNumberOfWheels, iNumberOfSeatedPassengers);
-                            if(newVehicle != null)
-                            {
-                                // Nu behöver jag lägga till registreringsnumret till de upptagna registreringsnumren
-                                this.RegistrationNumberRegister.AddRegistrationNumber(strRegistrationNumber);
+                            newVehicle = vehicleFactory.CreateVehicle(enumVehicleType, strRegistrationNumber, strColor, iNumberOfWheels, iNumberOfSeatedPassengers);                            
+
+                            if (newVehicle != null)
+                                result = MenuInputResult.CREATE_VEHICLE_FAILED;
+                            else
                                 result = MenuInputResult.TO_GARAGE_MENU;
-                            }
                         }
                     }
                 }
@@ -289,6 +352,8 @@ namespace Excercise5Garage.Menu
 
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
+
+                result = MenuInputResult.NA;
 
                 // Visa menyn. Lite special för att kunna få med default antal sittande passagerare
                 strNumberOfSeatedPassengersMenu = this.MenuFactory.GetMenu(MenuType.CREATE_NUMBER_SEATED_PASSENGERS);
@@ -328,7 +393,8 @@ namespace Excercise5Garage.Menu
                 }
                 else
                 {
-                    result = MenuInputResult.WRONG_INPUT;
+                    bRun = false;
+                    result = MenuInputResult.TO_GARAGE_MENU;
                 }
 
             } while (bRun);
@@ -357,6 +423,8 @@ namespace Excercise5Garage.Menu
 
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
+
+                result = MenuInputResult.NA;
 
                 // Visa menyn. Lite special för att kunna få med default antal hjul
                 strNumberOfWheelsMenu = this.MenuFactory.GetMenu(MenuType.CREATE_NUMBER_OF_WHEELS);
@@ -396,7 +464,8 @@ namespace Excercise5Garage.Menu
                 }
                 else
                 {
-                    result = MenuInputResult.WRONG_INPUT;
+                    bRun = false;
+                    result = MenuInputResult.TO_GARAGE_MENU;
                 }
 
             } while (bRun);
@@ -425,8 +494,10 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
+                result = MenuInputResult.NA;
+
                 // Visa menyn. Lite special för att kunna få med default färg
-                strColorMenu = this.MenuFactory.GetMenu(MenuType.CREATE_REGISTRATIONNUMBER);
+                strColorMenu = this.MenuFactory.GetMenu(MenuType.CREATE_COLOR);
                 strColorMenu = strColorMenu + ". (Default är " + strColor + ")" + System.Environment.NewLine;
                 this.Ui.WriteLine(strColorMenu);
 
@@ -483,6 +554,8 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.REGISTRATIONNUMBER_EXISTS)
                     this.Ui.WriteLine("Registreringsnumret finns redan");
 
+                result = MenuInputResult.NA;
+
                 // Visa menyn
                 this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.CREATE_REGISTRATIONNUMBER));
 
@@ -497,9 +570,11 @@ namespace Excercise5Garage.Menu
                         return (result, strRegistrationNumber);
                     }
                     else if (strInput.Length == 1 && strInput.StartsWith('1'))
-                    {// Användaren har valt att automatsikt skapa ett registreringsnummer
+                    {// Användaren har valt att skapa ett registreringsnummer
 
-                        strInput = this.RegistrationNumberRegister.CreateRandomRegistrationNumber();
+                        strRegistrationNumber = this.RegistrationNumberRegister.CreateRandomRegistrationNumber();
+                        result = MenuInputResult.CONTINUE;
+                        return (result, strRegistrationNumber);
                     }
 
                     strRegistrationNumber = strInput.ToUpper();
@@ -514,7 +589,8 @@ namespace Excercise5Garage.Menu
                 }
                 else
                 {
-                    result = MenuInputResult.WRONG_INPUT;
+                    bRun = false;
+                    result = MenuInputResult.TO_GARAGE_MENU;
                 }
 
             } while (bRun);

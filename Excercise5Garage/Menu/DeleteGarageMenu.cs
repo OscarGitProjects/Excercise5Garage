@@ -7,9 +7,9 @@ using System.Collections.Generic;
 namespace Excercise5Garage.Menu
 {
     /// <summary>
-    /// Klass med funktionalitet där användaren kan välja ett garage
+    /// Klass med funktionalitet där användaren kan radera ett garage
     /// </summary>
-    public class SelectGarageMenu
+    public class DeleteGarageMenu
     {
         /// <summary>
         /// Factory där man kan skapa menyer
@@ -35,16 +35,16 @@ namespace Excercise5Garage.Menu
         /// <param name="ui">Referense till objekt för att skriva och hämta indata</param>
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
         /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, ui, lsGarageHandlers är null</exception>
-        public SelectGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
+        public DeleteGarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers)
         {
             if (menuFactory == null)
-                throw new NullReferenceException("NullReferenceException. SelectGarageMenu.SelectGarageMenu(). menuFactory referensen är null");
+                throw new NullReferenceException("NullReferenceException. DeleteGarageMenu.DeleteGarageMenu(). menuFactory referensen är null");
 
             if (ui == null)
-                throw new NullReferenceException("NullReferenceException. SelectGarageMenu.SelectGarageMenu(). ui referensen är null");
+                throw new NullReferenceException("NullReferenceException. DeleteGarageMenu.DeleteGarageMenu(). ui referensen är null");
 
             if (lsGarageHandlers == null)
-                throw new NullReferenceException("NullReferenceException. SelectGarageMenu.SelectGarageMenu(). lsGarageHandlers referensen är null");
+                throw new NullReferenceException("NullReferenceException. DeleteGarageMenu.DeleteGarageMenu(). lsGarageHandlers referensen är null");
 
 
             MenuFactory = menuFactory;
@@ -88,7 +88,6 @@ namespace Excercise5Garage.Menu
                         Ui.WriteLine($"{iCount}. {strName}. Har lediga platser {strIsFull}");
                         iCount++;
                     }
-
 
                     // Hantera inmatning från användaren
                     var (returnResult, iReturnSelectedGarageHandler) = HandleInput(GarageHandlers.Count);
@@ -147,7 +146,7 @@ namespace Excercise5Garage.Menu
             {
                 result = MenuInputResult.TO_MAIN_MENU;
             }
-            
+
             return (result: result, iSelectedGarageHandler: iSelectedGarageHandler);
         }
     }

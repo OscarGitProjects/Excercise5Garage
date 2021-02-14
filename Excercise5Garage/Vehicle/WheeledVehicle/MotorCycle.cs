@@ -1,4 +1,5 @@
-﻿using Excercise5Garage.Garage.Interface;
+﻿using Excercise5Garage.Extensions;
+using Excercise5Garage.Garage.Interface;
 
 namespace Excercise5Garage.Vehicle.WheeledVehicle
 {
@@ -10,12 +11,12 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
         /// <summary>
         /// Default värde på antal hjul
         /// </summary>
-        public static int DefaultNumberOfWheels = 4;
+        public static int DefaultNumberOfWheels = 2;
 
         /// <summary>
         /// Default värde på antal passagerare
         /// </summary>
-        public static int DefaultNumberOfPassengers = 50;
+        public static int DefaultNumberOfPassengers = 2;
 
         /// <summary>
         /// Default färg
@@ -48,7 +49,7 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
         /// <returns>String med information om objektet</returns>
         public override string ToString()
         {
-            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color}, Antal hjul: {this.NumberOfWheels}, Antal sittande passagerare: {this.NumberOfSeatedPassengers}";
+            return $"{this.GetType().Name}. Registreringsnummer: {this.RegistrationNumber}, Färg: {this.Color?.ToLower()?.FirstToUpper()}, Antal hjul: {this.NumberOfWheels}, Antal sittande passagerare: {this.NumberOfSeatedPassengers}";
         }
     }
 }

@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Excercise5Garage.Menu
 {
+    /// <summary>
+    /// Används för att returnera olika resultat från HandleInput
+    /// Talar om vad som skall göras
+    /// </summary>
     public enum MenuInputResult
     {
         NA = 0,
@@ -12,9 +16,14 @@ namespace Excercise5Garage.Menu
         TO_MAIN_MENU = 3,
         TO_GARAGE_MENU = 4,
         CONTINUE = 5,
-        REGISTRATIONNUMBER_EXISTS = 6
+        REGISTRATIONNUMBER_EXISTS = 6,
+        CREATE_VEHICLE_FAILED = 7
     }
 
+
+    /// <summary>
+    /// Olika menyer
+    /// </summary>
     public enum MenuType
     {
         NA = 0,
@@ -28,11 +37,25 @@ namespace Excercise5Garage.Menu
         CREATE_REGISTRATIONNUMBER = 8,
         CREATE_COLOR = 9,
         CREATE_NUMBER_OF_WHEELS = 10,
-        CREATE_NUMBER_SEATED_PASSENGERS = 11
+        CREATE_NUMBER_SEATED_PASSENGERS = 11,
+        DELETE_GARAGE = 12
+
     }
 
+
+    /// <summary>
+    /// Klass som skapar olika menyer
+    /// </summary>
     public class MenuFactory : IMenuFactory
     {
+        /// <summary>
+        /// Metod som returnerar en meny som en textsträng
+        /// 
+        /// Special för menyerna CREATE_COLOR, CREATE_NUMBER_OF_WHEELS och CREATE_NUMBER_SEATED_PASSENGERS.
+        /// Då sista textraden på menyn inte avslutas med nyrad. Det beror på att i de tre fallen måste jag få dit defaulta värden i slutet av meny texten
+        /// </summary>
+        /// <param name="menuType">MenuType som vill vill ha tillbaka</param>
+        /// <returns>Önskad meny som en textsträng</returns>
         public string GetMenu(MenuType menuType)
         {
             StringBuilder strBuilder = new StringBuilder();
@@ -46,6 +69,7 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("0. Avsluta programmet");
                     strBuilder.AppendLine("1. Skapa garage");
                     strBuilder.AppendLine("2. Gå till garage");
+                    strBuilder.AppendLine("3. Radera garage");
                     //strBuilder.AppendLine("3. Simulering av skapa garage, skapa och parkera fordon i garaget");
                     strMenu = strBuilder.ToString();
                     break;
@@ -119,6 +143,12 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("0. För att återgå till menyn");
                     strBuilder.AppendLine("1. För default värde");
                     strBuilder.Append("Ange antal sittande passagerare i fordonet");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.DELETE_GARAGE:
+                    strBuilder.AppendLine("Radera garage");
+                    strBuilder.AppendLine("Välj siffra för önskat garage");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strMenu = strBuilder.ToString();
                     break;
             }
