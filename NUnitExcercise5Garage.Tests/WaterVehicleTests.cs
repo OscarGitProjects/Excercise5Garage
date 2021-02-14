@@ -41,7 +41,7 @@ namespace NUnitExcercise5Garage.Tests
             // Assert
             Assert.AreEqual("ABC 123", strActualRegistrationNumber);
 
-            Assert.AreEqual("Röd", strActualColor);
+            Assert.AreEqual("RÖD", strActualColor);
 
             Assert.AreEqual(2, iActualNumberOfEngins);
         }
@@ -72,7 +72,7 @@ namespace NUnitExcercise5Garage.Tests
             // Assert
             Assert.AreEqual("ABC 123", strActualRegistrationNumber);
 
-            Assert.AreEqual("Röd", strActualColor);
+            Assert.AreEqual("RÖD", strActualColor);
 
             Assert.AreEqual(2, iActualNumberOfEngins);
         }

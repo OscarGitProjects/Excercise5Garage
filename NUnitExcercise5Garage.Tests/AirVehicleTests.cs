@@ -25,7 +25,7 @@ namespace NUnitExcercise5Garage.Tests
         /// </summary>
         [Test]
         [Description("Metoden testar Airplane klassens konstruktor fungerar")]
-        public void PowerBoat_Constructor_Test()
+        public void Airplane_Constructor_Test()
         {
             // Assert.Pass();
 
@@ -44,7 +44,7 @@ namespace NUnitExcercise5Garage.Tests
             // Assert
             Assert.AreEqual("ABC 123", strActualRegistrationNumber);
 
-            Assert.AreEqual("Röd", strActualColor);
+            Assert.AreEqual("RÖD", strActualColor);
 
             Assert.AreEqual(2, iActualNumberOfEngins);
         }
