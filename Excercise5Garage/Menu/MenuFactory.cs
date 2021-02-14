@@ -26,7 +26,9 @@ namespace Excercise5Garage.Menu
         CREATE_AND_PARK_VEHICLE_MENU = 6,
         LEAVE_WITH_VEHICLE_MENU = 7,
         CREATE_REGISTRATIONNUMBER = 8,
-        CREATE_COLOR = 9
+        CREATE_COLOR = 9,
+        CREATE_NUMBER_OF_WHEELS = 10,
+        CREATE_NUMBER_SEATED_PASSENGERS = 11
     }
 
     public class MenuFactory : IMenuFactory
@@ -103,6 +105,20 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("0. För att återgå till menyn");
                     strBuilder.AppendLine("1. För default värde");
                     strBuilder.Append("Ange fordonets färg");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.CREATE_NUMBER_OF_WHEELS:
+                    strBuilder.AppendLine("Ange antal hjul");
+                    strBuilder.AppendLine("0. För att återgå till menyn");
+                    strBuilder.AppendLine("1. För default värde");
+                    strBuilder.Append("Ange antal hjul på fordonet");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.CREATE_NUMBER_SEATED_PASSENGERS:
+                    strBuilder.AppendLine("Ange antal sittande passagerare");
+                    strBuilder.AppendLine("0. För att återgå till menyn");
+                    strBuilder.AppendLine("1. För default värde");
+                    strBuilder.Append("Ange antal sittande passagerare i fordonet");
                     strMenu = strBuilder.ToString();
                     break;
             }

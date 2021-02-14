@@ -20,11 +20,6 @@ namespace Excercise5Garage
         public IMenuFactory MenuFactory { get; }
 
         /// <summary>
-        /// Factory där man kan skapa fordon
-        /// </summary>
-        public IVehicleFactory VehicleFactory { get; }
-
-        /// <summary>
         /// Referense till ui
         /// </summary>
         public IUI Ui { get; }
@@ -45,17 +40,13 @@ namespace Excercise5Garage
         /// Konstruktor
         /// </summary>
         /// <param name="menuFactory">Referens till Factory där vi skapar olika menyer</param>
-        /// <param name="vehicleFactory">referense till en factor där man kan skapa fordon</param>
         /// <param name="ui">Referens till ui</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
         /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, ui eller registrationNumberRegister är null</exception>
-        public GarageProgram(IMenuFactory menuFactory, IVehicleFactory vehicleFactory, IUI ui, IRegistrationNumberRegister registrationNumberRegister)
+        public GarageProgram(IMenuFactory menuFactory, IUI ui, IRegistrationNumberRegister registrationNumberRegister)
         {
             if (menuFactory == null)
                 throw new NullReferenceException("NullReferenceException. GarageProgram.GarageProgram(). menuFactory referensen är null");
-
-            if (vehicleFactory == null)
-                throw new NullReferenceException("NullReferenceException. GarageProgram.GarageProgram(). vehicleFactory referensen är null");
 
             if (ui == null)
                 throw new NullReferenceException("NullReferenceException. GarageProgram.v(). ui referensen är null");
@@ -65,7 +56,6 @@ namespace Excercise5Garage
 
 
             MenuFactory = menuFactory;
-            VehicleFactory = vehicleFactory;
             Ui = ui;
             RegistrationNumberRegister = registrationNumberRegister;
         }
@@ -78,7 +68,7 @@ namespace Excercise5Garage
         public void Run()
         {
             MenuInputResult result = MenuInputResult.NA;
-            MainMenu mainMenu = new MainMenu(this.MenuFactory, this.VehicleFactory, this.Ui, this.lsGarageHandlers, this.RegistrationNumberRegister);
+            MainMenu mainMenu = new MainMenu(this.MenuFactory, this.Ui, this.lsGarageHandlers, this.RegistrationNumberRegister);
 
             do
             {

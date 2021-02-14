@@ -22,11 +22,6 @@ namespace Excercise5Garage.Menu
         public IMenuFactory MenuFactory { get; }
 
         /// <summary>
-        /// Factory där man kan skapa fordon
-        /// </summary>
-        public IVehicleFactory VehicleFactory { get; }
-
-        /// <summary>
         /// Reference till ui
         /// </summary>
         public IUI Ui { get; }
@@ -52,19 +47,15 @@ namespace Excercise5Garage.Menu
         /// Konstruktor
         /// </summary>
         /// <param name="menuFactory">Referense till en factory där man kan hämta text till olika menyer</param>
-        /// <param name="vehicleFactory">referense till en factor där man kan skapa fordon</param>
         /// <param name="ui">Referense till objekt för att skriva och hämta indata</param>
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
         /// <param name="guidSelectedGarageHandlerGuid">Guid för vald GarageHandler</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
         /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, vehicleFactory, ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
-        public GarageMenu(IMenuFactory menuFactory, IVehicleFactory vehicleFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, Guid guidSelectedGarageHandlerGuid, IRegistrationNumberRegister registrationNumberRegister)
+        public GarageMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, Guid guidSelectedGarageHandlerGuid, IRegistrationNumberRegister registrationNumberRegister)
         {
             if (menuFactory == null)
                 throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). menuFactory referensen är null");
-
-            if (vehicleFactory == null)
-                throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). vehicleFactory referensen är null");
 
             if (ui == null)
                 throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). ui referensen är null");
@@ -76,7 +67,6 @@ namespace Excercise5Garage.Menu
                 throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). registrationNumberRegister referensen är null");
 
             MenuFactory = menuFactory;
-            VehicleFactory = vehicleFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;
             SelectedGarageHandlerGuid = guidSelectedGarageHandlerGuid;
@@ -111,6 +101,7 @@ namespace Excercise5Garage.Menu
                     this.Ui.WriteLine($"{strName}. Har lediga platser {strIsFull}. Antal bilar i garaget {iNumberOfParkedVehicle}");
                 }
                 
+                // Visa menyn
                 this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.GARAGE_MENU));
 
                 // Hantera inmatning från användaren
@@ -144,7 +135,7 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('1'))
                 {// Skapa och parkera ett fordon 
 
-                    CreateAndParkVehicleMenu createAndParkVehicleMenu = new CreateAndParkVehicleMenu(this.MenuFactory, this.VehicleFactory, this.Ui, this.GarageHandlers, this.SelectedGarageHandlerGuid, this.RegistrationNumberRegister);
+                    CreateAndParkVehicleMenu createAndParkVehicleMenu = new CreateAndParkVehicleMenu(this.MenuFactory, this.Ui, this.GarageHandlers, this.SelectedGarageHandlerGuid, this.RegistrationNumberRegister);
                     result = createAndParkVehicleMenu.Show();
                 }
                 else if (strInput.StartsWith('2'))

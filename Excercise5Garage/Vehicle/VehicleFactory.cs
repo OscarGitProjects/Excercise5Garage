@@ -63,7 +63,7 @@ namespace Excercise5Garage.Vehicle
                 case Vehicle_Type.MOTORCYCLE:
                     strColor = MotorCycle.DefaultColor;
                     iNumberOfWheels = MotorCycle.DefaultNumberOfWheels;
-                    iNumberOfSeatedPassengers = v.DefaultNumberOfPassengers;
+                    iNumberOfSeatedPassengers = MotorCycle.DefaultNumberOfPassengers;
                     break;
             }
 

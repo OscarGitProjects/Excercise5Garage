@@ -8,7 +8,6 @@ using Excercise5Garage.Vehicle;
 using Excercise5Garage.Vehicle.Interface;
 using System;
 using System.Collections.Generic;
-using Excercise5Garage.Extensions;
 
 namespace Excercise5Garage.Menu
 {
@@ -18,11 +17,6 @@ namespace Excercise5Garage.Menu
         /// Factory där man kan skapa menyer
         /// </summary>
         public IMenuFactory MenuFactory { get; }
-
-        /// <summary>
-        /// Factory där man kan skapa fordon
-        /// </summary>
-        public IVehicleFactory VehicleFactory { get; }
 
         /// <summary>
         /// Reference till ui
@@ -44,18 +38,14 @@ namespace Excercise5Garage.Menu
         /// Konstruktor
         /// </summary>
         /// <param name="menuFactory">Referens till factory för att skapa menyer</param>
-        /// <param name="vehicleFactory">referense till en factor där man kan skapa fordon</param>
         /// <param name="ui">Referens till ui</param>
         /// <param name="lsGarageHandlers">Referense till lista med handlers för olika garage</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
         /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, vehicleFactory, ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
-        public MainMenu(IMenuFactory menuFactory, IVehicleFactory vehicleFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, IRegistrationNumberRegister registrationNumberRegister)
+        public MainMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, IRegistrationNumberRegister registrationNumberRegister)
         {
             if (menuFactory == null)
                 throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). menuFactory referensen är null");
-
-            if (vehicleFactory == null)
-                throw new NullReferenceException("NullReferenceException. GarageMenu.GarageMenu(). vehicleFactory referensen är null");
 
             if (ui == null)
                 throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). ui referensen är null");
@@ -68,7 +58,6 @@ namespace Excercise5Garage.Menu
 
 
             MenuFactory = menuFactory;
-            VehicleFactory = vehicleFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;
             RegistrationNumberRegister = registrationNumberRegister;
@@ -135,7 +124,7 @@ namespace Excercise5Garage.Menu
                     if(iSelectedGarage > 0)
                     {// Användaren har valt ett garage
                         
-                        GarageMenu garageMenu = new GarageMenu(this.MenuFactory, this.VehicleFactory, this.Ui, this.GarageHandlers, this.GarageHandlers[iSelectedGarage - 1].GuidId, this.RegistrationNumberRegister);
+                        GarageMenu garageMenu = new GarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers, this.GarageHandlers[iSelectedGarage - 1].GuidId, this.RegistrationNumberRegister);
                         result = garageMenu.Show();
                     }
                 }
@@ -186,25 +175,25 @@ namespace Excercise5Garage.Menu
             IGarageHandler garageHandler = garageHandlers[0];
 
             // Börja skapa lite fordon som parkeras i garaget            
-            //IVehicleFactory vehicleFactory = new VehicleFactory(this.RegistrationNumberRegister);
+            IVehicleFactory vehicleFactory = new VehicleFactory(this.RegistrationNumberRegister);
 
-            ICanBeParkedInGarage vehicle = this.VehicleFactory.CreateRandomVehicleForGarage();
+            ICanBeParkedInGarage vehicle = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle);
 
-            ICanBeParkedInGarage vehicle1 = this.VehicleFactory.CreateRandomVehicleForGarage();
+            ICanBeParkedInGarage vehicle1 = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle1);
 
-            ICanBeParkedInGarage vehicle2 = this.VehicleFactory.CreateRandomVehicleForGarage();
+            ICanBeParkedInGarage vehicle2 = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle2);
 
-            ICanBeParkedInGarage vehicle3 = this.VehicleFactory.CreateRandomVehicleForGarage();
+            ICanBeParkedInGarage vehicle3 = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle3);
 
-            ICanBeParkedInGarage vehicle4 = this.VehicleFactory.CreateRandomVehicleForGarage();
+            ICanBeParkedInGarage vehicle4 = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle4);
 
             // Garaget är fullt, men vi försöker parkera ett fordon till
-            ICanBeParkedInGarage vehicle5 = this.VehicleFactory.CreateRandomVehicleForGarage();
+            ICanBeParkedInGarage vehicle5 = vehicleFactory.CreateRandomVehicleForGarage();
             garageHandler.ParkVehicle(vehicle5);
 
             garageHandler.PrintInformationAboutGarage();

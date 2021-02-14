@@ -22,11 +22,6 @@ namespace Excercise5Garage.Menu
         public IMenuFactory MenuFactory { get; }
 
         /// <summary>
-        /// Factory där man kan skapa fordon
-        /// </summary>
-        public IVehicleFactory VehicleFactory { get;  }
-
-        /// <summary>
         /// Reference till ui
         /// </summary>
         public IUI Ui { get; }
@@ -52,19 +47,15 @@ namespace Excercise5Garage.Menu
         /// Konstruktor
         /// </summary>
         /// <param name="menuFactory">Referense till en factory där man kan hämta text till olika menyer</param>
-        /// <param name="vehicleFactory">referense till en factor där man kan skapa fordon</param>
         /// <param name="ui">Referense till objekt för att skriva och hämta indata</param>
         /// <param name="lsGarageHandlers">lista med olika garagehandlers. Varje garagehandler hanterar ett garage</param>
         /// <param name="guidSelectedGarageHandlerGuid">Guid för vald GarageHandler</param>
         /// <param name="registrationNumberRegister">Referense till register där använda registreringsnummer finns</param>
         /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, vehicleFactory, ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
-        public CreateAndParkVehicleMenu(IMenuFactory menuFactory, IVehicleFactory vehicleFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, Guid guidSelectedGarageHandlerGuid, IRegistrationNumberRegister registrationNumberRegister)
+        public CreateAndParkVehicleMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, Guid guidSelectedGarageHandlerGuid, IRegistrationNumberRegister registrationNumberRegister)
         {
             if (menuFactory == null)
                 throw new NullReferenceException("NullReferenceException. CreateAndParkVehicleMenu.CreateAndParkVehicleMenu(). menuFactory referensen är null");
-
-            if (vehicleFactory == null)
-                throw new NullReferenceException("NullReferenceException. CreateAndParkVehicleMenu.CreateAndParkVehicleMenu(). vehicleFactory referensen är null");
 
             if (ui == null)
                 throw new NullReferenceException("NullReferenceException. CreateAndParkVehicleMenu.CreateAndParkVehicleMenu(). ui referensen är null");
@@ -77,7 +68,6 @@ namespace Excercise5Garage.Menu
 
 
             MenuFactory = menuFactory;
-            VehicleFactory = vehicleFactory;
             Ui = ui;
             GarageHandlers = lsGarageHandlers;
             SelectedGarageHandlerGuid = guidSelectedGarageHandlerGuid;
@@ -220,13 +210,13 @@ namespace Excercise5Garage.Menu
         /// <summary>
         /// Metoden skapar ett nytt fordon av typ car, bus eller motocycle
         /// </summary>
-        /// <param name="enumVehicleType">Enmu som bestämmer vilket fordon vi skall skapa</param>
-        /// <returns></returns>
+        /// <param name="enumVehicleType">Enum som bestämmer vilket fordon vi skall skapa</param>
+        /// <returns>MenuInputResult och ny vehicle. Vehicle kan vara null. Då gick det inte skapa fordonet eller har användaren valt att återgå till menyn</returns>
         private (MenuInputResult menuInputResult, ICanBeParkedInGarage newVehicle) CreateVehicle(Vehicle_Type enumVehicleType)
         {
-            string strInput = String.Empty;
             MenuInputResult result = MenuInputResult.NA;
             ICanBeParkedInGarage newVehicle = null;
+            IVehicleFactory vehicleFactory = new VehicleFactory(this.RegistrationNumberRegister);
 
             string strRegistrationNumber = String.Empty;
             string strColor = String.Empty;
@@ -234,7 +224,7 @@ namespace Excercise5Garage.Menu
             int iNumberOfSeatedPassengers = 0;
 
             // Hämta defaulta värden för fordonet som vi skall skapa
-            var (strDefaultColor, iDefaultNumberOfWheels, iDefaultNumberOfSeatedPassengers) = this.VehicleFactory.GetDefaultVehicleData(enumVehicleType);
+            var (strDefaultColor, iDefaultNumberOfWheels, iDefaultNumberOfSeatedPassengers) = vehicleFactory.GetDefaultVehicleData(enumVehicleType);
 
             // Hämta registreringsnumret från användaren
             var (tmpResult, strTmpRegistrationNumber) = GetRegistrationNumber();
@@ -264,7 +254,7 @@ namespace Excercise5Garage.Menu
                         {
                             iNumberOfSeatedPassengers = iTmpNumberOfSeatedPassengers;
 
-                            newVehicle = this.VehicleFactory.CreateVehicle(enumVehicleType, strRegistrationNumber, strColor, iNumberOfWheels, iNumberOfSeatedPassengers);
+                            newVehicle = vehicleFactory.CreateVehicle(enumVehicleType, strRegistrationNumber, strColor, iNumberOfWheels, iNumberOfSeatedPassengers);
                             if(newVehicle != null)
                             {
                                 // Nu behöver jag lägga till registreringsnumret till de upptagna registreringsnumren
@@ -279,9 +269,17 @@ namespace Excercise5Garage.Menu
             return (result, newVehicle);
         }
 
+
+        /// <summary>
+        /// Metoden läser in antalet sittande passagerare somm fodonet har. Användaren kan också välja default antal sittande passagerare
+        /// </summary>
+        /// <param name="iDefaultNumberOfSeatedPassengers">Default antal sittande passagerare</param>
+        /// <returns>MenuInputResult och antalet sittande passagerare</returns>
         private (MenuInputResult menuInputResult, int iNumberOfSeatedPassengers) GetNumberOfSeatedPassengers(int iDefaultNumberOfSeatedPassengers)
         {
             MenuInputResult result = MenuInputResult.NA;
+            string strInput = String.Empty;
+            string strNumberOfSeatedPassengersMenu = String.Empty;
             int iNumberOfSeatedPassengers = 0;
             bool bRun = true;            
 
@@ -292,13 +290,41 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
-                // TODO Implementera GetNumberOfSeatedPassengers
-                // this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.CREATE_REGISTRATIONNUMBER));
+                // Visa menyn. Lite special för att kunna få med default antal sittande passagerare
+                strNumberOfSeatedPassengersMenu = this.MenuFactory.GetMenu(MenuType.CREATE_NUMBER_SEATED_PASSENGERS);
+                strNumberOfSeatedPassengersMenu = strNumberOfSeatedPassengersMenu + ". (Default är " + iDefaultNumberOfSeatedPassengers + ")" + System.Environment.NewLine;
+                this.Ui.WriteLine(strNumberOfSeatedPassengersMenu);
 
-                // Inläsning av fordonets färg från användarna
-                string strInput = this.Ui.ReadLine();
+                // Inläsning av antalet sittande passagerare
+                strInput = this.Ui.ReadLine();
                 if (!String.IsNullOrWhiteSpace(strInput))
                 {
+                    strInput = strInput.Trim();
+                    if (strInput.Length == 1 && strInput.StartsWith('0'))
+                    {// Användaren har valt att avsluta programmet. Återgå till menyn
+
+                        result = MenuInputResult.TO_GARAGE_MENU;
+                        return (result, iNumberOfSeatedPassengers);
+                    }
+                    else if (strInput.Length == 1 && strInput.StartsWith('1'))
+                    {// Användaren har valt defaulta antalet sittande passagerare
+
+                        iNumberOfSeatedPassengers = iDefaultNumberOfSeatedPassengers;
+                        result = MenuInputResult.CONTINUE;
+                        return (result, iNumberOfSeatedPassengers);
+                    }
+
+
+                    // Försök att konvertera input till en siffra
+                    if (int.TryParse(strInput, out iNumberOfSeatedPassengers))
+                    {
+                        result = MenuInputResult.CONTINUE;
+                        bRun = false;
+                    }
+                    else
+                    {// Det var ingen siffra
+                        result = MenuInputResult.WRONG_INPUT;
+                    }
                 }
                 else
                 {
@@ -311,11 +337,19 @@ namespace Excercise5Garage.Menu
             return (result, iNumberOfSeatedPassengers);
         }
 
+
+        /// <summary>
+        /// Metoden läser in antalet hjul som fodonet har. Användaren kan också välja default antal hjul
+        /// </summary>
+        /// <param name="iDefaultNumberOfWheels">Default antal hjul</param>
+        /// <returns>MenuInputResult och antal hjul som fordonet har</returns>
         private (MenuInputResult menuInputResult, int iNumberOfWheels) GetNumberOfWheels(int iDefaultNumberOfWheels)
         {
             MenuInputResult result = MenuInputResult.NA;
+            string strInput = string.Empty;
+            string strNumberOfWheelsMenu = String.Empty;
             int iNumberOfWheels = 0;
-            bool bRun = true;            
+            bool bRun = true;
 
             do
             {
@@ -324,13 +358,41 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.WRONG_INPUT)
                     this.Ui.WriteLine("Felaktig inmatning");
 
-                // TODO Implementera GetNumberOfWheels
-                // this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.CREATE_REGISTRATIONNUMBER));
+                // Visa menyn. Lite special för att kunna få med default antal hjul
+                strNumberOfWheelsMenu = this.MenuFactory.GetMenu(MenuType.CREATE_NUMBER_OF_WHEELS);
+                strNumberOfWheelsMenu = strNumberOfWheelsMenu + ". (Default är " + iDefaultNumberOfWheels + ")" + System.Environment.NewLine;
+                this.Ui.WriteLine(strNumberOfWheelsMenu);
 
-                // Inläsning av fordonets färg från användarna
-                string strInput = this.Ui.ReadLine();
+                // Inläsning av antalet hjul
+                strInput = this.Ui.ReadLine();
                 if (!String.IsNullOrWhiteSpace(strInput))
                 {
+                    strInput = strInput.Trim();
+                    if (strInput.Length == 1 && strInput.StartsWith('0'))
+                    {// Användaren har valt att avsluta programmet. Återgå till menyn
+
+                        result = MenuInputResult.TO_GARAGE_MENU;
+                        return (result, iNumberOfWheels);
+                    }
+                    else if (strInput.Length == 1 && strInput.StartsWith('1'))
+                    {// Användaren har valt defaulta antalet hjul på fordonet
+
+                        iNumberOfWheels = iDefaultNumberOfWheels;
+                        result = MenuInputResult.CONTINUE;
+                        return (result, iNumberOfWheels);
+                    }
+
+
+                    // Försök att konvertera input till en siffra
+                    if (int.TryParse(strInput, out iNumberOfWheels))
+                    {
+                        result = MenuInputResult.CONTINUE;
+                        bRun = false;
+                    }
+                    else
+                    {// Det var ingen siffra
+                        result = MenuInputResult.WRONG_INPUT;
+                    }
                 }
                 else
                 {
@@ -352,6 +414,8 @@ namespace Excercise5Garage.Menu
         {
             MenuInputResult result = MenuInputResult.NA;
             string strColor = strDefaultColor.ToUpper();
+            string strInput = String.Empty;
+            string strColorMenu = String.Empty;
             bool bRun = true;
 
             do
@@ -362,12 +426,12 @@ namespace Excercise5Garage.Menu
                     this.Ui.WriteLine("Felaktig inmatning");
 
                 // Visa menyn. Lite special för att kunna få med default färg
-                string strColorMenu = this.MenuFactory.GetMenu(MenuType.CREATE_REGISTRATIONNUMBER);
+                strColorMenu = this.MenuFactory.GetMenu(MenuType.CREATE_REGISTRATIONNUMBER);
                 strColorMenu = strColorMenu + ". (Default är " + strColor + ")" + System.Environment.NewLine;
                 this.Ui.WriteLine(strColorMenu);
 
                 // Inläsning av fordonets färg från användarna
-                string strInput = this.Ui.ReadLine();
+                strInput = this.Ui.ReadLine();
                 if (!String.IsNullOrWhiteSpace(strInput))
                 {
                     strInput = strInput.Trim();
@@ -419,6 +483,7 @@ namespace Excercise5Garage.Menu
                 if (result == MenuInputResult.REGISTRATIONNUMBER_EXISTS)
                     this.Ui.WriteLine("Registreringsnumret finns redan");
 
+                // Visa menyn
                 this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.CREATE_REGISTRATIONNUMBER));
 
                 // Inläsning av fordonets registreringsnummer från användaren
@@ -439,8 +504,7 @@ namespace Excercise5Garage.Menu
 
                     strRegistrationNumber = strInput.ToUpper();
 
-                    bool bRegistrationNumberExists = this.RegistrationNumberRegister.CheckIfRegistrationnNumberExists(strRegistrationNumber);
-                    if (bRegistrationNumberExists)
+                    if (this.RegistrationNumberRegister.CheckIfRegistrationnNumberExists(strRegistrationNumber) )
                         result = MenuInputResult.REGISTRATIONNUMBER_EXISTS;
                     else
                     {
@@ -453,7 +517,7 @@ namespace Excercise5Garage.Menu
                     result = MenuInputResult.WRONG_INPUT;
                 }
 
-            }while (bRun);
+            } while (bRun);
 
             return (result, strRegistrationNumber);
         }
