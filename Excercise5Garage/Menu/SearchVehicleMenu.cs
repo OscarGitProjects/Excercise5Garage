@@ -1,15 +1,14 @@
-﻿using Excercise5Garage.GarageHandler.Interface;
+﻿using Excercise5Garage.Extensions;
+using Excercise5Garage.Garage.Interface;
+using Excercise5Garage.GarageHandler.Interface;
 using Excercise5Garage.Menu.Interface;
 using Excercise5Garage.RegistrationNumber.Interface;
 using Excercise5Garage.UI.Interface;
 using Excercise5Garage.Vehicle.Interface;
+using Excercise5Garage.Vehicle.WheeledVehicle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Excercise5Garage.Extensions;
-using Excercise5Garage.Vehicle.WheeledVehicle;
-using Excercise5Garage.Garage.Interface;
 
 namespace Excercise5Garage.Menu
 {
@@ -100,6 +99,7 @@ namespace Excercise5Garage.Menu
             return result;
         }
 
+
         /// <summary>
         /// Metoden hantera input från användaren
         /// </summary>
@@ -107,22 +107,6 @@ namespace Excercise5Garage.Menu
         private MenuInputResult HandleInput()
         {
             MenuInputResult result = MenuInputResult.NA;
-
-            /* 
-                    strBuilder.AppendLine("Sök efter fordon");
-                    strBuilder.AppendLine("0. För att återgå till menyn");
-                    strBuilder.AppendLine("1. Sök på registreringsnummer");
-                    strBuilder.AppendLine("2. Sök på upptagna registreringsnummer");
-                    strBuilder.AppendLine("3. Sök på färg");
-                    strBuilder.AppendLine("4. Sök på fordonstyp");
-                    strBuilder.AppendLine("5. Sök på antal hjul");
-                    strBuilder.AppendLine("6. Sök på antal sittande passagerare");
-                    strBuilder.AppendLine("7. Sök på text");
-                    strMenu = strBuilder.ToString();
-            */
-
-            // Hämta vald garagehandler
-            //IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
 
             // Inläsning av information från användaren
             string strInput = this.Ui.ReadLine();
@@ -169,7 +153,7 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('7'))
                 {// Sök på en text
 
-                    result = SearchForVehicleWithTxt();
+                    result = SearchForVehicleWithText();
                 }
                 else
                 {
@@ -190,14 +174,24 @@ namespace Excercise5Garage.Menu
         /// Gör sökningen på ett antal properties och sammanställer resultatet
         /// </summary>
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
-        private MenuInputResult SearchForVehicleWithTxt()
+        private MenuInputResult SearchForVehicleWithText()
         {
+            // Listor med sök ord som har matchat något i sökningarna efter vehicle
+            List<string> lsMatchedRegistrationnumbers = new List<string>();
+            List<string> lsMatchedColors = new List<string>();
+            List<string> lsMatchedTypes = new List<string>();
+            List<int> lsMatchedNumberOfWheels = new List<int>();
+            List<int> lsMatchedNumberOfSeatedPassengers = new List<int>();
+
+            // Sammanställd lista med resultat av sökningen
             List<ICanBeParkedInGarage> lsVehicle = new List<ICanBeParkedInGarage>();
             MenuInputResult result = MenuInputResult.NA;
 
             this.Ui.Clear();
 
+            // Skriv ut menyn
             this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.SEARCH_VEHICLE_WITH_TEXT));
+
 
             // Läs in data från användaren
             string strInput = this.Ui.ReadLine();
@@ -212,7 +206,7 @@ namespace Excercise5Garage.Menu
                 else
                 {
                     strInput = strInput.ToLower();
-                    string[] strArray = strInput.Split(' ');
+                    string[] strArray = strInput.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                     int iNumber = 0;
 
                     if (strArray.Length > 0)
@@ -226,45 +220,153 @@ namespace Excercise5Garage.Menu
                                 if (!String.IsNullOrWhiteSpace(str))
                                 {// Vi har tecken. Gör en sökning
 
-                                    // Först söker vi på registreringsnummer
+                                    // Sök på registreringsnummer                                    
                                     var tmpVehiclesRegistrationNumber = garageHandler.Garage.Where(v => ((IVehicle)v).RegistrationNumber.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
                                     if (tmpVehiclesRegistrationNumber?.Count > 0)
+                                    {
                                         lsVehicle.AddRange(tmpVehiclesRegistrationNumber);
+                                        lsMatchedRegistrationnumbers.Add(str);
+                                    }
 
                                     // Sök på färg
                                     var tmpVehiclesColor = garageHandler.Garage.Where(v => ((IVehicle)v).Color.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
                                     if (tmpVehiclesColor?.Count > 0)
+                                    {
                                         lsVehicle.AddRange(tmpVehiclesColor);
+                                        lsMatchedColors.Add(str);
+                                    }
 
                                     // Sök på fordonstyp
                                     var tmpVehiclesType = garageHandler.Garage.Where(v => v.GetType().Name.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
                                     if (tmpVehiclesType?.Count > 0)
+                                    {
                                         lsVehicle.AddRange(tmpVehiclesType);
+                                        lsMatchedTypes.Add(str);
+                                    }
 
                                     if (Int32.TryParse(str, out iNumber))
                                     {
                                         // Sök på antalet hjul
                                         var tmpVehiclesNumberOfWheels = garageHandler.Garage.Where(v => ((WheeledVehicle)v).NumberOfWheels == iNumber).ToList();
                                         if (tmpVehiclesNumberOfWheels?.Count > 0)
+                                        {
                                             lsVehicle.AddRange(tmpVehiclesNumberOfWheels);
+                                            lsMatchedNumberOfWheels.Add(iNumber);
+                                        }
 
                                         // Sök på antalet sittande passagerare
                                         var tmpVehiclesNumberOfSeatedPassengers = garageHandler.Garage.Where(v => ((WheeledVehicle)v).NumberOfSeatedPassengers == iNumber).ToList();
                                         if (tmpVehiclesNumberOfSeatedPassengers?.Count > 0)
+                                        {
                                             lsVehicle.AddRange(tmpVehiclesNumberOfSeatedPassengers);
+                                            lsMatchedNumberOfSeatedPassengers.Add(iNumber);
+                                        }
                                     }
                                 }
-                            }
+                            }// End of foreach strArray
 
 
+                            // Nu skall vi filtrera listan med fordon som har matchat något i sökningen
                             if(lsVehicle?.Count > 0)
                             {// Vi har hittat några vehicle som matchar något av orden som användaren har sökt på
 
                                 // Se till att alla dubbletter försvinner
                                 lsVehicle = lsVehicle.Distinct().ToList();
-                                foreach(IVehicle vehicle in lsVehicle)
+
+                                // Nu måste jag kolla om vi har flera sökningar som skall matcha ett resultat
+                                List<ICanBeParkedInGarage> lsTmpVehicles = new List<ICanBeParkedInGarage>(lsVehicle.Count);
+                                List<ICanBeParkedInGarage> lsTmpFilteredVehicles = null;
+
+                                if (lsMatchedRegistrationnumbers?.Count > 0)
+                                {// Vi har haft matchning på  registreringsnummer. Filtrera bort alla som inte har registreringsnummer som har matchat
+
+                                    foreach(string str in lsMatchedRegistrationnumbers)
+                                    {
+                                        lsTmpFilteredVehicles = lsVehicle.Where(v => ((IVehicle)v).RegistrationNumber.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                                        if (lsTmpFilteredVehicles?.Count > 0)
+                                            lsTmpVehicles.AddRange(lsTmpFilteredVehicles);                                            
+                                    }                                    
+                                }
+
+
+                                if(lsMatchedColors?.Count > 0)
+                                {// Vi har haft matchande färger. Filtrera bort alla som inte har sökt färger
+
+                                    foreach (string str in lsMatchedColors)
+                                    {
+                                        if(lsTmpVehicles?.Count > 0)    // Vi har tidigare filtreringar av vehicle. Använd den listan med vehicles
+                                            lsTmpFilteredVehicles = lsTmpVehicles.Where(v => ((IVehicle)v).Color.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+                                        else
+                                            lsTmpFilteredVehicles = lsVehicle.Where(v => ((IVehicle)v).Color.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                                        if (lsTmpFilteredVehicles?.Count > 0)
+                                            lsTmpVehicles.AddRange(lsTmpFilteredVehicles);
+                                    }
+                                }
+
+
+                                if(lsMatchedTypes?.Count > 0)
+                                {// Vi har haft matchande typer av fordon. Filtrerar bort dom som inte har matchningar
+
+                                    foreach(string str in lsMatchedTypes)
+                                    {
+                                        if(lsTmpVehicles?.Count > 0)    // Vi har tidigare filtreringar av vehicle. Använd den listan med vehicles
+                                            lsTmpFilteredVehicles = lsTmpVehicles.Where(v => v.GetType().Name.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+                                        else 
+                                            lsTmpFilteredVehicles = lsVehicle.Where(v => v.GetType().Name.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                                        if (lsTmpFilteredVehicles?.Count > 0)
+                                            lsTmpVehicles.AddRange(lsTmpFilteredVehicles);
+                                    }
+                                }
+
+
+                                if(lsMatchedNumberOfWheels?.Count > 0)
+                                {// Vi har haft matchande antal hjul på fordon. Filtrerar bort dom som inte har matchningen
+
+                                    foreach(int number in lsMatchedNumberOfWheels)
+                                    {
+                                        if (lsTmpVehicles?.Count > 0)   // Vi har tidigare filtreringar av vehicle. Använd den listan med vehicles
+                                            lsTmpFilteredVehicles = lsTmpVehicles.Where(v => ((WheeledVehicle)v).NumberOfWheels == number).ToList();
+                                        else
+                                            lsTmpFilteredVehicles = lsVehicle.Where(v => ((WheeledVehicle)v).NumberOfWheels == number).ToList();
+
+                                        if (lsTmpFilteredVehicles?.Count > 0)
+                                            lsTmpVehicles.AddRange(lsTmpFilteredVehicles);
+                                    }
+                                }
+
+
+                                if (lsMatchedNumberOfSeatedPassengers?.Count > 0)
+                                {// Vi har haft matchande antal sittande passagerare. Filtrerar bort dom som inte har matchningen
+
+                                    foreach (int number in lsMatchedNumberOfSeatedPassengers)
+                                    {
+                                        if (lsTmpVehicles?.Count > 0)   // Vi har tidigare filtreringar av vehicle. Använd den listan med vehicles
+                                            lsTmpFilteredVehicles = lsTmpVehicles.Where(v => ((WheeledVehicle)v).NumberOfSeatedPassengers == iNumber).ToList();
+                                        else
+                                            lsTmpFilteredVehicles = lsVehicle.Where(v => ((WheeledVehicle)v).NumberOfSeatedPassengers == iNumber).ToList();
+
+                                        if (lsTmpFilteredVehicles?.Count > 0)
+                                            lsTmpVehicles.AddRange(lsTmpFilteredVehicles);
+                                    }
+                                }
+
+                                // Se till att alla dubbletter försvinner
+                                lsVehicle = lsTmpVehicles.Distinct().ToList();
+
+                                if (lsVehicle?.Count > 0)
                                 {
-                                    Ui.WriteLine(vehicle.ToString());
+                                    // Skriv ut de fordon som sökningen matchar
+                                    foreach (IVehicle vehicle in lsVehicle)
+                                    {
+                                        Ui.WriteLine(vehicle.ToString());
+                                    }
+                                }
+                                else
+                                {
+                                    Ui.WriteLine($"Hittade inga fordon med sökningen {strInput}");
                                 }
                             }
                             else
