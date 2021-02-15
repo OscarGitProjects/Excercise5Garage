@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using Excercise5Garage.Extensions;
 using Excercise5Garage.Vehicle.WheeledVehicle;
+using Excercise5Garage.Garage.Interface;
 
 namespace Excercise5Garage.Menu
 {
@@ -153,6 +154,7 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('4'))
                 {// Sök på fordonstyp
 
+                    result = SearchForVehicleOfTyp();
                 }
                 else if (strInput.StartsWith('5'))
                 {// Sök på antal hjul
@@ -167,6 +169,7 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('7'))
                 {// Sök på en text
 
+                    result = SearchForVehicleWithTxt();
                 }
                 else
                 {
@@ -178,6 +181,170 @@ namespace Excercise5Garage.Menu
                 result = MenuInputResult.WRONG_INPUT;
             }
             
+            return result;
+        }
+
+
+        /// <summary>
+        /// Metoden söker efter vehicle med en sök text.
+        /// Gör sökningen på ett antal properties och sammanställer resultatet
+        /// </summary>
+        /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
+        private MenuInputResult SearchForVehicleWithTxt()
+        {
+            List<ICanBeParkedInGarage> lsVehicle = new List<ICanBeParkedInGarage>();
+            MenuInputResult result = MenuInputResult.NA;
+
+            this.Ui.Clear();
+
+            this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.SEARCH_VEHICLE_WITH_TEXT));
+
+            // Läs in data från användaren
+            string strInput = this.Ui.ReadLine();
+            if (!String.IsNullOrWhiteSpace(strInput))
+            {
+                strInput = strInput.Trim();
+                if (strInput.Length == 1 && strInput.StartsWith('0'))
+                {// Användaren har valt att avsluta programmet. Återgå till menyn
+                    result = MenuInputResult.TO_GARAGE_MENU;
+                    return result;
+                }
+                else
+                {
+                    strInput = strInput.ToLower();
+                    string[] strArray = strInput.Split(' ');
+                    int iNumber = 0;
+
+                    if (strArray.Length > 0)
+                    {
+                        // Hämta vald garagehandler
+                        IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
+                        if (garageHandler != null)
+                        {
+                            foreach (string str in strArray)
+                            {
+                                if (!String.IsNullOrWhiteSpace(str))
+                                {// Vi har tecken. Gör en sökning
+
+                                    // Först söker vi på registreringsnummer
+                                    var tmpVehiclesRegistrationNumber = garageHandler.Garage.Where(v => ((IVehicle)v).RegistrationNumber.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+                                    if (tmpVehiclesRegistrationNumber?.Count > 0)
+                                        lsVehicle.AddRange(tmpVehiclesRegistrationNumber);
+
+                                    // Sök på färg
+                                    var tmpVehiclesColor = garageHandler.Garage.Where(v => ((IVehicle)v).Color.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+                                    if (tmpVehiclesColor?.Count > 0)
+                                        lsVehicle.AddRange(tmpVehiclesColor);
+
+                                    // Sök på fordonstyp
+                                    var tmpVehiclesType = garageHandler.Garage.Where(v => v.GetType().Name.Equals(str, StringComparison.OrdinalIgnoreCase)).ToList();
+                                    if (tmpVehiclesType?.Count > 0)
+                                        lsVehicle.AddRange(tmpVehiclesType);
+
+                                    if (Int32.TryParse(str, out iNumber))
+                                    {
+                                        // Sök på antalet hjul
+                                        var tmpVehiclesNumberOfWheels = garageHandler.Garage.Where(v => ((WheeledVehicle)v).NumberOfWheels == iNumber).ToList();
+                                        if (tmpVehiclesNumberOfWheels?.Count > 0)
+                                            lsVehicle.AddRange(tmpVehiclesNumberOfWheels);
+
+                                        // Sök på antalet sittande passagerare
+                                        var tmpVehiclesNumberOfSeatedPassengers = garageHandler.Garage.Where(v => ((WheeledVehicle)v).NumberOfSeatedPassengers == iNumber).ToList();
+                                        if (tmpVehiclesNumberOfSeatedPassengers?.Count > 0)
+                                            lsVehicle.AddRange(tmpVehiclesNumberOfSeatedPassengers);
+                                    }
+                                }
+                            }
+
+
+                            if(lsVehicle?.Count > 0)
+                            {// Vi har hittat några vehicle som matchar något av orden som användaren har sökt på
+
+                                // Se till att alla dubbletter försvinner
+                                lsVehicle = lsVehicle.Distinct().ToList();
+                                foreach(IVehicle vehicle in lsVehicle)
+                                {
+                                    Ui.WriteLine(vehicle.ToString());
+                                }
+                            }
+                            else
+                            {
+                                Ui.WriteLine($"Hittade inga fordon med sökningen {strInput}");
+                            }
+
+                            Ui.WriteLine("Return för att fortsätta");
+                            Ui.ReadLine();
+                        }
+                    }
+                    else
+                    {
+                        result = MenuInputResult.WRONG_INPUT;
+                    }
+                }
+            }
+            else
+            {
+                result = MenuInputResult.WRONG_INPUT;
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Metoden söker efter fordon av en speciell typ
+        /// </summary>
+        /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
+        private MenuInputResult SearchForVehicleOfTyp()
+        {
+            MenuInputResult result = MenuInputResult.NA;
+
+            this.Ui.Clear();
+
+            this.Ui.WriteLine(this.MenuFactory.GetMenu(MenuType.SEARCH_WITH_VEHICLE_TYPE));
+
+            // Inläsning av sökt färg från användaren
+            string strInput = this.Ui.ReadLine();
+            if (!String.IsNullOrWhiteSpace(strInput))
+            {
+                strInput = strInput.Trim();
+                if (strInput.Length == 1 && strInput.StartsWith('0'))
+                {// Användaren har valt att avsluta programmet. Återgå till menyn
+                    result = MenuInputResult.TO_GARAGE_MENU;
+                    return result;
+                }
+                else
+                {
+                    strInput = strInput.ToLower();
+
+                    // Hämta vald garagehandler
+                    IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
+                    if (garageHandler != null)
+                    {
+                        var lsVehicles = garageHandler.Garage.Where(v => v.GetType().Name.Equals(strInput, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                        if (lsVehicles?.Count > 0)
+                        {
+                            foreach (var vehicle in lsVehicles)
+                            {
+                                Ui.WriteLine(vehicle.ToString());
+                            }
+                        }
+                        else
+                        {
+                            Ui.WriteLine($"Hittade inga fordon av typen {strInput}");
+                        }
+
+                        Ui.WriteLine("Return för att fortsätta");
+                        Ui.ReadLine();
+                    }
+                }
+            }
+            else
+            {
+                result = MenuInputResult.WRONG_INPUT;
+            }
+
             return result;
         }
 
@@ -214,7 +381,7 @@ namespace Excercise5Garage.Menu
                         IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
                         if (garageHandler != null)
                         {
-                            var lsVehicles = garageHandler.Garage.Where(vv => ((WheeledVehicle)vv).NumberOfWheels == iNumberOfSeatedPassengers).ToList();
+                            var lsVehicles = garageHandler.Garage.Where(vv => ((WheeledVehicle)vv).NumberOfSeatedPassengers == iNumberOfSeatedPassengers).ToList();
 
                             if (lsVehicles?.Count > 0)
                             {

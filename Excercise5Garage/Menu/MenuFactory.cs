@@ -42,7 +42,9 @@ namespace Excercise5Garage.Menu
         SEARCH_VEHICLE_WITH_REGISTRATIONNUMBER = 13,
         SEARCH_FOR_USED_REGISTRATIONNUMBER = 14,
         SEARCH_VEHICLE_WITH_COLOR = 15,
-        SEARCH_VEHICLE_WITH_NUMBER_OF_WHEELS = 16
+        SEARCH_VEHICLE_WITH_NUMBER_OF_WHEELS = 16,
+        SEARCH_WITH_VEHICLE_TYPE = 17,
+        SEARCH_VEHICLE_WITH_TEXT = 18
 
     }
 
@@ -184,6 +186,19 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("Sök fordon med antal hjul");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strBuilder.AppendLine("Ange antal hjul");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.SEARCH_WITH_VEHICLE_TYPE:
+                    strBuilder.AppendLine("Sök fordon av typ");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange vilken typ av fordon som söks");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.SEARCH_VEHICLE_WITH_TEXT:
+                    strBuilder.AppendLine("Sök fordon. Returnerar alla som matchar något uttryck som ni har sökt på");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange en text med vad ni söker"); 
+                    strBuilder.AppendLine("ex färg, typ av fordon, registreringsnummer, antal hjul, antal passagerare");
                     strMenu = strBuilder.ToString();
                     break;
             }

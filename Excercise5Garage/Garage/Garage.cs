@@ -217,7 +217,7 @@ namespace Excercise5Garage.Garage
         public string PrintAllInformation()
         {
             StringBuilder strBuilder = new StringBuilder();
-            strBuilder.AppendLine($"Id: {this.GarageID}, Name: {this.GarageName}, Capacity: {this.Capacity}, Count: {this.Count}");
+            strBuilder.AppendLine($"Id: {this.GarageID}, Namn: {this.GarageName}, Kapacitet: {this.Capacity}, Antal parkerade fordon: {this.Count}");
 
             if (!IsEmpty)
             {// Det finns parkerade fordon. Hämta info om dessa

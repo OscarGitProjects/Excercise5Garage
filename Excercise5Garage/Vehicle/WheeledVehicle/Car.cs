@@ -23,10 +23,6 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
         /// </summary>
         public static string DefaultColor = "SVART";
 
-        /// <summary>
-        /// Antalet sittande passagerar som fordonet kan ta
-        /// </summary>
-        public int NumberOfSeatedPassengers { get; set; }
 
 
         /// <summary>
@@ -36,9 +32,8 @@ namespace Excercise5Garage.Vehicle.WheeledVehicle
         /// <param name="strColor">Bilens färg. Default värde är Svart</param>
         /// <param name="iNumberOfWheels">Antal hjul på bilen. Default värde är 4</param>
         /// <param name="iNumberOfSeatedPassengers">Antal sittande passagerar som fordonet kan ta. Default är 5</param>
-        public Car(string strRegistrationNumber, string strColor = "SVART", int iNumberOfWheels = 4, int iNumberOfSeatedPassengers = 5) : base(strRegistrationNumber, strColor, iNumberOfWheels)
+        public Car(string strRegistrationNumber, string strColor = "SVART", int iNumberOfWheels = 4, int iNumberOfSeatedPassengers = 5) : base(strRegistrationNumber, strColor, iNumberOfWheels, iNumberOfSeatedPassengers)
         {
-            NumberOfSeatedPassengers = iNumberOfSeatedPassengers;
         }
 
 

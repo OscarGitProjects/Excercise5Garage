@@ -723,5 +723,112 @@ namespace NUnitExcercise5Garage.Tests
 
             Assert.AreEqual(actualVec2.RegistrationNumber, ((Vehicle)vehicle2).RegistrationNumber);
         }
+
+
+        /// <summary>
+        /// Metoden lägger kontrollerar att sökningen efter vehicle med registreringsnummer fungerar
+        /// </summary>
+        [Test]
+        [Description("Metoden lägger kontrollerar att sökningen efter vehicle med registreringsnummer fungerar")]
+        public void Garage_Count_Number_Of_Vehicle_With_Registrationnumber()
+        {
+            // Assert.Pass();
+
+            // Arrange
+            // expected      
+            Guid guid = Guid.NewGuid();
+
+            Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", 5);
+
+            ICanBeParkedInGarage vehicle1 = new Car("AAA 111", "Röd", 4);
+            ICanBeParkedInGarage vehicle2 = new Bus("BBB 222", "Grön", 50);
+
+
+            // Act
+            // actual           
+            int iActualNumberOfVehicleBeforeAddedVehicle = garage.CountVehicleWithRegistrationNumber("AAA 111");
+
+            // Lägg till 2 fordon
+            garage.Add(vehicle1);
+            garage.Add(vehicle2);
+
+            int iActualNumberOfVehicleAfterAddedVehicle = garage.CountVehicleWithRegistrationNumber("AAA 111");
+
+            // Assert
+            Assert.AreEqual(0, iActualNumberOfVehicleBeforeAddedVehicle);
+            Assert.AreEqual(1, iActualNumberOfVehicleAfterAddedVehicle);
+        }
+
+
+        /// <summary>
+        /// Metoden testar att GetGarageInfo() returnerar rätt information
+        /// </summary>
+        [Test]
+        [Description("Metoden testar att GetGarageInfo() returnerar rätt information")]
+        public void Garage_GetGarageInfo()
+        {
+            // public (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo()
+
+            // Assert.Pass();
+
+            // Arrange
+            // expected      
+            Guid guid = Guid.NewGuid();
+
+            Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", 5);
+
+            ICanBeParkedInGarage vehicle1 = new Car("AAA 111", "Röd", 4);
+            ICanBeParkedInGarage vehicle2 = new Bus("BBB 222", "Grön", 50);
+
+            // Lägg till 2 fordon
+            garage.Add(vehicle1);
+            garage.Add(vehicle2);
+
+            // Act
+            // actual           
+            var(strActualId, strActualName, bActualIsFull, iActualCapacity, iActualNumberOfParkedVehicle) = garage.GetGarageInfo();
+
+
+            // Assert
+            Assert.AreEqual(guid.ToString(), strActualId);
+            Assert.AreEqual("Garage 1", strActualName);
+            Assert.AreEqual(false, bActualIsFull);
+            Assert.AreEqual(5, iActualCapacity);
+            Assert.AreEqual(2, iActualNumberOfParkedVehicle);
+        }
+
+
+        /// <summary>
+        /// Metoden testar att beräkningen av antal vehcile i garaget fungerar
+        /// </summary>
+        [Test]
+        [Description("Metoden testar att beräkningen av antal vehcile i garaget fungerar")]
+        public void Garage_Vehicle_Count()
+        {
+            // public (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo()
+
+            // Assert.Pass();
+
+            // Arrange
+            // expected      
+            Guid guid = Guid.NewGuid();
+
+            Garage<ICanBeParkedInGarage> garage = new Garage<ICanBeParkedInGarage>(guid, "Garage 1", 5);
+
+            ICanBeParkedInGarage vehicle1 = new Car("AAA 111", "Röd", 4);
+            ICanBeParkedInGarage vehicle2 = new Bus("BBB 222", "Grön", 50);
+
+            // Lägg till 2 fordon
+            garage.Add(vehicle1);
+            garage.Add(vehicle2);
+
+            // Act
+            // actual           
+            int iActualNumberOfVehicles = garage.Count;
+
+
+            // Assert
+            Assert.AreEqual(2, iActualNumberOfVehicles);
+        }
     }
 }
