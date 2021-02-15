@@ -113,7 +113,6 @@ namespace Excercise5Garage.Menu
 
         /// <summary>
         /// Metoden hanterar inmatning av kommandon från ui
-        /// Hanterar inmatning av val av Garagehandler
         /// </summary>
         /// <param name="iNumberOfGarageHandlers">Antalet garagehandler som det finns</param>
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando. Index till vald garagehandler</returns>

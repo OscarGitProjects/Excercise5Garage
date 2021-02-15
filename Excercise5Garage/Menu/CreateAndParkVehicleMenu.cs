@@ -76,7 +76,7 @@ namespace Excercise5Garage.Menu
 
 
         /// <summary>
-        /// Metoden visar menyn där användaren skall ange registreringsnummer för det fordon som skall lämna garaget
+        /// Metoden visar huvudmenyn där användaren kan skapa och parkera ett fordon i garaget
         /// </summary>
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
         public MenuInputResult Show()

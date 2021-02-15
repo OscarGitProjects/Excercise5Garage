@@ -167,7 +167,8 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('6'))
                 {// Sök efter fordon
 
-                    // TODO SÖKNING EFTER FORDON
+                    SearchVehicleMenu searchVehicleMenu = new SearchVehicleMenu(this.MenuFactory, this.Ui, this.GarageHandlers, this.SelectedGarageHandlerGuid, this.RegistrationNumberRegister);
+                    result = searchVehicleMenu.Show();
                 }
             }
             else

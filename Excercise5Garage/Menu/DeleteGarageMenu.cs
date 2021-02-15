@@ -54,7 +54,7 @@ namespace Excercise5Garage.Menu
 
 
         /// <summary>
-        /// Metoden visar menyn för att välja garage
+        /// Metoden visar menyn där användaren kan radera ett garage
         /// </summary>
         /// <returns>Index för valt garage eller 0 för ej valt garage</returns>
         public int Show()
@@ -112,7 +112,6 @@ namespace Excercise5Garage.Menu
 
         /// <summary>
         /// Metoden hanterar inmatning av kommandon från ui
-        /// Hanterar inmatning av val av Garagehandler
         /// </summary>
         /// <param name="iNumberOfGarageHandlers">Antalet garagehandler som det finns</param>
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando. Index till vald garagehandler</returns>

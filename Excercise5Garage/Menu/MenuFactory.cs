@@ -38,7 +38,11 @@ namespace Excercise5Garage.Menu
         CREATE_COLOR = 9,
         CREATE_NUMBER_OF_WHEELS = 10,
         CREATE_NUMBER_SEATED_PASSENGERS = 11,
-        DELETE_GARAGE = 12
+        DELETE_GARAGE = 12,
+        SEARCH_VEHICLE_WITH_REGISTRATIONNUMBER = 13,
+        SEARCH_FOR_USED_REGISTRATIONNUMBER = 14,
+        SEARCH_VEHICLE_WITH_COLOR = 15,
+        SEARCH_VEHICLE_WITH_NUMBER_OF_WHEELS = 16
 
     }
 
@@ -98,9 +102,16 @@ namespace Excercise5Garage.Menu
                     strMenu = strBuilder.ToString();
                     break; ;
                 case MenuType.SOK_VEHICLE_IN_GARAGE_MENU:
-
-                    // TODO GÖR MENYN FÖR SÖKNING AV FORDON
-
+                    strBuilder.AppendLine("Sök efter fordon");
+                    strBuilder.AppendLine("0. För att återgå till menyn");
+                    strBuilder.AppendLine("1. Sök på registreringsnummer");
+                    strBuilder.AppendLine("2. Sök på upptagna registreringsnummer");
+                    strBuilder.AppendLine("3. Sök på färg");
+                    strBuilder.AppendLine("4. Sök på fordonstyp");
+                    strBuilder.AppendLine("5. Sök på antal hjul");
+                    strBuilder.AppendLine("6. Sök på antal sittande passagerare");
+                    strBuilder.AppendLine("7. Sök på text");
+                    strMenu = strBuilder.ToString();
                     break;
                 case MenuType.CREATE_AND_PARK_VEHICLE_MENU:                    
                     strBuilder.AppendLine("Skapa nytt fordon och parkera i garaget");
@@ -149,6 +160,30 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("Radera garage");
                     strBuilder.AppendLine("Välj siffra för önskat garage");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.SEARCH_VEHICLE_WITH_REGISTRATIONNUMBER:
+                    strBuilder.AppendLine("Sök fordon på registreringsnummer");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange registreringsnummer");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.SEARCH_FOR_USED_REGISTRATIONNUMBER:
+                    strBuilder.AppendLine("Sök registreringsnummer i registret med använda registreringsnummer");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange registreringsnummer");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.SEARCH_VEHICLE_WITH_COLOR:
+                    strBuilder.AppendLine("Sök fordon med färgen");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange färg");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.SEARCH_VEHICLE_WITH_NUMBER_OF_WHEELS:
+                    strBuilder.AppendLine("Sök fordon med antal hjul");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange antal hjul");
                     strMenu = strBuilder.ToString();
                     break;
             }

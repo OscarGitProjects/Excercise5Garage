@@ -5,7 +5,15 @@
     /// </summary>
     public class WheeledVehicle : Vehicle
     {
+        /// <summary>
+        /// Antal hjul på fordonet
+        /// </summary>
         public int NumberOfWheels { get; set; }
+
+        /// <summary>
+        /// Antalet sittande passagerar som fordonet kan ta
+        /// </summary>
+        public int NumberOfSeatedPassengers { get; set; }
 
 
         /// <summary>
@@ -14,9 +22,11 @@
         /// <param name="strRegistrationNumber">Fordonets registreringsnummer</param>
         /// <param name="strColor">Fordonets färg</param>
         /// <param name="iNumberOfWheels">Antal hjul på Fordonet</param>
-        public WheeledVehicle(string strRegistrationNumber, string strColor, int iNumberOfWheels): base(strRegistrationNumber, strColor)
+        /// <param name="iNumberOfSeatedPassengers">Antal sittande passagerare</param>
+        public WheeledVehicle(string strRegistrationNumber, string strColor, int iNumberOfWheels, int iNumberOfSeatedPassengers) : base(strRegistrationNumber, strColor)
         {
             this.NumberOfWheels = iNumberOfWheels;
+            this.NumberOfSeatedPassengers = iNumberOfSeatedPassengers;
         }
     }
 }
