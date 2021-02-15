@@ -17,7 +17,9 @@ namespace Excercise5Garage.Menu
         TO_GARAGE_MENU = 4,
         CONTINUE = 5,
         REGISTRATIONNUMBER_EXISTS = 6,
-        CREATE_VEHICLE_FAILED = 7
+        CREATE_VEHICLE_FAILED = 7,
+        TO_SEARCH_MENU = 8
+
     }
 
 
@@ -43,8 +45,9 @@ namespace Excercise5Garage.Menu
         SEARCH_FOR_USED_REGISTRATIONNUMBER = 14,
         SEARCH_VEHICLE_WITH_COLOR = 15,
         SEARCH_VEHICLE_WITH_NUMBER_OF_WHEELS = 16,
-        SEARCH_WITH_VEHICLE_TYPE = 17,
-        SEARCH_VEHICLE_WITH_TEXT = 18
+        SEARCH_VEHICLE_WITH_VEHICLE_TYPE = 17,
+        SEARCH_VEHICLE_WITH_TEXT = 18,
+        SEARCH_VEHICLE_WITH_NUMBER_OF_SEATED_PASSENGERS = 19
 
     }
 
@@ -188,7 +191,7 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("Ange antal hjul");
                     strMenu = strBuilder.ToString();
                     break;
-                case MenuType.SEARCH_WITH_VEHICLE_TYPE:
+                case MenuType.SEARCH_VEHICLE_WITH_VEHICLE_TYPE:
                     strBuilder.AppendLine("Sök fordon av typ");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strBuilder.AppendLine("Ange vilken typ av fordon som söks");
@@ -199,6 +202,12 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strBuilder.AppendLine("Ange en text med vad ni söker"); 
                     strBuilder.AppendLine("ex färg, typ av fordon, registreringsnummer, antal hjul, antal passagerare");
+                    strMenu = strBuilder.ToString();
+                    break;
+                case MenuType.SEARCH_VEHICLE_WITH_NUMBER_OF_SEATED_PASSENGERS:
+                    strBuilder.AppendLine("Sök fordon med antal sittande passagerare");
+                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.AppendLine("Ange antal sittande passagerare");
                     strMenu = strBuilder.ToString();
                     break;
             }
