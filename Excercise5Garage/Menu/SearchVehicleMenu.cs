@@ -138,7 +138,7 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('4'))
                 {// Sök på fordonstyp
 
-                    result = SearchForVehicleOfTyp();
+                    result = SearchForVehicleOfType();
                 }
                 else if (strInput.StartsWith('5'))
                 {// Sök på antal hjul
@@ -451,7 +451,7 @@ namespace Excercise5Garage.Menu
         /// Metoden söker efter fordon av en speciell typ
         /// </summary>
         /// <returns>enum MenuInputResult med olika värden beroende på användarens kommando</returns>
-        private MenuInputResult SearchForVehicleOfTyp()
+        private MenuInputResult SearchForVehicleOfType()
         {
             MenuInputResult result = MenuInputResult.NA;
 
