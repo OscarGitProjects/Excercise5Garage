@@ -120,9 +120,14 @@ namespace Excercise5Garage.Garage
             bool bRemovedObject = false;
             for(int i = 0; i < arrVehicles.Length; i++)
             {
-                if(arrVehicles[i] != null)
+                if (arrVehicles[i] != null)
+                {
                     if (vehicle.Equals(arrVehicles[i]))
+                    {
                         bRemovedObject = Remove(i);
+                        break;
+                    }
+                }
             }
 
             return bRemovedObject;
