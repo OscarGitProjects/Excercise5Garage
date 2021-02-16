@@ -381,7 +381,7 @@ namespace Excercise5Garage.Menu
 
 
                     // Försök att konvertera input till en siffra
-                    if (int.TryParse(strInput, out iNumberOfSeatedPassengers))
+                    if (int.TryParse(strInput, out iNumberOfSeatedPassengers) && iNumberOfSeatedPassengers > 0)
                     {
                         result = MenuInputResult.CONTINUE;
                         bRun = false;
@@ -452,7 +452,7 @@ namespace Excercise5Garage.Menu
 
 
                     // Försök att konvertera input till en siffra
-                    if (int.TryParse(strInput, out iNumberOfWheels))
+                    if (int.TryParse(strInput, out iNumberOfWheels) && iNumberOfWheels > 0)
                     {
                         result = MenuInputResult.CONTINUE;
                         bRun = false;
@@ -579,7 +579,7 @@ namespace Excercise5Garage.Menu
 
                     strRegistrationNumber = strInput.ToUpper();
 
-                    if (this.RegistrationNumberRegister.CheckIfRegistrationnNumberExists(strRegistrationNumber) )
+                    if (this.RegistrationNumberRegister.CheckIfRegistrationNumberExists(strRegistrationNumber) )
                         result = MenuInputResult.REGISTRATIONNUMBER_EXISTS;
                     else
                     {

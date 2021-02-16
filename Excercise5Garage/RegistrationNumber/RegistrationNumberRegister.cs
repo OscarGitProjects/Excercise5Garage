@@ -56,7 +56,7 @@ namespace Excercise5Garage.RegistrationNumber
         /// </summary>
         /// <param name="strRegistrationNumber">Sökt registreringsnummer</param>
         /// <returns>true om registreringsnumret redan finns. Annars returneras false</returns>
-        public bool CheckIfRegistrationnNumberExists(string strRegistrationNumber)
+        public bool CheckIfRegistrationNumberExists(string strRegistrationNumber)
         {
             bool bRegisterNumberExists= false;
             string strTmpRegistrationNumber = strRegistrationNumber.ToUpper();
@@ -78,7 +78,7 @@ namespace Excercise5Garage.RegistrationNumber
         {
             bool bAddedRegistrationNumber = false;
 
-            if (CheckIfRegistrationnNumberExists(strRegistrationNumber) == false)
+            if (CheckIfRegistrationNumberExists(strRegistrationNumber) == false)
             {
                 this.RegistrationNumbers.Add(strRegistrationNumber.ToUpper());
                 bAddedRegistrationNumber = true;
@@ -97,7 +97,7 @@ namespace Excercise5Garage.RegistrationNumber
         {
             bool bRemovedRegistrationNumber = false;
 
-            if (CheckIfRegistrationnNumberExists(strRegistrationNumber) == true)
+            if (CheckIfRegistrationNumberExists(strRegistrationNumber) == true)
                 bRemovedRegistrationNumber = this.RegistrationNumbers.Remove(strRegistrationNumber.ToUpper());
 
             return bRemovedRegistrationNumber;
@@ -135,7 +135,7 @@ namespace Excercise5Garage.RegistrationNumber
 
                 strRegistrationNumber = strTextPart + strNumberPart;
 
-                if (!this.CheckIfRegistrationnNumberExists(strRegistrationNumber))
+                if (!this.CheckIfRegistrationNumberExists(strRegistrationNumber))
                     // Registreringsnumret fanns inte. Det går bra att använda det
                     bRun = false;
             }

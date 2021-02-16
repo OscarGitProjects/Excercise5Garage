@@ -776,7 +776,7 @@ namespace Excercise5Garage.Menu
                 {
                     strInput = strInput.ToUpper();
 
-                    if(this.RegistrationNumberRegister.CheckIfRegistrationnNumberExists(strInput))
+                    if(this.RegistrationNumberRegister.CheckIfRegistrationNumberExists(strInput))
                     {
                         Ui.WriteLine($"Registreringsnummer {strInput} är upptaget");
                     }
