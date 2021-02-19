@@ -59,9 +59,6 @@ namespace Excercise5Garage.Menu
     {
         /// <summary>
         /// Metod som returnerar en meny som en textsträng
-        /// 
-        /// Special för menyerna CREATE_COLOR, CREATE_NUMBER_OF_WHEELS och CREATE_NUMBER_SEATED_PASSENGERS.
-        /// Då sista textraden på menyn inte avslutas med nyrad. Det beror på att i de tre fallen måste jag få dit defaulta värden i slutet av meny texten
         /// </summary>
         /// <param name="menuType">MenuType som vill vill ha tillbaka</param>
         /// <returns>Önskad meny som en textsträng</returns>
@@ -78,20 +75,19 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("0. Avsluta programmet");
                     strBuilder.AppendLine("1. Skapa garage");
                     strBuilder.AppendLine("2. Gå till garage");
-                    strBuilder.AppendLine("3. Radera garage");
-                    //strBuilder.AppendLine("3. Simulering av skapa garage, skapa och parkera fordon i garaget");
+                    strBuilder.Append("3. Radera garage");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.CREATE_GARAGE_MENU:
                     strBuilder.AppendLine("Skapa ett nytt garage");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
-                    strBuilder.AppendLine("Ange namn på garaget");
+                    strBuilder.Append("Ange namn på garaget");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SELECT_GARAGE_MENU:
                     strBuilder.AppendLine("Välj garage");
                     strBuilder.AppendLine("Välj siffra för önskat garage");
-                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.Append("0. För att återgå till huvudmenyn");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.GARAGE_MENU:
@@ -103,7 +99,7 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("   Sedan lämnar ett fordon garaget");
                     strBuilder.AppendLine("4. Lista alla fordon");
                     strBuilder.AppendLine("5. Lista alla fordon per typ");
-                    strBuilder.AppendLine("6. Söka efter fordon");
+                    strBuilder.Append("6. Söka efter fordon");
                     strMenu = strBuilder.ToString();
                     break; ;
                 case MenuType.SOK_VEHICLE_IN_GARAGE_MENU:
@@ -115,7 +111,7 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("4. Sök på fordonstyp");
                     strBuilder.AppendLine("5. Sök på antal hjul");
                     strBuilder.AppendLine("6. Sök på antal sittande passagerare");
-                    strBuilder.AppendLine("7. Sök på text");
+                    strBuilder.Append("7. Sök på text");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.CREATE_AND_PARK_VEHICLE_MENU:                    
@@ -124,20 +120,20 @@ namespace Excercise5Garage.Menu
                     strBuilder.AppendLine("0. För att återgå till menyn");
                     strBuilder.AppendLine("1. Skapa en bil");
                     strBuilder.AppendLine("2. Skapa en buss");
-                    strBuilder.AppendLine("3. Skapa en motorcykel");
+                    strBuilder.Append("3. Skapa en motorcykel");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.LEAVE_WITH_VEHICLE_MENU:
                     strBuilder.AppendLine("Lämna garaget med fordon");
                     strBuilder.AppendLine("0. För att återgå till menyn");
-                    strBuilder.AppendLine("Ange fordonets registreringsnummer");
+                    strBuilder.Append("Ange fordonets registreringsnummer");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.CREATE_REGISTRATIONNUMBER:
                     strBuilder.AppendLine("Ange registreringsnumret");
                     strBuilder.AppendLine("0. För att återgå till menyn");
                     strBuilder.AppendLine("1. För att automatiskt skapa ett registreringsnummer");
-                    strBuilder.AppendLine("Ange fordonets registreringsnummer");
+                    strBuilder.Append("Ange fordonets registreringsnummer");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.CREATE_COLOR:
@@ -164,50 +160,50 @@ namespace Excercise5Garage.Menu
                 case MenuType.DELETE_GARAGE:
                     strBuilder.AppendLine("Radera garage");
                     strBuilder.AppendLine("Välj siffra för önskat garage");
-                    strBuilder.AppendLine("0. För att återgå till huvudmenyn");
+                    strBuilder.Append("0. För att återgå till huvudmenyn");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SEARCH_VEHICLE_WITH_REGISTRATIONNUMBER:
                     strBuilder.AppendLine("Sök fordon på registreringsnummer");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
-                    strBuilder.AppendLine("Ange registreringsnummer");
+                    strBuilder.Append("Ange registreringsnummer");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SEARCH_FOR_USED_REGISTRATIONNUMBER:
                     strBuilder.AppendLine("Sök registreringsnummer i registret med använda registreringsnummer");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
-                    strBuilder.AppendLine("Ange registreringsnummer");
+                    strBuilder.Append("Ange registreringsnummer");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SEARCH_VEHICLE_WITH_COLOR:
                     strBuilder.AppendLine("Sök fordon med färgen");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
-                    strBuilder.AppendLine("Ange färg");
+                    strBuilder.Append("Ange färg");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SEARCH_VEHICLE_WITH_NUMBER_OF_WHEELS:
                     strBuilder.AppendLine("Sök fordon med antal hjul");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
-                    strBuilder.AppendLine("Ange antal hjul");
+                    strBuilder.Append("Ange antal hjul");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SEARCH_VEHICLE_WITH_VEHICLE_TYPE:
                     strBuilder.AppendLine("Sök fordon av typ");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
-                    strBuilder.AppendLine("Ange vilken typ av fordon som söks");
+                    strBuilder.Append("Ange vilken typ av fordon som söks");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SEARCH_VEHICLE_WITH_TEXT:
                     strBuilder.AppendLine("Sök fordon. Returnerar alla som matchar något uttryck som ni har sökt på");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
                     strBuilder.AppendLine("Ange en text med vad ni söker"); 
-                    strBuilder.AppendLine("ex färg, typ av fordon, registreringsnummer, antal hjul, antal passagerare");
+                    strBuilder.Append("ex färg, typ av fordon, registreringsnummer, antal hjul, antal passagerare");
                     strMenu = strBuilder.ToString();
                     break;
                 case MenuType.SEARCH_VEHICLE_WITH_NUMBER_OF_SEATED_PASSENGERS:
                     strBuilder.AppendLine("Sök fordon med antal sittande passagerare");
                     strBuilder.AppendLine("0. För att återgå till huvudmenyn");
-                    strBuilder.AppendLine("Ange antal sittande passagerare");
+                    strBuilder.Append("Ange antal sittande passagerare");
                     strMenu = strBuilder.ToString();
                     break;
             }

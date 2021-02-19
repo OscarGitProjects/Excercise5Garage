@@ -44,8 +44,8 @@ namespace Excercise5Garage.Menu
         /// <exception cref="System.NullReferenceException">Kan kastas om referensen till menuFactory, vehicleFactory, ui, lsGarageHandlers eller registrationNumberRegister är null</exception>
         public MainMenu(IMenuFactory menuFactory, IUI ui, IList<IGarageHandler> lsGarageHandlers, IRegistrationNumberRegister registrationNumberRegister)
         {
-            if (menuFactory == null)
-                throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). menuFactory referensen är null");
+            //if (menuFactory == null)
+            //    throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). menuFactory referensen är null");
 
             if (ui == null)
                 throw new NullReferenceException("NullReferenceException. MainMenu.MainMenu(). ui referensen är null");
@@ -112,7 +112,7 @@ namespace Excercise5Garage.Menu
                 else if (strInput.StartsWith('1'))
                 {// Skapa garage
 
-                    CreateGarageMenu createGarageMenu = new CreateGarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers, this.RegistrationNumberRegister);
+                    CreateGarageMenu createGarageMenu = new CreateGarageMenu(this.MenuFactory, this.Ui, this.GarageHandlers);
                     result = createGarageMenu.Show();
                 }
                 else if (strInput.StartsWith('2'))
@@ -181,7 +181,7 @@ namespace Excercise5Garage.Menu
             var garage = garageFactory.CreateGarage(guid, "Första garaget", 5);
 
             // Skapa en GarageHandler som hantera allt om ett garage
-            this.GarageHandlers.Add(new GarageHandler.GarageHandler(garage, this.Ui, this.RegistrationNumberRegister));
+            this.GarageHandlers.Add(new GarageHandler.GarageHandler(garage, this.Ui));
 
             Ui.WriteLine($"Har skapat ett nytt garage. " + garage);
 

@@ -189,7 +189,7 @@ namespace Excercise5Garage.Menu
             IGarageHandler garageHandler = this.GarageHandlers.FirstOrDefault(g => g.GuidId.Equals(this.SelectedGarageHandlerGuid));
             if (garageHandler != null)
             {
-                if (garageHandler.Garage.Count > 0)
+                if (garageHandler.NumberOfVehicleInGarage() > 0)
                 {// Det finns parkerade fordon i garaget. Gruppera dom på typ och räkna antalet av varje typ
 
                     var results = garageHandler.Garage.GroupBy(v => v.GetType().Name)

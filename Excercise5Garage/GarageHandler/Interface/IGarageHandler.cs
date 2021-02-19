@@ -6,7 +6,7 @@ namespace Excercise5Garage.GarageHandler.Interface
 {
     public interface IGarageHandler
     {
-        IGarage<ICanBeParkedInGarage> Garage { get; set; }
+        IGarage<ICanBeParkedInGarage> Garage { get; }
         IUI Ui { get; }
         Guid GuidId { get; }
         bool ParkVehicle(ICanBeParkedInGarage vehicle);
@@ -16,5 +16,6 @@ namespace Excercise5Garage.GarageHandler.Interface
         void PrintInformationAboutGarage();
         (string strId, string strName, bool bIsFull, int iCapacity, int iNumberOfParkedVehicle) GetGarageInfo();
         int CountVehicleWithRegistrationNumber(string strRegistrationNumber);
+        int NumberOfVehicleInGarage();
     }
 }
